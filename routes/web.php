@@ -3,10 +3,11 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\Siswa;
+use App\Http\Controllers\LandingController;
 use Illuminate\Support\Facades\Route;
 
-// ── Root redirect ────────────────────────────────────────────────────────────
-Route::get('/', fn() => redirect()->route('login'));
+// ── Landing Page ──────────────────────────────────────────────────────────────
+Route::get('/', [LandingController::class, 'index'])->name('landing');
 
 // ── Auth ─────────────────────────────────────────────────────────────────────
 Route::middleware('guest')->group(function () {
