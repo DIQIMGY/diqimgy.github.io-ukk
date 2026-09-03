@@ -12,7 +12,10 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        $this->command->info('🚀 Memulai seeding database...');
+        
         // ─── Admin ────────────────────────────────────────────────────────
+        $this->command->info('👤 Membuat user admin...');
         User::create([
             'name'     => 'Administrator',
             'email'    => 'admin@perpus.sch.id',
@@ -21,6 +24,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // ─── Siswa ────────────────────────────────────────────────────────
+        $this->command->info('👥 Membuat user siswa & anggota...');
         $siswa1 = User::create([
             'name'     => 'Budi Santoso',
             'email'    => 'budi@siswa.sch.id',
@@ -51,28 +55,20 @@ class DatabaseSeeder extends Seeder
             'status'  => 'aktif',
         ]);
 
-        // ─── Buku ─────────────────────────────────────────────────────────
-        $buku = [
-            ['BK001', 'Pemrograman Web dengan PHP', 'Betha Sidik', 'Informatika', 2022, 'Pemrograman', 5],
-            ['BK002', 'Belajar Laravel dari Dasar', 'Ahmad Dahlan', 'Elex Media', 2023, 'Framework', 3],
-            ['BK003', 'Database MySQL untuk Pemula', 'Ridwan Sanjaya', 'Andi', 2021, 'Database', 4],
-            ['BK004', 'Jaringan Komputer Modern', 'James Kurose', 'Erlangga', 2020, 'Jaringan', 2],
-            ['BK005', 'Algoritma dan Pemrograman', 'Rinaldi Munir', 'Informatika', 2019, 'Pemrograman', 6],
-            ['BK006', 'Kecerdasan Buatan', 'Stuart Russell', 'Erlangga', 2022, 'AI', 3],
-            ['BK007', 'Sistem Operasi Modern', 'Andrew Tanenbaum', 'Andi', 2021, 'Sistem Operasi', 4],
-            ['BK008', 'UI/UX Design untuk Web', 'Doni Kusuma', 'Gramedia', 2023, 'Desain', 5],
-        ];
+        // ─── Buku dengan Data REAL ────────────────────────────────────────
+        $this->command->info('📚 Menjalankan BukuSeeder...');
+        $this->call(BukuSeeder::class);
 
-        foreach ($buku as $b) {
-            Buku::create([
-                'kode_buku'    => $b[0],
-                'judul'        => $b[1],
-                'pengarang'    => $b[2],
-                'penerbit'     => $b[3],
-                'tahun_terbit' => $b[4],
-                'kategori'     => $b[5],
-                'stok'         => $b[6],
-            ]);
-        }
+        // ─── Peminjaman ───────────────────────────────────────────────────
+        $this->command->info('📋 Menjalankan PeminjamanSeeder...');
+        $this->call(PeminjamanSeeder::class);
+        
+        $this->command->info('');
+        $this->command->info('✨ Seeding selesai!');
+        $this->command->line('');
+        $this->command->line('Login credentials:');
+        $this->command->line('Admin  → admin@perpus.sch.id / admin123');
+        $this->command->line('Siswa1 → budi@siswa.sch.id / siswa123');
+        $this->command->line('Siswa2 → siti@siswa.sch.id / siswa123');
     }
 }

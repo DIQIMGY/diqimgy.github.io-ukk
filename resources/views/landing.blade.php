@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;1,700;1,800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-<style>
+<style data-v="<?php echo time(); ?>">
 :root{
   --crimson:#ED1B3B;
   --crimson-dark:#C41630;
@@ -486,7 +486,7 @@ a{text-decoration:none;color:inherit}
   background:#fff;border-radius:var(--r);
   border:1px solid var(--border);box-shadow:var(--sh);
   overflow:hidden;display:flex;flex-direction:column;
-  transition:transform .22s,box-shadow .22s;
+  transition:transform .22s,box-shadow .22s;min-height:280px;
 }
 .bk:hover{transform:translateY(-5px);box-shadow:var(--sh2)}
 .bk-cov{position:relative;padding-top:150%;overflow:hidden;background:#dde4ef}
@@ -512,7 +512,14 @@ a{text-decoration:none;color:inherit}
 .bk-rank{position:absolute;top:7px;left:10px;z-index:4;font-size:.72rem;font-weight:900;color:var(--gold);text-shadow:0 1px 4px rgba(0,0,0,.5)}
 .bk-body{padding:11px 12px 12px;flex:1;display:flex;flex-direction:column}
 .bk-cat{font-size:.59rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--crimson);margin-bottom:4px}
-.bk-ttl{font-size:.83rem;font-weight:700;color:var(--tx1);line-height:1.35;margin-bottom:3px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.bk-ttl{
+  font-size:.83rem;font-weight:700;color:var(--tx1);
+  line-height:1.35;margin-bottom:3px;
+  overflow:hidden;display:-webkit-box;
+  -webkit-line-clamp:2;-webkit-box-orient:vertical;
+  min-height:2.7em; /* FIXED HEIGHT: 2 baris */
+  max-height:2.7em;
+}
 .bk-ath{font-size:.72rem;color:var(--tx3);margin-bottom:9px}
 .bk-foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:4px}
 .bk-meta{font-size:.68rem;font-weight:600;color:var(--tx3);display:flex;align-items:center;gap:3px}
@@ -598,6 +605,599 @@ a{text-decoration:none;color:inherit}
   box-shadow:0 1px 4px rgba(0,0,0,.04);
 }
 .cat-chip:hover,.cat-chip.active{background:var(--crimson);color:#fff;border-color:var(--crimson);box-shadow:0 4px 14px rgba(237,27,59,.22);transform:translateY(-1px)}
+
+/* ══════════════ KATEGORI NAVIGATION ══════════════ */
+.kat-nav-btn{
+  width:48px;height:48px;border-radius:50%;
+  background:#fff;border:2px solid var(--border);
+  color:var(--navy);font-size:1.3rem;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:all .25s;
+  flex-shrink:0;
+}
+.kat-nav-btn:hover{
+  background:var(--crimson);color:#fff;
+  border-color:var(--crimson);
+  box-shadow:0 4px 16px rgba(237,27,59,.3);
+  transform:scale(1.08);
+}
+.kat-nav-btn:active{transform:scale(0.95)}
+
+.kat-dot{
+  width:10px;height:10px;border-radius:50%;
+  background:var(--border);cursor:pointer;
+  transition:all .3s;
+}
+.kat-dot:hover{background:var(--tx3);transform:scale(1.2)}
+.kat-dot.active{
+  width:28px;border-radius:6px;
+  background:var(--crimson);
+}
+
+/* ══════════════ FEATURED BOOK SECTION ══════════════ */
+.featured-book-section{
+  background:#fafbfc;
+  padding:80px 20px;
+  position:relative;
+  overflow:hidden;
+}
+.featured-book-section::before{
+  content:'';position:absolute;
+  top:0;left:0;right:0;bottom:0;
+  background:
+    radial-gradient(circle at 85% 15%, rgba(237,27,59,.03) 0%, transparent 40%),
+    radial-gradient(circle at 15% 85%, rgba(194,164,113,.04) 0%, transparent 40%);
+  pointer-events:none;
+}
+
+.featured-container{
+  max-width:1200px;margin:0 auto;
+  display:grid;
+  grid-template-columns:400px 1fr;
+  gap:70px;align-items:center;
+  position:relative;z-index:1;
+  background:#fff;
+  border-radius:24px;
+  padding:60px;
+  box-shadow:0 2px 16px rgba(0,0,0,.04);
+  border:1px solid rgba(0,0,0,.06);
+}
+
+/* Left: Cover Side */
+.featured-cover-side{
+  position:relative;
+  display:flex;align-items:center;justify-content:center;
+}
+.featured-cover-wrapper{
+  width:100%;
+  position:relative;
+}
+.featured-cover-img,
+.featured-cover-placeholder{
+  width:100%;
+  aspect-ratio:2/3;
+  border-radius:12px;
+  box-shadow:
+    0 12px 40px rgba(0,0,0,.12),
+    0 0 0 1px rgba(0,0,0,.05);
+  object-fit:cover;
+}
+.featured-cover-placeholder{
+  background:linear-gradient(135deg, #f1f5f9, #e2e8f0);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:14px;color:#64748b;
+}
+.featured-cover-placeholder i{font-size:3.5rem;opacity:.3}
+.featured-cover-title{
+  font-size:1.05rem;font-weight:700;
+  padding:0 20px;text-align:center;
+  color:#475569;
+}
+
+.featured-badge{
+  position:absolute;top:16px;right:-10px;
+  background:#fff;
+  color:var(--crimson);font-weight:800;font-size:.75rem;
+  padding:8px 16px;border-radius:99px;
+  box-shadow:0 4px 12px rgba(0,0,0,.1);
+  border:1px solid rgba(237,27,59,.15);
+  display:flex;align-items:center;gap:6px;
+  letter-spacing:.02em;
+}
+.featured-badge i{color:var(--crimson)}
+
+/* Right: Info Side */
+.featured-info-side{
+  color:var(--tx1);
+}
+.featured-info-content{
+  max-width:100%;
+}
+
+.featured-label{
+  display:inline-flex;align-items:center;gap:7px;
+  background:rgba(237,27,59,.06);
+  border:1px solid rgba(237,27,59,.15);
+  color:var(--crimson);font-weight:700;font-size:.76rem;
+  padding:7px 16px;border-radius:99px;
+  margin-bottom:18px;letter-spacing:.03em;
+}
+
+.featured-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.9rem, 4vw, 2.8rem);
+  font-weight:800;color:var(--navy);
+  margin-bottom:16px;line-height:1.2;
+  letter-spacing:-.02em;
+}
+
+.featured-meta{
+  display:flex;gap:20px;margin-bottom:24px;
+  flex-wrap:wrap;
+}
+.featured-author,
+.featured-category{
+  display:flex;align-items:center;gap:7px;
+  font-size:.88rem;color:var(--tx3);
+  font-weight:600;
+}
+.featured-author i{color:var(--navy);font-size:.95rem}
+.featured-category i{color:var(--crimson);font-size:.95rem}
+
+.featured-stats{
+  display:grid;grid-template-columns:repeat(3, 1fr);
+  gap:12px;margin-bottom:26px;
+}
+.featured-stat{
+  background:#fafbfc;
+  border:1px solid rgba(0,0,0,.06);
+  border-radius:10px;padding:14px 10px;
+  text-align:center;
+  transition:all .2s;
+}
+.featured-stat:hover{
+  background:#fff;
+  box-shadow:0 2px 8px rgba(0,0,0,.06);
+  transform:translateY(-2px);
+}
+.featured-stat-value{
+  font-size:1.65rem;font-weight:800;
+  color:var(--navy);line-height:1;
+  margin-bottom:5px;
+}
+.featured-stat-label{
+  font-size:.72rem;color:var(--tx3);
+  font-weight:600;text-transform:uppercase;
+  letter-spacing:.03em;
+}
+
+.featured-description{
+  margin-bottom:28px;
+}
+.featured-description p{
+  font-size:.96rem;color:var(--tx2);
+  line-height:1.7;margin:0;
+}
+
+.featured-actions{
+  display:flex;gap:12px;flex-wrap:wrap;
+}
+.featured-btn-primary,
+.featured-btn-secondary,
+.featured-btn-disabled{
+  display:inline-flex;align-items:center;gap:9px;
+  padding:13px 26px;border-radius:99px;
+  font-weight:700;font-size:.88rem;
+  transition:all .25s;cursor:pointer;
+  text-decoration:none;border:none;
+  letter-spacing:.01em;
+}
+.featured-btn-primary{
+  background:var(--crimson);
+  color:#fff;
+  box-shadow:0 4px 14px rgba(237,27,59,.25);
+}
+.featured-btn-primary:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 20px rgba(237,27,59,.35);
+  background:#c2164a;
+  color:#fff;
+}
+.featured-btn-secondary{
+  background:#fff;
+  border:1.5px solid rgba(0,0,0,.12);
+  color:var(--tx2);
+}
+.featured-btn-secondary:hover{
+  background:#fafbfc;
+  border-color:rgba(0,0,0,.2);
+  transform:translateY(-2px);
+  box-shadow:0 4px 12px rgba(0,0,0,.08);
+  color:var(--tx1);
+}
+.featured-btn-disabled{
+  background:#f1f5f9;
+  color:#94a3b8;
+  cursor:not-allowed;
+  border:1px solid rgba(0,0,0,.06);
+}
+
+/* Responsive */
+@media(max-width:992px){
+  .featured-container{
+    grid-template-columns:1fr;
+    gap:40px;text-align:center;
+    padding:40px 30px;
+  }
+  .featured-cover-wrapper{max-width:280px;margin:0 auto}
+  .featured-info-content{max-width:100%}
+  .featured-meta{justify-content:center}
+  .featured-actions{justify-content:center}
+}
+
+/* ══════════════ BARU DIKEMBALIKAN SECTION ══════════════ */
+.baru-kembali-sec{
+  background:linear-gradient(to bottom, #f0fdf4 0%, #fff 100%);
+  border-top:1px solid rgba(34,197,94,.08);
+}
+
+.baru-kembali-badge{
+  background:rgba(34,197,94,.12) !important;
+  border-color:rgba(34,197,94,.25) !important;
+  color:#15803d !important;
+}
+
+.baru-kembali-scroll-wrapper{
+  overflow:hidden;
+  margin:0 -20px;
+  padding:0 20px;
+}
+.baru-kembali-scroll{
+  display:flex;gap:16px;
+  overflow-x:auto;
+  scroll-behavior:smooth;
+  padding-bottom:12px;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(34,197,94,.3) transparent;
+}
+.baru-kembali-scroll::-webkit-scrollbar{height:6px}
+.baru-kembali-scroll::-webkit-scrollbar-track{background:rgba(34,197,94,.05);border-radius:99px}
+.baru-kembali-scroll::-webkit-scrollbar-thumb{background:rgba(34,197,94,.3);border-radius:99px}
+.baru-kembali-scroll::-webkit-scrollbar-thumb:hover{background:rgba(34,197,94,.5)}
+
+/* COMPACT HORIZONTAL CARD */
+.baru-kembali-card{
+  flex:0 0 360px;
+  background:#fff;
+  border-radius:12px;
+  border:1px solid rgba(34,197,94,.15);
+  box-shadow:0 2px 12px rgba(34,197,94,.08);
+  display:flex;
+  overflow:visible !important; /* BIAR BUTTON KELIATAN */
+  transition:all .25s;
+  min-height:135px; /* MIN bukan FIXED */
+}
+.baru-kembali-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 6px 20px rgba(34,197,94,.18);
+}
+
+/* Cover kecil di kiri */
+.baru-kembali-cover{
+  position:relative;
+  width:90px;
+  height:135px;
+  flex-shrink:0;
+  overflow:hidden !important; /* COVER TETAP HIDDEN */
+  border-radius:12px 0 0 12px; /* ROUNDED KIRI AJA */
+}
+.baru-kembali-cover img,
+.baru-kembali-cover-placeholder{
+  width:100%;height:100%;
+  object-fit:cover;
+}
+.baru-kembali-cover-placeholder{
+  background:linear-gradient(135deg, #dcfce7, #bbf7d0);
+  display:flex;align-items:center;justify-content:center;
+  color:#16a34a;font-size:2rem;
+}
+
+/* Badge kecil */
+.baru-kembali-badge-card{
+  position:absolute;top:8px;right:8px;
+  background:#fff;
+  color:#16a34a;font-weight:700;font-size:.65rem;
+  padding:4px 8px;border-radius:6px;
+  display:flex;align-items:center;gap:4px;
+  box-shadow:0 2px 8px rgba(34,197,94,.25);
+  border:1px solid rgba(34,197,94,.2);
+  animation:pulse-green 2s ease-in-out infinite;
+}
+.baru-kembali-badge-card::before{
+  content:'';
+  position:absolute;inset:-2px;
+  border-radius:6px;
+  background:radial-gradient(circle, rgba(34,197,94,.3) 0%, transparent 70%);
+  animation:pulse-ring-green 2s ease-in-out infinite;
+  z-index:-1;
+}
+
+@keyframes pulse-green{
+  0%,100%{transform:scale(1);box-shadow:0 2px 8px rgba(34,197,94,.25)}
+  50%{transform:scale(1.05);box-shadow:0 4px 12px rgba(34,197,94,.4)}
+}
+@keyframes pulse-ring-green{
+  0%,100%{opacity:1;transform:scale(1)}
+  50%{opacity:0;transform:scale(1.4)}
+}
+
+/* Info di kanan - compact & EFFICIENT */
+.baru-kembali-info{
+  padding:10px 12px;
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  /* HAPUS justify-content, biar natural flow! */
+}
+
+.baru-kembali-genre{
+  display:inline-block;
+  font-size:.65rem;font-weight:700;
+  color:#15803d;
+  background:rgba(34,197,94,.1);
+  border:1px solid rgba(34,197,94,.2);
+  padding:3px 8px;border-radius:6px;
+  text-transform:uppercase;
+  letter-spacing:.03em;
+  width:fit-content;
+  margin-bottom:2px;
+}
+
+.baru-kembali-title{
+  font-size:.88rem;font-weight:800;
+  color:var(--navy);
+  line-height:1.2;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+  margin:0 0 2px 0;
+}
+
+.baru-kembali-author{
+  display:flex;align-items:center;gap:5px;
+  font-size:.73rem;color:var(--tx3);
+  font-weight:600;
+  margin:0 0 4px 0;
+}
+.baru-kembali-author i{color:#16a34a;font-size:.8rem}
+
+.baru-kembali-time{
+  display:flex;align-items:center;gap:6px;
+  font-size:.7rem;color:#16a34a;
+  font-weight:600;
+  background:rgba(34,197,94,.06);
+  padding:5px 8px;border-radius:5px;
+  margin:0 0 6px 0;
+  flex:1; /* AMBIL RUANG TERSISA! */
+  min-height:32px;
+}
+.baru-kembali-time i{font-size:.8rem}
+
+/* Stock bar compact */
+.baru-kembali-stock{
+  margin:0 0 6px 0;
+}
+.baru-kembali-stock-bar{
+  width:100%;height:4px;
+  background:rgba(34,197,94,.15);
+  border-radius:99px;
+  overflow:hidden;
+  margin-bottom:4px;
+}
+.baru-kembali-stock-fill{
+  height:100%;
+  background:linear-gradient(90deg, #22c55e, #16a34a);
+  border-radius:99px;
+  transition:width .3s;
+}
+.baru-kembali-stock-text{
+  display:flex;align-items:center;gap:5px;
+  font-size:.7rem;color:var(--tx2);
+  margin:0;
+}
+.baru-kembali-stock-text i{color:#eab308;font-size:.8rem}
+.baru-kembali-stock-text strong{color:#16a34a;font-weight:800}
+
+/* Button - NEMPEL DI BAWAH */
+.baru-kembali-btn{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  width:100%;
+  background:linear-gradient(135deg, #22c55e, #16a34a);
+  color:#fff;
+  font-weight:700;font-size:.78rem;
+  padding:7px 14px;border-radius:8px;
+  transition:all .25s;
+  text-decoration:none;
+  letter-spacing:.01em;
+  box-shadow:0 3px 10px rgba(34,197,94,.25);
+  margin:0; /* NO margin-top:auto - biar natural! */
+}
+.baru-kembali-btn:hover{
+  background:linear-gradient(135deg, #16a34a, #15803d);
+  box-shadow:0 5px 16px rgba(34,197,94,.4);
+  transform:translateY(-1px);
+  color:#fff;
+}
+.baru-kembali-btn i{font-size:.95rem}
+
+}
+
+/* ══════════════ WAITLIST SECTION ══════════════ */
+.waitlist-sec{
+  background:linear-gradient(to bottom, #fffbf5 0%, #fff 100%);
+  border-top:1px solid rgba(234,179,8,.08);
+}
+
+.waitlist-badge{
+  background:rgba(234,179,8,.12) !important;
+  border-color:rgba(234,179,8,.25) !important;
+  color:#b45309 !important;
+}
+
+.waitlist-scroll-wrapper{
+  overflow:hidden;
+  margin:0 -20px;
+  padding:0 20px;
+}
+.waitlist-scroll{
+  display:flex;gap:16px;
+  overflow-x:auto;
+  scroll-behavior:smooth;
+  padding-bottom:12px;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(234,179,8,.3) transparent;
+}
+.waitlist-scroll::-webkit-scrollbar{height:6px}
+.waitlist-scroll::-webkit-scrollbar-track{background:rgba(234,179,8,.05);border-radius:99px}
+.waitlist-scroll::-webkit-scrollbar-thumb{background:rgba(234,179,8,.3);border-radius:99px}
+.waitlist-scroll::-webkit-scrollbar-thumb:hover{background:rgba(234,179,8,.5)}
+
+/* WAITLIST: VERTICAL CARD (BEDA DARI HORIZONTAL!) */
+.waitlist-card{
+  flex:0 0 200px; /* LEBIH KECIL */
+  background:#fff;
+  border-radius:12px;
+  border:1px solid rgba(234,179,8,.15);
+  box-shadow:0 2px 12px rgba(234,179,8,.08);
+  display:flex;
+  flex-direction:column; /* VERTICAL! */
+  overflow:hidden; /* BISA HIDDEN LAGI */
+  transition:all .25s;
+}
+.waitlist-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 8px 24px rgba(234,179,8,.2);
+}
+
+/* Cover BESAR DI ATAS (portrait) */
+.waitlist-cover{
+  position:relative;
+  width:100%; /* FULL WIDTH */
+  aspect-ratio:2/3; /* PORTRAIT */
+  flex-shrink:0;
+  overflow:hidden;
+  border-radius:0; /* NO ROUNDED - SUDAH DI CARD */
+}
+.waitlist-cover img,
+.waitlist-cover-placeholder{
+  width:100%;height:100%;
+  object-fit:cover;
+}
+.waitlist-cover-placeholder{
+  background:linear-gradient(135deg, #fef3c7, #fde68a);
+  display:flex;align-items:center;justify-content:center;
+  color:#d97706;font-size:2rem;
+}
+
+/* Overlay gelap untuk menandakan "locked" */
+.waitlist-overlay{
+  position:absolute;inset:0;
+  background:rgba(0,0,0,.55);
+  backdrop-filter:blur(2px);
+  display:flex;align-items:center;justify-content:center;
+  color:rgba(255,255,255,.95);
+  font-size:2rem;
+}
+
+/* Badge kembali ke cover (position absolute) */
+.waitlist-stock-badge{
+  position:absolute;top:10px;right:10px;
+  background:linear-gradient(135deg, #f97316, #ea580c);
+  color:#fff;font-weight:700;font-size:.68rem;
+  padding:5px 10px;border-radius:8px;
+  display:flex;align-items:center;gap:4px;
+  box-shadow:0 3px 10px rgba(249,115,22,.35);
+  z-index:2;
+}
+
+/* Info DI BAWAH (vertical) */
+.waitlist-info{
+  padding:12px;
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.waitlist-genre{
+  display:inline-block;
+  font-size:.68rem;font-weight:700;
+  color:#b45309;
+  background:rgba(234,179,8,.1);
+  border:1px solid rgba(234,179,8,.2);
+  padding:3px 8px;border-radius:6px;
+  text-transform:uppercase;
+  letter-spacing:.03em;
+  width:fit-content;
+}
+
+.waitlist-title{
+  font-size:.9rem;font-weight:800;
+  color:var(--navy);
+  line-height:1.25;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+  margin:0 0 4px 0;
+}
+
+.waitlist-author{
+  display:flex;align-items:center;gap:5px;
+  font-size:.75rem;color:var(--tx3);
+  font-weight:600;
+  margin:0 0 8px 0;
+}
+.waitlist-author i{color:#d97706;font-size:.8rem}
+
+/* Info box - SIMPLE */
+.waitlist-stats{
+  background:rgba(234,179,8,.05);
+  border:1px solid rgba(234,179,8,.1);
+  border-radius:6px;
+  padding:8px;
+  display:flex;flex-direction:column;gap:5px;
+  margin:0 0 10px 0;
+  flex:1;
+}
+
+.waitlist-queue,
+.waitlist-estimate{
+  display:flex;align-items:flex-start;gap:6px;
+  font-size:.72rem;color:var(--tx2);
+  line-height:1.35;
+}
+.waitlist-queue i{color:#ea580c;font-size:.8rem;flex-shrink:0;margin-top:2px}
+.waitlist-estimate i{color:#b45309;font-size:.8rem;flex-shrink:0;margin-top:2px}
+
+/* Button compact */
+.waitlist-btn{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  width:100%;
+  background:transparent;
+  border:2px solid #ddd;
+  color:#999;
+  font-weight:700;font-size:.78rem;
+  padding:8px 14px;border-radius:8px;
+  text-decoration:none;
+  cursor:not-allowed;
+  margin:0;
+}
+.waitlist-btn i{font-size:.9rem}
+
 
 /* ══════════════ MINI BOOK LIST (terbaru) ══════════════ */
 .mini-card{
@@ -688,6 +1288,8 @@ a{text-decoration:none;color:inherit}
         <a href="#terbaru"  class="lnav-link" id="nl-new">Terbaru</a>
         <a href="#stok"     class="lnav-link" id="nl-stok">Stok</a>
         <a href="#kategori" class="lnav-link" id="nl-kat">Kategori</a>
+        <a href="#baru-kembali" class="lnav-link" id="nl-bk">Baru Kembali</a>
+        <a href="#waitlist" class="lnav-link" id="nl-wait">Waitlist</a>
       </nav>
 
       {{-- Actions --}}
@@ -723,7 +1325,7 @@ a{text-decoration:none;color:inherit}
 
     {{-- Mobile menu dropdown --}}
     <div id="mobileMenu" style="display:none;padding:8px 16px 14px;border-top:1px solid var(--border)">
-      @foreach(['Beranda'=>route('landing'),'Populer'=>'#populer','Terbaru'=>'#terbaru','Stok Terbanyak'=>'#stok','Kategori'=>'#kategori'] as $label=>$href)
+      @foreach(['Beranda'=>route('landing'),'Populer'=>'#populer','Terbaru'=>'#terbaru','Stok Terbanyak'=>'#stok','Kategori'=>'#kategori','Baru Kembali'=>'#baru-kembali','Waitlist'=>'#waitlist'] as $label=>$href)
       <a href="{{ $href }}" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:9px;font-size:.84rem;font-weight:600;color:var(--tx2);transition:background .15s"
          onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background=''" onclick="document.getElementById('mobileMenu').style.display='none'">
         {{ $label }}
@@ -861,6 +1463,111 @@ a{text-decoration:none;color:inherit}
   </div>
 </section>
 
+
+{{-- ══ FEATURED BOOK ══ --}}
+<section class="featured-book-section">
+  @php
+    // Ambil buku dengan peminjaman terbanyak untuk featured
+    $featuredBook = \App\Models\Buku::withCount('peminjaman')
+      ->orderByDesc('peminjaman_count')
+      ->first();
+  @endphp
+  
+  @if($featuredBook)
+  <div class="featured-container">
+    {{-- Left Side: Book Cover --}}
+    <div class="featured-cover-side">
+      <div class="featured-cover-wrapper">
+        @if($featuredBook->cover)
+          <img src="{{ Storage::url($featuredBook->cover) }}" alt="{{ $featuredBook->judul }}" class="featured-cover-img">
+        @else
+          <div class="featured-cover-placeholder">
+            <i class="bi bi-book-fill"></i>
+            <div class="featured-cover-title">{{ $featuredBook->judul }}</div>
+          </div>
+        @endif
+        
+        {{-- Floating badge --}}
+        <div class="featured-badge">
+          <i class="bi bi-star-fill"></i>
+          <span>Featured</span>
+        </div>
+      </div>
+    </div>
+    
+    {{-- Right Side: Book Info --}}
+    <div class="featured-info-side">
+      <div class="featured-info-content">
+        {{-- Label --}}
+        <div class="featured-label">
+          <i class="bi bi-bookmark-star-fill"></i>
+          <span>Buku Pilihan</span>
+        </div>
+        
+        {{-- Title --}}
+        <h2 class="featured-title">{{ $featuredBook->judul }}</h2>
+        
+        {{-- Author & Category --}}
+        <div class="featured-meta">
+          <div class="featured-author">
+            <i class="bi bi-person-fill"></i>
+            <span>{{ $featuredBook->pengarang }}</span>
+          </div>
+          <div class="featured-category">
+            <i class="bi bi-tag-fill"></i>
+            <span>{{ $featuredBook->kategori }}</span>
+          </div>
+        </div>
+        
+        {{-- Stats --}}
+        <div class="featured-stats">
+          <div class="featured-stat">
+            <div class="featured-stat-value">{{ $featuredBook->peminjaman_count }}</div>
+            <div class="featured-stat-label">Peminjaman</div>
+          </div>
+          <div class="featured-stat">
+            <div class="featured-stat-value">{{ $featuredBook->stok }}</div>
+            <div class="featured-stat-label">Stok Tersedia</div>
+          </div>
+          <div class="featured-stat">
+            <div class="featured-stat-value">{{ $featuredBook->tahun_terbit }}</div>
+            <div class="featured-stat-label">Tahun Terbit</div>
+          </div>
+        </div>
+        
+        {{-- Description --}}
+        <div class="featured-description">
+          <p>
+            Buku ini menjadi favorit dan paling banyak dipinjam oleh para siswa. 
+            {{ $featuredBook->kategori }} yang menarik dengan pembahasan mendalam, 
+            cocok untuk {{ strtolower($featuredBook->kategori) === 'pemrograman' ? 'belajar coding' : 'menambah wawasan' }} 
+            dan pengembangan diri. Jangan sampai kehabisan!
+          </p>
+        </div>
+        
+        {{-- CTA Buttons --}}
+        <div class="featured-actions">
+          @if($featuredBook->stok > 0)
+            <a href="{{ route('register') }}" class="featured-btn-primary">
+              <i class="bi bi-book"></i>
+              <span>Pinjam Sekarang</span>
+            </a>
+            <a href="{{ route('register') }}" class="featured-btn-secondary">
+              <i class="bi bi-info-circle"></i>
+              <span>Lihat Detail</span>
+            </a>
+          @else
+            <button class="featured-btn-disabled" disabled>
+              <i class="bi bi-x-circle"></i>
+              <span>Stok Habis</span>
+            </button>
+          @endif
+        </div>
+      </div>
+    </div>
+  </div>
+  @endif
+</section>
 
 {{-- ══ POPULER ══ --}}
 <section class="lsec" id="populer" style="background:#fff">
@@ -1060,27 +1767,366 @@ a{text-decoration:none;color:inherit}
   </div>
 </section>
 
-{{-- ══ KATEGORI ══ --}}
+{{-- ══ KATEGORI dengan Foto Buku & Pagination ══ --}}
 <section class="lsec" id="kategori" style="background:#fff">
   <div class="lsec-inner">
     <div class="lsec-header">
       <div>
-        <div class="lsec-badge blue"><i class="bi bi-grid-fill"></i> Jelajahi</div>
-        <h2 class="lsec-title">Semua <span style="color:var(--blue)">Kategori</span></h2>
+        <div class="lsec-badge"><i class="bi bi-grid-fill"></i> Jelajahi Genre</div>
+        <h2 class="lsec-title">Buku <span>Berdasarkan Kategori</span></h2>
         <p class="lsec-sub">Temukan buku sesuai minat kamu</p>
       </div>
     </div>
-    <div class="cat-grid">
-      @php
-      $catIcons=['Pemrograman'=>'bi-code-slash','Framework'=>'bi-layers-fill','Database'=>'bi-database-fill','Jaringan'=>'bi-diagram-3-fill','AI'=>'bi-cpu-fill','Desain'=>'bi-palette-fill','Sistem Operasi'=>'bi-terminal-fill','Matematika'=>'bi-calculator-fill','Fisika'=>'bi-lightning-fill','Bahasa'=>'bi-translate','Sejarah'=>'bi-hourglass-split','Sastra'=>'bi-journal-text','kartun'=>'bi-brush-fill','fantasi'=>'bi-stars','misteri'=>'bi-search-heart'];
-      @endphp
-      @foreach($kategoris as $kat)
-      <a href="{{ route('register') }}" class="cat-chip">
-        <i class="bi {{ $catIcons[$kat]??'bi-book-fill' }}" style="color:var(--blue)"></i>
-        {{ $kat }}
-      </a>
-      @endforeach
+
+    @php
+      // Ambil buku per kategori (6 buku per kategori)
+      $kategoriBuku = [];
+      foreach($kategoris as $kat) {
+        $books = \App\Models\Buku::where('kategori', $kat)
+          ->withCount('peminjaman')
+          ->orderByDesc('peminjaman_count')
+          ->take(6)
+          ->get();
+        if($books->count() > 0) {
+          $kategoriBuku[$kat] = $books;
+        }
+      }
+      
+      $kategoriList = array_keys($kategoriBuku);
+    @endphp
+
+    @if(count($kategoriList) > 0)
+      {{-- Kategori Navigation --}}
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;gap:16px">
+        <button class="kat-nav-btn" id="katPrevBtn" onclick="changeKategori(-1)">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+        
+        <div style="flex:1;text-align:center">
+          <h3 id="currentKatName" style="font-size:1.4rem;font-weight:800;color:var(--navy);font-family:'Playfair Display',serif;margin-bottom:4px">
+            {{ $kategoriList[0] }}
+          </h3>
+          <p id="currentKatCount" style="font-size:.85rem;color:var(--tx3);font-weight:500">
+            {{ $kategoriBuku[$kategoriList[0]]->count() }} buku tersedia
+          </p>
+        </div>
+        
+        <button class="kat-nav-btn" id="katNextBtn" onclick="changeKategori(1)">
+          <i class="bi bi-chevron-right"></i>
+        </button>
+      </div>
+
+      {{-- Kategori Progress Indicator --}}
+      <div style="display:flex;gap:6px;justify-content:center;margin-bottom:24px">
+        @foreach($kategoriList as $index => $kat)
+          <div class="kat-dot {{ $index === 0 ? 'active' : '' }}" data-index="{{ $index }}"></div>
+        @endforeach
+      </div>
+
+      {{-- Book Grid untuk Kategori Terpilih --}}
+      <div id="katBookGrid" class="bg">
+        @foreach($kategoriBuku[$kategoriList[0]] as $i => $book)
+          <div class="bk">
+            <div class="bk-cov">
+              @if($book->cover)
+                <img src="{{ Storage::url($book->cover) }}" alt="{{ $book->judul }}">
+              @else
+                <div class="bk-ph g{{ $i%8 }}">
+                  <span class="pi"><i class="bi bi-book-fill"></i></span>
+                  <span class="pt">{{ $book->judul }}</span>
+                  <span class="pa">{{ $book->pengarang }}</span>
+                </div>
+              @endif
+              @if($i === 0)
+                <div class="bk-rank">🔥 #1</div>
+              @elseif($i < 3)
+                <div class="bk-rank" style="color:rgba(255,255,255,.7)">✦ #{{ $i+1 }}</div>
+              @endif
+              <span class="bk-badge {{ $book->stok > 0 ? 'b-ada' : 'b-habis' }}">
+                {{ $book->stok > 0 ? $book->stok.' stok' : 'Habis' }}
+              </span>
+            </div>
+            <div class="bk-body">
+              <div class="bk-cat">{{ $book->kategori }}</div>
+              <div class="bk-ttl">{{ $book->judul }}</div>
+              <div class="bk-ath"><i class="bi bi-person" style="font-size:.65rem"></i> {{ $book->pengarang }}</div>
+              <div class="bk-foot">
+                <span class="bk-meta"><i class="bi bi-download" style="font-size:.65rem"></i>{{ $book->peminjaman_count }}x</span>
+                @if($book->stok > 0)
+                  <a href="{{ route('register') }}" class="btn-bk"><i class="bi bi-book"></i>Pinjam</a>
+                @else
+                  <span class="btn-bk-dis">Habis</span>
+                @endif
+              </div>
+            </div>
+          </div>
+        @endforeach
+      </div>
+
+      {{-- Hidden data untuk JS --}}
+      <script>
+        const kategoriData = @json($kategoriBuku);
+        const kategoriList = @json($kategoriList);
+        let currentKatIndex = 0;
+
+        function changeKategori(direction) {
+          currentKatIndex += direction;
+          
+          // Loop around
+          if(currentKatIndex < 0) currentKatIndex = kategoriList.length - 1;
+          if(currentKatIndex >= kategoriList.length) currentKatIndex = 0;
+          
+          updateKategoriDisplay();
+        }
+
+        function updateKategoriDisplay() {
+          const currentKat = kategoriList[currentKatIndex];
+          const books = kategoriData[currentKat];
+          
+          // Update heading
+          document.getElementById('currentKatName').textContent = currentKat;
+          document.getElementById('currentKatCount').textContent = books.length + ' buku tersedia';
+          
+          // Update dots
+          document.querySelectorAll('.kat-dot').forEach((dot, idx) => {
+            dot.classList.toggle('active', idx === currentKatIndex);
+          });
+          
+          // Update book grid dengan animasi
+          const grid = document.getElementById('katBookGrid');
+          grid.style.opacity = '0';
+          grid.style.transform = 'translateY(20px)';
+          
+          setTimeout(() => {
+            let html = '';
+            const gradients = [
+              'linear-gradient(150deg,#0f1f3d,#1e4080)',
+              'linear-gradient(150deg,#581c87,#7c3aed)',
+              'linear-gradient(150deg,#064e3b,#059669)',
+              'linear-gradient(150deg,#78350f,#d97706)',
+              'linear-gradient(150deg,#881337,#e11d48)',
+              'linear-gradient(150deg,#0c4a6e,#0284c7)',
+              'linear-gradient(150deg,#1f2937,#4b5563)',
+              'linear-gradient(150deg,#134e4a,#0d9488)',
+            ];
+            
+            books.forEach((book, i) => {
+              const hasCover = book.cover;
+              const gradientIndex = i % gradients.length;
+              
+              html += `
+                <div class="bk">
+                  <div class="bk-cov">
+                    ${hasCover 
+                      ? `<img src="/storage/${book.cover}" alt="${book.judul}">`
+                      : `<div class="bk-ph" style="background:${gradients[gradientIndex]}">
+                          <span class="pi"><i class="bi bi-book-fill"></i></span>
+                          <span class="pt">${book.judul}</span>
+                          <span class="pa">${book.pengarang}</span>
+                        </div>`
+                    }
+                    ${i === 0 ? '<div class="bk-rank">🔥 #1</div>' : ''}
+                    ${i > 0 && i < 3 ? `<div class="bk-rank" style="color:rgba(255,255,255,.7)">✦ #${i+1}</div>` : ''}
+                    <span class="bk-badge ${book.stok > 0 ? 'b-ada' : 'b-habis'}">
+                      ${book.stok > 0 ? book.stok + ' stok' : 'Habis'}
+                    </span>
+                  </div>
+                  <div class="bk-body">
+                    <div class="bk-cat">${book.kategori}</div>
+                    <div class="bk-ttl">${book.judul}</div>
+                    <div class="bk-ath"><i class="bi bi-person" style="font-size:.65rem"></i> ${book.pengarang}</div>
+                    <div class="bk-foot">
+                      <span class="bk-meta"><i class="bi bi-download" style="font-size:.65rem"></i>${book.peminjaman_count}x</span>
+                      ${book.stok > 0 
+                        ? `<a href="{{ route('register') }}" class="btn-bk"><i class="bi bi-book"></i>Pinjam</a>`
+                        : `<span class="btn-bk-dis">Habis</span>`
+                      }
+                    </div>
+                  </div>
+                </div>
+              `;
+            });
+            
+            grid.innerHTML = html;
+            grid.style.opacity = '1';
+            grid.style.transform = 'translateY(0)';
+          }, 200);
+        }
+        
+        // Click dots untuk jump ke kategori
+        document.querySelectorAll('.kat-dot').forEach((dot, index) => {
+          dot.addEventListener('click', () => {
+            currentKatIndex = index;
+            updateKategoriDisplay();
+          });
+        });
+        
+        // Add smooth transition to grid
+        document.getElementById('katBookGrid').style.transition = 'opacity 0.3s, transform 0.3s';
+      </script>
+    @else
+      <div style="text-align:center;padding:60px 20px;color:var(--tx4)">
+        <i class="bi bi-collection" style="font-size:3.5rem;opacity:.2;display:block;margin-bottom:14px"></i>
+        <p style="font-size:1.05rem">Belum ada buku tersedia untuk ditampilkan per kategori.</p>
+      </div>
+    @endif
+  </div>
+</section>
+
+{{-- ══ BARU DIKEMBALIKAN - Tersedia Lagi! ══ --}}
+<section class="lsec baru-kembali-sec" id="baru-kembali">
+  <div class="lsec-inner">
+    <div class="lsec-header">
+      <div>
+        <div class="lsec-badge baru-kembali-badge">
+          <i class="bi bi-check-circle-fill"></i> TERSEDIA KEMBALI
+        </div>
+        <h2 class="lsec-title">Stok <span>Terbatas</span></h2>
+        <p class="lsec-sub">Buku populer dengan stok terbatas, pinjam sekarang sebelum kehabisan</p>
+      </div>
     </div>
+
+    @if($bukuBaruKembali->isEmpty())
+      <div style="text-align:center;padding:48px;color:var(--tx4)">
+        <i class="bi bi-inbox" style="font-size:3rem;opacity:.2;display:block;margin-bottom:12px"></i>
+        <p>Belum ada buku yang baru dikembalikan saat ini.</p>
+      </div>
+    @else
+      <div class="baru-kembali-scroll-wrapper">
+        <div class="baru-kembali-scroll">
+          @foreach($bukuBaruKembali as $buku)
+            <div class="baru-kembali-card">
+              {{-- Cover tanpa overlay (fresh/available) --}}
+              <div class="baru-kembali-cover">
+                @if($buku->cover)
+                  <img src="{{ Storage::url($buku->cover) }}" alt="{{ $buku->judul }}">
+                @else
+                  <div class="baru-kembali-cover-placeholder">
+                    <i class="bi bi-book-fill"></i>
+                  </div>
+                @endif
+              </div>
+              
+              {{-- Info --}}
+              <div class="baru-kembali-info" style="display:flex !important;flex-direction:column !important;gap:3px !important;padding:8px 10px !important;justify-content:flex-start !important;min-height:135px !important">
+                {{-- Badge pindah ke sini --}}
+                <div class="baru-kembali-badge-card" style="position:static !important;align-self:flex-start !important;margin-bottom:2px !important">
+                  <i class="bi bi-check-circle-fill"></i>
+                  <span>Tersedia</span>
+                </div>
+                
+                <h3 class="baru-kembali-title" style="margin:0 !important;font-size:.85rem !important">{{ $buku->judul }}</h3>
+                <div class="baru-kembali-author" style="margin:0 !important;font-size:.7rem !important">
+                  <i class="bi bi-person-fill"></i>
+                  {{ $buku->pengarang }}
+                </div>
+                
+                {{-- Info Fresh/Available - EXPAND! --}}
+                <div class="baru-kembali-time" style="flex:1 !important;display:flex !important;align-items:flex-start !important;margin:0 !important;padding:6px 8px !important;font-size:.68rem !important;line-height:1.3 !important">
+                  <i class="bi bi-check-circle-fill" style="margin-top:2px"></i>
+                  <span style="flex:1">Stok terbatas, pinjam sebelum kehabisan</span>
+                </div>
+                
+                {{-- Progress stok (urgency) --}}
+                <div class="baru-kembali-stock" style="margin:0 0 4px 0 !important">
+                  <div class="baru-kembali-stock-bar">
+                    <div class="baru-kembali-stock-fill" style="width:{{ ($buku->stok / 3) * 100 }}%"></div>
+                  </div>
+                  <div class="baru-kembali-stock-text">
+                    <i class="bi bi-exclamation-circle-fill"></i>
+                    <span><strong>{{ $buku->stok }}</strong> stok tersisa</span>
+                  </div>
+                </div>
+                
+                {{-- CTA Button (solid hijau dengan icon petir) --}}
+                <a href="{{ route('register') }}" class="baru-kembali-btn" style="margin:0 !important;padding:6px 12px !important;font-size:.75rem !important">
+                  <i class="bi bi-lightning-charge-fill"></i>
+                  <span>Pinjam</span>
+                </a>
+              </div>
+            </div>
+          @endforeach
+        </div>
+      </div>
+    @endif
+  </div>
+</section>
+
+{{-- ══ WAITLIST - Buku Habis Dipinjam ══ --}}
+<section class="lsec waitlist-sec" id="waitlist">
+  <div class="lsec-inner">
+    <div class="lsec-header">
+      <div>
+        <div class="lsec-badge waitlist-badge">
+          <i class="bi bi-hourglass-split"></i> MENUNGGU KETERSEDIAAN
+        </div>
+        <h2 class="lsec-title">Waitlist <span>Buku</span></h2>
+        <p class="lsec-sub">Buku ini sedang dipinjam, daftar antre untuk dapat notifikasi saat tersedia</p>
+      </div>
+    </div>
+
+    @if($bukuWaitlist->isEmpty())
+      <div style="text-align:center;padding:48px;color:var(--tx4)">
+        <i class="bi bi-check-circle" style="font-size:3rem;opacity:.2;display:block;margin-bottom:12px"></i>
+        <p>Semua buku sedang tersedia untuk dipinjam!</p>
+      </div>
+    @else
+      <div class="waitlist-scroll-wrapper">
+        <div class="waitlist-scroll">
+          @foreach($bukuWaitlist as $buku)
+            <div class="waitlist-card">
+              {{-- Cover dengan overlay - DI ATAS --}}
+              <div class="waitlist-cover">
+                @if($buku->cover)
+                  <img src="{{ Storage::url($buku->cover) }}" alt="{{ $buku->judul }}">
+                @else
+                  <div class="waitlist-cover-placeholder">
+                    <i class="bi bi-book-fill"></i>
+                  </div>
+                @endif
+                <div class="waitlist-overlay">
+                  <i class="bi bi-lock-fill"></i>
+                </div>
+                
+                {{-- Badge kembali ke cover --}}
+                <div class="waitlist-stock-badge">
+                  <i class="bi bi-x-circle-fill"></i>
+                  <span>Habis</span>
+                </div>
+              </div>
+              
+              {{-- Info DI BAWAH --}}
+              <div class="waitlist-info">
+                <div class="waitlist-genre">{{ $buku->kategori }}</div>
+                <h3 class="waitlist-title">{{ $buku->judul }}</h3>
+                <div class="waitlist-author">
+                  <i class="bi bi-person-fill"></i>
+                  {{ $buku->pengarang }}
+                </div>
+                
+                {{-- Info Simpel --}}
+                <div class="waitlist-stats">
+                  <div class="waitlist-queue">
+                    <i class="bi bi-info-circle-fill"></i>
+                    <span>Sedang dipinjam semua</span>
+                  </div>
+                  <div class="waitlist-estimate">
+                    <i class="bi bi-arrow-clockwise"></i>
+                    <span>Cek lagi nanti ya</span>
+                  </div>
+                </div>
+                
+                {{-- CTA Button --}}
+                <button class="waitlist-btn" disabled>
+                  <i class="bi bi-x-circle-fill"></i>
+                  <span>Habis</span>
+                </button>
+              </div>
+            </div>
+          @endforeach
+        </div>
+      </div>
+    @endif
   </div>
 </section>
 
@@ -1136,6 +2182,8 @@ a{text-decoration:none;color:inherit}
         <a href="#terbaru" class="footer-lnk">Buku Terbaru</a>
         <a href="#stok" class="footer-lnk">Stok Terbanyak</a>
         <a href="#kategori" class="footer-lnk">Kategori</a>
+        <a href="#baru-kembali" class="footer-lnk">Baru Kembali</a>
+        <a href="#waitlist" class="footer-lnk">Waitlist</a>
       </div>
       <div class="col-lg-2 col-md-3 col-6">
         <p class="footer-h">Akun</p>
@@ -1191,6 +2239,8 @@ const links={
   'terbaru' :document.getElementById('nl-new'),
   'stok'    :document.getElementById('nl-stok'),
   'kategori':document.getElementById('nl-kat'),
+  'baru-kembali':document.getElementById('nl-bk'),
+  'waitlist':document.getElementById('nl-wait'),
 };
 const homeLink=document.getElementById('nl-home');
 window.addEventListener('scroll',()=>{

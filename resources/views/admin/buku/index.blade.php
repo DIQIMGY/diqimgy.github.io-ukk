@@ -304,7 +304,7 @@
 {{-- Pagination --}}
 @if($buku->hasPages())
 <div style="display:flex;justify-content:center;margin-top:32px">
-  {{ $buku->links() }}
+  {{ $buku->links('vendor.pagination.custom-simple') }}
 </div>
 @endif
 @endif

@@ -10,6 +10,7 @@ class Buku extends Model
 
     protected $fillable = [
         'kode_buku',
+        'isbn',
         'judul',
         'pengarang',
         'penerbit',
@@ -18,6 +19,16 @@ class Buku extends Model
         'stok',
         'cover',
         'deskripsi',
+        'rating',
+        'is_featured',
+        'returned_at',
+        'waitlist_count',
+    ];
+
+    protected $casts = [
+        'is_featured' => 'boolean',
+        'returned_at' => 'datetime',
+        'rating' => 'decimal:1',
     ];
 
     public function peminjaman()
