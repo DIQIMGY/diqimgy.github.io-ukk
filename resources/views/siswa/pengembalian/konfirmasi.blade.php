@@ -23,11 +23,23 @@
     <div class="cbox-body">
       {{-- Buku info --}}
       <div style="background:var(--surface-2);border-radius:12px;padding:16px;margin-bottom:18px;border:1px solid var(--border-2)">
-        <p style="font-size:.63rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--tx-4);margin:0 0 8px">
+        <p style="font-size:.63rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--tx-4);margin:0 0 12px">
           <i class="bi bi-book me-1"></i>Buku yang Dikembalikan
         </p>
-        <h6 style="font-weight:800;color:var(--navy-800);margin:0 0 4px;line-height:1.3">{{ $peminjaman->buku->judul }}</h6>
-        <p style="font-size:.78rem;color:var(--tx-3);margin:0">{{ $peminjaman->buku->pengarang }}</p>
+        <div style="display:flex;align-items:start;gap:14px">
+          @if($peminjaman->buku && $peminjaman->buku->cover)
+            <img src="{{ Storage::url($peminjaman->buku->cover) }}" alt="{{ $peminjaman->buku->judul }}" 
+                 style="width:56px;height:84px;object-fit:cover;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,.2);flex-shrink:0;">
+          @else
+            <div style="width:56px;height:84px;border-radius:10px;background:linear-gradient(135deg,#0c4a6e,#0284c7);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 6px 20px rgba(0,0,0,.2)">
+              <i class="bi bi-book-fill" style="color:rgba(255,255,255,.8);font-size:1.6rem"></i>
+            </div>
+          @endif
+          <div style="flex:1;min-width:0">
+            <h6 style="font-weight:800;color:var(--navy-800);margin:0 0 4px;line-height:1.3">{{ $peminjaman->buku->judul }}</h6>
+            <p style="font-size:.78rem;color:var(--tx-3);margin:0">{{ $peminjaman->buku->pengarang }}</p>
+          </div>
+        </div>
       </div>
 
       {{-- Date grid --}}

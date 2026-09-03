@@ -4,11 +4,17 @@
 <div class="reg-bg">
   <div class="reg-card">
     <div style="text-align:center;margin-bottom:26px">
-      <div style="width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,#f59e0b,#d97706);display:flex;align-items:center;justify-content:center;font-size:1.3rem;color:#fff;margin:0 auto 12px;box-shadow:0 6px 18px rgba(245,158,11,.35)">
-        <i class="bi bi-person-plus-fill"></i>
+      <a href="{{ route('landing') }}" style="display:inline-flex;align-items:center;gap:6px;color:var(--tx3);font-size:.77rem;font-weight:600;margin-bottom:18px;transition:color .15s"
+         onmouseover="this.style.color='var(--navy)'" onmouseout="this.style.color='var(--tx3)'">
+        <i class="bi bi-arrow-left"></i> Kembali ke Beranda
+      </a>
+      <div>
+        <div style="width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,var(--crimson),var(--crimson-dark));display:flex;align-items:center;justify-content:center;font-size:1.3rem;color:#fff;margin:0 auto 12px;box-shadow:0 6px 18px rgba(237,27,59,.35)">
+          <i class="bi bi-person-plus-fill"></i>
+        </div>
+        <h5 style="font-weight:900;color:var(--navy);margin:0 0 4px;font-size:1.05rem;letter-spacing:-.02em">Daftar Anggota Baru</h5>
+        <p style="font-size:.79rem;color:var(--tx3);margin:0">Isi data diri untuk mendaftar sebagai anggota perpustakaan</p>
       </div>
-      <h5 style="font-weight:900;color:#0f1f3d;margin:0 0 4px;font-size:1.05rem;letter-spacing:-.02em">Daftar Anggota Baru</h5>
-      <p style="font-size:.79rem;color:#94a3b8;margin:0">Isi data diri untuk mendaftar sebagai anggota perpustakaan</p>
     </div>
 
     @if($errors->any())

@@ -48,6 +48,7 @@ class AnggotaController extends Controller
             'alamat'   => 'nullable|string|max:255',
             'telepon'  => 'nullable|string|max:20',
             'status'   => 'required|in:aktif,nonaktif',
+            'foto'     => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
         ]);
 
         $user = User::create([
@@ -57,6 +58,11 @@ class AnggotaController extends Controller
             'role'     => 'siswa',
         ]);
 
+        $fotoPath = null;
+        if ($request->hasFile('foto')) {
+            $fotoPath = $request->file('foto')->store('anggota', 'public');
+        }
+
         Anggota::create([
             'user_id'  => $user->id,
             'nis'      => $request->nis,
@@ -64,6 +70,7 @@ class AnggotaController extends Controller
             'kelas'    => $request->kelas,
             'alamat'   => $request->alamat,
             'telepon'  => $request->telepon,
+            'foto'     => $fotoPath,
             'status'   => $request->status,
         ]);
 
@@ -85,6 +92,7 @@ class AnggotaController extends Controller
             'alamat'  => 'nullable|string|max:255',
             'telepon' => 'nullable|string|max:20',
             'status'  => 'required|in:aktif,nonaktif',
+            'foto'    => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
         ]);
 
         $anggotum->user->update([
@@ -97,12 +105,31 @@ class AnggotaController extends Controller
             $anggotum->user->update(['password' => Hash::make($request->password)]);
         }
 
+        // Handle foto upload
+        $fotoPath = $anggotum->foto;
+        
+        if ($request->has('hapus_foto')) {
+            if ($fotoPath && \Storage::disk('public')->exists($fotoPath)) {
+                \Storage::disk('public')->delete($fotoPath);
+            }
+            $fotoPath = null;
+        }
+        
+        if ($request->hasFile('foto')) {
+            // Hapus foto lama jika ada
+            if ($fotoPath && \Storage::disk('public')->exists($fotoPath)) {
+                \Storage::disk('public')->delete($fotoPath);
+            }
+            $fotoPath = $request->file('foto')->store('anggota', 'public');
+        }
+
         $anggotum->update([
             'nis'     => $request->nis,
             'nama'    => $request->name,
             'kelas'   => $request->kelas,
             'alamat'  => $request->alamat,
             'telepon' => $request->telepon,
+            'foto'    => $fotoPath,
             'status'  => $request->status,
         ]);
 
@@ -111,6 +138,11 @@ class AnggotaController extends Controller
 
     public function destroy(Anggota $anggotum)
     {
+        // Hapus foto jika ada
+        if ($anggotum->foto && \Storage::disk('public')->exists($anggotum->foto)) {
+            \Storage::disk('public')->delete($anggotum->foto);
+        }
+        
         $user = $anggotum->user;
         $anggotum->delete();
         $user->delete();
