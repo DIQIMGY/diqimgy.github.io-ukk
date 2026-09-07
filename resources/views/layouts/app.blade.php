@@ -148,32 +148,17 @@ a{text-decoration:none;color:inherit}
 
 .sb-logo{
   width:48px;height:48px;border-radius:14px;
-  background:linear-gradient(135deg,var(--crimson),var(--crimson-dark));
+  background:#fff;
   display:flex;align-items:center;justify-content:center;
   font-size:1.3rem;color:#fff;flex-shrink:0;
-  box-shadow:0 6px 20px rgba(237,27,59,.5), 
-              inset 0 1px 0 rgba(255,255,255,.2);
+  box-shadow:0 6px 20px rgba(0,0,0,.15);
   position:relative;
+  overflow:hidden;
 }
 
-.sb-logo::after {
-  content: '';
-  position: absolute;
-  inset: 4px;
-  border-radius: 10px;
-  border: 1px solid rgba(255,255,255,.15);
+.sb-logo img{
+  filter:drop-shadow(0 2px 4px rgba(0,0,0,.1));
 }
-
-.sb-logo i{
-  filter:drop-shadow(0 2px 4px rgba(0,0,0,.3));
-  animation:bounce 2s ease-in-out infinite;
-}
-
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-3px); }
-}
-
 .sb-brand-txt strong{
   display:block;color:#fff;font-size:.9rem;
   font-weight:900;line-height:1.2;
@@ -503,6 +488,19 @@ a{text-decoration:none;color:inherit}
 
 /* Content */
 .app-content{padding:24px;flex:1}
+.app-content{
+  position:relative;
+  isolation:isolate;
+}
+.app-content::before{
+  content:'';
+  position:absolute;
+  inset:0 0 auto;
+  height:220px;
+  background:linear-gradient(180deg,rgba(255,255,255,.65),transparent);
+  pointer-events:none;
+  z-index:-1;
+}
 
 /* Overlay */
 .sb-overlay{
@@ -918,8 +916,11 @@ label.form-label{font-size:.8rem;font-weight:600;margin-bottom:6px;color:var(--t
 /* Card box */
 .cbox{
   background:var(--surface);border-radius:var(--radius);
-  border:1px solid var(--border);box-shadow:var(--sh-sm);
+  border:1px solid rgba(229,231,235,.9);box-shadow:var(--sh-sm);
+  overflow:hidden;
+  transition:box-shadow .24s var(--ease),border-color .24s var(--ease),transform .24s var(--ease);
 }
+.cbox:hover{border-color:#dbe2ea;box-shadow:var(--sh-md)}
 .cbox-header{
   padding:16px 20px;border-bottom:1px solid var(--border);
   display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;
@@ -1142,7 +1143,7 @@ label.form-label{font-size:.8rem;font-weight:600;margin-bottom:6px;color:var(--t
   {{-- ══ SIDEBAR ══ --}}
   <nav class="sidebar" id="sidebar">
     <div class="sb-brand">
-      <div class="sb-logo"><i class="bi bi-book-half"></i></div>
+      <div class="sb-logo"><img src="/image/logo.png" alt="Logo" style="width:100%;height:100%;object-fit:contain;"></div>
       <div class="sb-brand-txt">
         <strong>Perpustakaan<br>Sekolah Digital</strong>
         <span>Library Management System</span>

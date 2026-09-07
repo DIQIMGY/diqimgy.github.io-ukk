@@ -109,6 +109,31 @@
 .search-result-info strong {
   color: #14284B;
 }
+
+.catalog-pagination {
+  display:flex;
+  justify-content:center;
+  overflow-x:auto;
+  padding:4px 0;
+}
+
+.catalog-pagination .pagination {
+  flex-wrap:nowrap;
+  gap:5px;
+}
+
+.catalog-pagination .page-link {
+  min-width:34px !important;
+  width:34px;
+  height:34px;
+  padding:0 !important;
+  border-radius:8px !important;
+  font-size:.76rem !important;
+}
+
+@media (max-width:576px) {
+  .catalog-pagination { justify-content:flex-start; }
+}
 </style>
 
 <div class="catalog-page-modern">
@@ -191,8 +216,8 @@
   </div>
 
   @if($buku->hasPages())
-  <div style="margin-top: 32px; padding-top: 28px; border-top: 2px solid rgba(237,27,59,0.1)">
-    {{ $buku->links() }}
+  <div class="catalog-pagination" style="margin-top:32px;padding-top:28px;border-top:2px solid rgba(237,27,59,0.1)">
+    {{ $buku->links('vendor.pagination.custom-simple') }}
   </div>
   @endif
   @endif

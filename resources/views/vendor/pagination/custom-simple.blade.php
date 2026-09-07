@@ -4,11 +4,11 @@
             {{-- Previous Page Link --}}
             @if ($paginator->onFirstPage())
                 <li class="page-item disabled" aria-disabled="true">
-                    <span class="page-link" style="padding:8px 12px;font-size:0.85rem;border-radius:10px;border:1px solid #e0e0e0;background:#f5f5f5;color:#999;display:flex;align-items:center;justify-content:center;min-width:36px;height:36px;cursor:not-allowed">‹</span>
+                    <span class="page-link" style="padding:8px 12px;font-size:0.85rem;border-radius:10px;border:1px solid #e0e0e0;background:#f5f5f5;color:#999;display:flex;align-items:center;justify-content:center;min-width:36px;height:36px;cursor:not-allowed;font-family:system-ui,-apple-system,sans-serif">‹</span>
                 </li>
             @else
                 <li class="page-item">
-                    <a class="page-link" href="{{ $paginator->previousPageUrl() }}" rel="prev" style="padding:8px 12px;font-size:0.85rem;border-radius:10px;border:1px solid #e0e0e0;background:#fff;color:#333;display:flex;align-items:center;justify-content:center;min-width:36px;height:36px;text-decoration:none;transition:all 0.2s">‹</a>
+                    <a class="page-link" href="{{ $paginator->previousPageUrl() }}" rel="prev" style="padding:8px 12px;font-size:0.85rem;border-radius:10px;border:1px solid #e0e0e0;background:#fff;color:#333;display:flex;align-items:center;justify-content:center;min-width:36px;height:36px;text-decoration:none;transition:all 0.2s;font-family:system-ui,-apple-system,sans-serif">‹</a>
                 </li>
             @endif
 
@@ -40,11 +40,11 @@
             {{-- Next Page Link --}}
             @if ($paginator->hasMorePages())
                 <li class="page-item">
-                    <a class="page-link" href="{{ $paginator->nextPageUrl() }}" rel="next" style="padding:8px 12px;font-size:0.85rem;border-radius:10px;border:1px solid #e0e0e0;background:#fff;color:#333;display:flex;align-items:center;justify-content:center;min-width:36px;height:36px;text-decoration:none;transition:all 0.2s">›</a>
+                    <a class="page-link" href="{{ $paginator->nextPageUrl() }}" rel="next" style="padding:8px 12px;font-size:0.85rem;border-radius:10px;border:1px solid #e0e0e0;background:#fff;color:#333;display:flex;align-items:center;justify-content:center;min-width:36px;height:36px;text-decoration:none;transition:all 0.2s;font-family:system-ui,-apple-system,sans-serif">›</a>
                 </li>
             @else
                 <li class="page-item disabled" aria-disabled="true">
-                    <span class="page-link" style="padding:8px 12px;font-size:0.85rem;border-radius:10px;border:1px solid #e0e0e0;background:#f5f5f5;color:#999;display:flex;align-items:center;justify-content:center;min-width:36px;height:36px;cursor:not-allowed">›</span>
+                    <span class="page-link" style="padding:8px 12px;font-size:0.85rem;border-radius:10px;border:1px solid #e0e0e0;background:#f5f5f5;color:#999;display:flex;align-items:center;justify-content:center;min-width:36px;height:36px;cursor:not-allowed;font-family:system-ui,-apple-system,sans-serif">›</span>
                 </li>
             @endif
         </ul>

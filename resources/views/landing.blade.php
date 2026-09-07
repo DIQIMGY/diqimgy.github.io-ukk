@@ -52,7 +52,7 @@ a{text-decoration:none;color:inherit}
   pointer-events:none;
 }
 .lnav{
-  max-width:1180px;margin:0 auto;
+  max-width:1240px;margin:0 auto;
   /* Transparan awalnya, solid setelah scroll */
   background:rgba(15,31,61,.25);
   backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
@@ -68,7 +68,7 @@ a{text-decoration:none;color:inherit}
   top:12px;left:50%;
   transform:translateX(-50%);
   width:calc(100% - 48px);
-  max-width:1180px;
+  max-width:1240px;
   background:rgba(255,255,255,.93);
   border-color:rgba(232,236,243,.9);
   box-shadow:0 8px 32px rgba(0,0,0,.12),0 2px 6px rgba(0,0,0,.06);
@@ -84,17 +84,18 @@ a{text-decoration:none;color:inherit}
 .lnav:not(.scrolled) .btn-lnav-out:hover{ background:rgba(255,255,255,.15); color:#fff; border-color:rgba(255,255,255,.5) }
 
 .lnav-inner{
-  padding:0 20px;
+  padding:0 16px;
   height:58px;display:flex;align-items:center;
-  justify-content:space-between;gap:16px;
+  justify-content:space-between;gap:12px;
 }
 .lnav-brand{display:flex;align-items:center;gap:10px;flex-shrink:0}
 .lnav-logo{
   width:38px;height:38px;border-radius:10px;
-  background:linear-gradient(135deg,var(--crimson),var(--crimson-dark));
+  background:#fff;
   display:flex;align-items:center;justify-content:center;
   font-size:.95rem;color:#fff;flex-shrink:0;
-  box-shadow:0 3px 10px rgba(237,27,59,.35);
+  box-shadow:0 3px 10px rgba(0,0,0,.15);
+  overflow:hidden;
 }
 .lnav-name{font-weight:800;font-size:.86rem;color:var(--navy);line-height:1.2;transition:color .3s}
 .lnav-sub{font-size:.62rem;color:var(--tx3);font-weight:500;transition:color .3s}
@@ -108,8 +109,8 @@ a{text-decoration:none;color:inherit}
   transition:background .3s;
 }
 .lnav-link{
-  font-size:.8rem;font-weight:600;color:var(--tx3);
-  padding:6px 14px;border-radius:9px;
+  font-size:.75rem;font-weight:600;color:var(--tx3);
+  padding:6px 12px;border-radius:9px;
   transition:all .2s;white-space:nowrap;
 }
 .lnav-link:hover{color:var(--navy);background:rgba(255,255,255,.7)}
@@ -122,24 +123,24 @@ a{text-decoration:none;color:inherit}
 .lnav-actions{display:flex;align-items:center;gap:8px;flex-shrink:0}
 .btn-lnav-out{
   border:1.5px solid var(--border);background:transparent;
-  color:var(--tx2);padding:7px 15px;border-radius:10px;
-  font-size:.8rem;font-weight:600;cursor:pointer;
-  transition:all .2s;display:inline-flex;align-items:center;gap:6px;
+  color:var(--tx2);padding:6px 12px;border-radius:10px;
+  font-size:.75rem;font-weight:600;cursor:pointer;
+  transition:all .2s;display:inline-flex;align-items:center;gap:5px;
 }
 .btn-lnav-out:hover{border-color:var(--navy);color:var(--navy);background:var(--bg-alt)}
 .btn-lnav-solid{
   background:linear-gradient(135deg,var(--navy),var(--navy-dark));
-  color:#fff;padding:8px 18px;border-radius:10px;
-  font-size:.8rem;font-weight:700;cursor:pointer;border:none;
-  transition:all .2s;display:inline-flex;align-items:center;gap:6px;
+  color:#fff;padding:7px 14px;border-radius:10px;
+  font-size:.75rem;font-weight:700;cursor:pointer;border:none;
+  transition:all .2s;display:inline-flex;align-items:center;gap:5px;
   box-shadow:0 2px 8px rgba(20,40,75,.22);
 }
 .btn-lnav-solid:hover{background:linear-gradient(135deg,var(--navy-dark),var(--navy-darker));transform:translateY(-1px);box-shadow:0 5px 16px rgba(20,40,75,.28);color:#fff}
 .btn-lnav-gold{
   background:linear-gradient(135deg,var(--crimson),var(--crimson-dark));
-  color:#fff;padding:8px 18px;border-radius:10px;
-  font-size:.8rem;font-weight:700;cursor:pointer;border:none;
-  transition:all .2s;display:inline-flex;align-items:center;gap:6px;
+  color:#fff;padding:7px 14px;border-radius:10px;
+  font-size:.75rem;font-weight:700;cursor:pointer;border:none;
+  transition:all .2s;display:inline-flex;align-items:center;gap:5px;
   box-shadow:0 2px 8px rgba(237,27,59,.3);
 }
 .btn-lnav-gold:hover{transform:translateY(-1px);box-shadow:0 5px 16px rgba(237,27,59,.4);color:#fff}
@@ -164,7 +165,7 @@ a{text-decoration:none;color:inherit}
 /* Overlay tipis untuk kontras */
 .hero-bg-overlay{
   position:absolute;inset:0;z-index:1;pointer-events:none;
-  background:linear-gradient(135deg,rgba(15,31,61,.12) 0%,rgba(8,15,31,.18) 100%);
+  background:linear-gradient(135deg,rgba(15,31,61,.04) 0%,rgba(8,15,31,.06) 100%);
 }
 
 /* Wrapper konten */
@@ -432,7 +433,7 @@ a{text-decoration:none;color:inherit}
 
 @media(max-width:480px){
   .hero-inner{padding:80px 14px 44px}
-  .hero-panel{max-width:100%;border-radius:20px}
+  .hero-panel{max-width:100%;width:100%;border-radius:20px}
   .hero-books-side{padding:28px 20px 8px;min-height:200px}
   .book-stack{max-width:220px;gap:-8px}
   .book-3d:nth-child(1){width:72px}
@@ -1214,26 +1215,105 @@ a{text-decoration:none;color:inherit}
 .mini-body{padding:13px 15px;flex:1;min-width:0;display:flex;flex-direction:column;justify-content:space-between}
 
 /* ══════════════ CTA ══════════════ */
-.cta-sec{
-  background:
-    linear-gradient(
-        90deg,
-        rgba(10, 5, 35, 0.92) 0%,
-        rgba(25, 8, 50, 0.88) 40%,
-        rgba(30, 10, 50, 0.75) 75%,
-        rgba(20, 5, 30, 0.85) 100%
-    ),
-    url('/image/cta-bg.jpg');
-  background-size:cover;background-position:center;
-  padding:72px 0;position:relative;overflow:hidden;
+.cta-sec {
+    background:
+        linear-gradient(
+            90deg,
+            rgba(12, 5, 30, 0.72) 0%,
+            rgba(25, 8, 50, 0.58) 40%,
+            rgba(30, 10, 50, 0.42) 70%,
+            rgba(20, 5, 30, 0.55) 100%
+        ),
+        url('/image/cta-bg.jpeg');
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    padding: 72px 0;
+    position: relative;
+    overflow: hidden;
 }
 .cta-glow{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(237,27,59,.12) 0%,transparent 65%);top:-200px;right:-100px;pointer-events:none}
+.cta-sec::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(180deg,rgba(6,16,31,.1),rgba(6,16,31,.28));
+}
+.cta-sec > div[style*="max-width:680px"]{
+  background:rgba(6,16,31,.38);
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:24px;
+  padding:30px 28px !important;
+  box-shadow:0 18px 50px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.1);
+  backdrop-filter:blur(5px);
+  -webkit-backdrop-filter:blur(5px);
+}
+.cta-sec > div[style*="max-width:680px"] > div:first-child{
+  background:rgba(255,255,255,.12) !important;
+  border-color:rgba(255,255,255,.3) !important;
+  color:#fff !important;
+  text-shadow:0 1px 8px rgba(0,0,0,.2);
+}
+.btn-hero-gold,.btn-hero-ghost{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  min-height:46px;
+  padding:12px 22px;
+  border-radius:11px;
+  font-size:.86rem;
+  font-weight:800;
+  transition:transform .22s,box-shadow .22s,background .22s,border-color .22s;
+}
+.btn-hero-gold{
+  background:linear-gradient(135deg,#f4b942,#e5a623);
+  color:#241704;
+  box-shadow:0 7px 22px rgba(244,185,66,.35);
+}
+.btn-hero-gold:hover{
+  color:#241704;
+  transform:translateY(-2px);
+  box-shadow:0 11px 28px rgba(244,185,66,.48);
+}
+.btn-hero-ghost{
+  background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.48);
+  color:#fff;
+}
+.btn-hero-ghost:hover{
+  background:#fff;
+  border-color:#fff;
+  color:var(--navy-dark);
+  transform:translateY(-2px);
+  box-shadow:0 8px 22px rgba(0,0,0,.2);
+}
+.cta-mascot{
+  position:absolute;
+  bottom:10px;
+  right:34px;
+  z-index:2;
+  width:156px;
+  height:auto;
+  filter:drop-shadow(0 10px 22px rgba(0,0,0,.42));
+  animation:float 3s ease-in-out infinite;
+  pointer-events:none;
+}
+@media(max-width:576px){
+  .cta-sec{padding:52px 0;}
+  .cta-sec > div[style*="max-width:680px"]{margin:0 16px !important;padding:24px 18px !important;}
+  .btn-hero-gold,.btn-hero-ghost{width:100%;}
+  .cta-mascot{width:104px;right:8px;bottom:2px;opacity:.9;}
+}
 
 /* ══════════════ FOOTER ══════════════ */
 .lfooter{background:var(--navy-dark);border-top:1px solid rgba(255,255,255,.06);padding:52px 0 28px}
 .lfooter-inner{max-width:1200px;margin:0 auto;padding:0 24px}
 .footer-logo{display:flex;align-items:center;gap:10px;margin-bottom:14px}
-.footer-logo-ico{width:36px;height:36px;border-radius:9px;background:linear-gradient(135deg,var(--crimson),var(--crimson-dark));display:flex;align-items:center;justify-content:center;font-size:.9rem;color:#fff}
+.footer-logo-ico{width:36px;height:36px;border-radius:9px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:.9rem;color:#fff;overflow:hidden}
 .footer-logo-name{font-weight:800;font-size:.88rem;color:#fff}
 .footer-desc{font-size:.82rem;color:rgba(255,255,255,.38);line-height:1.7;max-width:260px}
 .footer-h{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.3);margin-bottom:16px}
@@ -1246,6 +1326,10 @@ a{text-decoration:none;color:inherit}
 .footer-social a:hover{background:rgba(237,27,59,.25);color:var(--crimson)}
 
 /* ══════════════ RESPONSIVE ══════════════ */
+@media(max-width:1200px){
+  .lnav-name,.lnav-sub{display:none}
+  .lnav-brand{gap:0}
+}
 @media(max-width:991px){
   .hero h1{font-size:2rem}
   .promo-inner{padding:30px 28px}
@@ -1264,6 +1348,12 @@ a{text-decoration:none;color:inherit}
   .hero-stats{gap:18px}
   .lnav-wrap{padding:8px 12px}
 }
+
+/* Floating animation for mascot */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
 </style>
 </head>
 <body>
@@ -1274,7 +1364,7 @@ a{text-decoration:none;color:inherit}
     <div class="lnav-inner">
       {{-- Brand --}}
       <div class="lnav-brand">
-        <div class="lnav-logo"><i class="bi bi-book-half"></i></div>
+        <div class="lnav-logo"><img src="/image/logo.png" alt="Logo" style="width:100%;height:100%;object-fit:contain;"></div>
         <div>
           <div class="lnav-name">Perpustakaan Sekolah Digital</div>
           <div class="lnav-sub">Library Management System</div>
@@ -1290,6 +1380,7 @@ a{text-decoration:none;color:inherit}
         <a href="#kategori" class="lnav-link" id="nl-kat">Kategori</a>
         <a href="#baru-kembali" class="lnav-link" id="nl-bk">Baru Kembali</a>
         <a href="#waitlist" class="lnav-link" id="nl-wait">Waitlist</a>
+        <a href="#coming-soon" class="lnav-link" id="nl-soon">Segera Hadir</a>
       </nav>
 
       {{-- Actions --}}
@@ -1620,18 +1711,10 @@ a{text-decoration:none;color:inherit}
       <div class="promo-glow1"></div>
       <div class="promo-glow2"></div>
       <div class="promo-inner">
-        {{-- Books stacked --}}
-        @if($bukuPopuler->count() >= 3)
-        <div style="display:flex;align-items:flex-end;gap:8px;filter:drop-shadow(0 16px 32px rgba(0,0,0,.4));position:relative;z-index:1">
-          @foreach($bukuPopuler->take(3) as $pi => $pb)
-          @php $pr=['-7deg','0deg','6deg'];$pt=['translateY(8px)','translateY(-4px)','translateY(10px)'];@endphp
-          <div style="width:72px;height:108px;border-radius:8px;overflow:hidden;transform:rotate({{ $pr[$pi] }}) {{ $pt[$pi] }};box-shadow:0 10px 28px rgba(0,0,0,.38);border:1px solid rgba(255,255,255,.1)">
-            @if($pb->cover)<img src="{{ Storage::url($pb->cover) }}" style="width:100%;height:100%;object-fit:cover">
-            @else<div style="width:100%;height:100%;background:linear-gradient(150deg,{{ ['#0f1f3d,#1e4080','#3b0764,#6d28d9','#064e3b,#059669'][$pi] }});display:flex;align-items:center;justify-content:center"><i class="bi bi-book-fill" style="color:rgba(255,255,255,.4);font-size:1.5rem"></i></div>@endif
-          </div>
-          @endforeach
+        {{-- Maskot --}}
+        <div style="display:flex;align-items:center;justify-content:center;filter:drop-shadow(0 20px 40px rgba(0,0,0,.4));position:relative;z-index:1;flex-shrink:0">
+          <img src="/image/maskot.png" alt="Maskot Perpustakaan" style="width:220px;height:auto;object-fit:contain;animation:float 3s ease-in-out infinite">
         </div>
-        @endif
         {{-- Text --}}
         <div style="flex:1;position:relative;z-index:1">
           <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(237,27,59,.15);border:1px solid rgba(237,27,59,.3);color:var(--crimson);font-size:.72rem;font-weight:800;padding:4px 12px;border-radius:99px;margin-bottom:14px;letter-spacing:.04em">
@@ -2130,6 +2213,178 @@ a{text-decoration:none;color:inherit}
   </div>
 </section>
 
+{{-- ══ SEGERA HADIR - Coming Soon ══ --}}
+@if($bukuSegeraHadir->isNotEmpty())
+{{-- CSS khusus section segera hadir --}}
+<style>
+.cs-section{
+  background:#fff;
+  padding:72px 0;
+  position:relative;
+  overflow:hidden;
+}
+.cs-section::before{
+  content:'';
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(237,27,59,.04) 0%,transparent 70%);
+  pointer-events:none;
+}
+.cs-inner{
+  max-width:1180px;margin:0 auto;padding:0 24px;position:relative;
+}
+.cs-head{
+  text-align:center;margin-bottom:44px;
+}
+.cs-tag{
+  display:inline-flex;align-items:center;gap:7px;
+  background:linear-gradient(135deg,#ed1b3b,#c41630);
+  color:#fff;padding:6px 16px;border-radius:99px;
+  font-size:.72rem;font-weight:800;letter-spacing:.08em;
+  margin-bottom:18px;
+  box-shadow:0 4px 16px rgba(237,27,59,.25);
+}
+.cs-title{
+  font-size:2rem;font-weight:800;color:var(--navy);
+  margin-bottom:10px;line-height:1.25;
+}
+.cs-title em{
+  font-style:italic;
+  background:linear-gradient(135deg,#ed1b3b,#ff4757);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.cs-sub{
+  font-size:.92rem;color:var(--tx3);
+  max-width:480px;margin:0 auto;
+}
+/* Scroll container */
+.cs-scroll-wrap{
+  overflow:hidden;
+  margin:0 -24px;
+  padding:0 24px;
+}
+.cs-scroll{
+  display:flex;gap:20px;
+  overflow-x:auto;
+  scroll-behavior:smooth;
+  padding-bottom:16px;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(237,27,59,.3) rgba(237,27,59,.08);
+}
+.cs-scroll::-webkit-scrollbar{height:5px}
+.cs-scroll::-webkit-scrollbar-track{background:rgba(237,27,59,.06);border-radius:99px}
+.cs-scroll::-webkit-scrollbar-thumb{background:rgba(237,27,59,.35);border-radius:99px}
+.cs-scroll::-webkit-scrollbar-thumb:hover{background:rgba(237,27,59,.5)}
+/* Card */
+.cs-card{
+  flex:0 0 200px;
+  background:#fff;
+  border:1.5px solid rgba(237,27,59,.15);
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow:0 4px 16px rgba(237,27,59,.12);
+  transition:transform .25s,box-shadow .25s,border-color .25s;
+}
+.cs-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 16px 32px rgba(237,27,59,.25);
+  border-color:rgba(237,27,59,.35);
+}
+.cs-cover{
+  position:relative;
+  height:270px;
+  background:#f8f9fa;
+  overflow:hidden;
+}
+.cs-cover img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform .35s;
+}
+.cs-card:hover .cs-cover img{transform:scale(1.05)}
+.cs-cover-fallback{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,#fff5f6,#ffe0e5);
+}
+.cs-badge{
+  position:absolute;top:10px;left:10px;
+  background:rgba(237,27,59,.95);
+  backdrop-filter:blur(6px);
+  color:#fff;padding:5px 11px;border-radius:7px;
+  font-size:.68rem;font-weight:800;letter-spacing:.06em;
+  display:flex;align-items:center;gap:4px;
+  box-shadow:0 2px 8px rgba(237,27,59,.35);
+}
+.cs-body{
+  padding:14px 14px 16px;
+}
+.cs-kat{
+  font-size:.68rem;font-weight:700;letter-spacing:.08em;
+  color:var(--crimson);text-transform:uppercase;
+  margin-bottom:6px;
+}
+.cs-judul{
+  font-size:.9rem;font-weight:700;color:var(--navy);
+  line-height:1.35;margin-bottom:5px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.cs-penulis{
+  font-size:.78rem;color:var(--tx3);
+  margin-bottom:12px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.cs-date{
+  display:flex;align-items:center;gap:6px;
+  background:rgba(237,27,59,.08);
+  border:1px solid rgba(237,27,59,.18);
+  border-radius:8px;padding:7px 10px;
+  font-size:.76rem;font-weight:600;color:var(--crimson);
+}
+</style>
+
+<section class="cs-section" id="coming-soon">
+  <div class="cs-inner">
+    <div class="cs-head">
+      <div class="cs-tag">
+        <i class="bi bi-clock-history"></i> SEGERA HADIR
+      </div>
+      <h2 class="cs-title">Buku yang Akan <em>Segera Tersedia</em></h2>
+      <p class="cs-sub">Tandai kalendermu! Buku-buku baru ini akan segera bisa dipinjam.</p>
+    </div>
+
+    <div class="cs-scroll-wrap">
+      <div class="cs-scroll">
+        @foreach($bukuSegeraHadir as $b)
+        <div class="cs-card">
+          <div class="cs-cover">
+            @if($b->cover)
+              <img src="{{ asset('storage/' . $b->cover) }}" alt="{{ $b->judul }}">
+            @else
+              <div class="cs-cover-fallback">
+                <i class="bi bi-book-fill" style="font-size:3rem;color:rgba(237,27,59,.25)"></i>
+              </div>
+            @endif
+            <div class="cs-badge">
+              <i class="bi bi-clock-fill" style="font-size:.6rem"></i> SOON
+            </div>
+          </div>
+          <div class="cs-body">
+            <div class="cs-kat">{{ $b->kategori }}</div>
+            <div class="cs-judul">{{ $b->judul }}</div>
+            <div class="cs-penulis">{{ $b->pengarang }}</div>
+            <div class="cs-date">
+              <i class="bi bi-calendar-event-fill"></i>
+              {{ \Carbon\Carbon::parse($b->tanggal_rilis)->isoFormat('D MMM YY') }}
+            </div>
+          </div>
+        </div>
+        @endforeach
+      </div>
+    </div>
+  </div>
+</section>
+@endif
+
 {{-- ══ CTA ══ --}}
 <section class="cta-sec">
   {{--
@@ -2138,6 +2393,10 @@ a{text-decoration:none;color:inherit}
     atau ilustrasi perpustakaan dengan tone gelap. Ukuran ideal: 1920x600px
   --}}
   <div class="cta-glow"></div>
+  
+  {{-- MASKOT floating di pojok kanan --}}
+  <img src="/image/maskot.png" alt="Maskot" class="cta-mascot">
+  
   <div style="max-width:680px;margin:0 auto;padding:0 24px;text-align:center;position:relative;z-index:1">
     <div style="display:inline-flex;align-items:center;gap:7px;background:rgba(237,27,59,.16);border:1px solid rgba(237,27,59,.32);color:var(--crimson);font-size:.74rem;font-weight:700;padding:5px 14px;border-radius:99px;margin-bottom:20px;letter-spacing:.03em">
       <i class="bi bi-person-check-fill"></i> Bergabung Sekarang — Gratis!
@@ -2165,7 +2424,7 @@ a{text-decoration:none;color:inherit}
     <div class="row g-4">
       <div class="col-lg-4 col-md-6">
         <div class="footer-logo">
-          <div class="footer-logo-ico"><i class="bi bi-book-half"></i></div>
+          <div class="footer-logo-ico"><img src="/image/logo.png" alt="Logo" style="width:100%;height:100%;object-fit:contain;"></div>
           <div class="footer-logo-name">Perpustakaan Sekolah Digital</div>
         </div>
         <p class="footer-desc">Platform peminjaman buku digital untuk seluruh warga sekolah. Mudah, cepat, dan gratis untuk semua siswa.</p>
@@ -2184,6 +2443,7 @@ a{text-decoration:none;color:inherit}
         <a href="#kategori" class="footer-lnk">Kategori</a>
         <a href="#baru-kembali" class="footer-lnk">Baru Kembali</a>
         <a href="#waitlist" class="footer-lnk">Waitlist</a>
+        <a href="#coming-soon" class="footer-lnk">Segera Hadir</a>
       </div>
       <div class="col-lg-2 col-md-3 col-6">
         <p class="footer-h">Akun</p>
@@ -2241,6 +2501,7 @@ const links={
   'kategori':document.getElementById('nl-kat'),
   'baru-kembali':document.getElementById('nl-bk'),
   'waitlist':document.getElementById('nl-wait'),
+  'coming-soon':document.getElementById('nl-soon'),
 };
 const homeLink=document.getElementById('nl-home');
 window.addEventListener('scroll',()=>{

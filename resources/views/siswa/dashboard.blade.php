@@ -29,6 +29,17 @@
   position: relative;
   overflow: hidden;
   border: 1px solid rgba(255,255,255,.08);
+  isolation:isolate;
+}
+
+.welcome-banner-siswa > div:first-child::after {
+  content:'';
+  display:block;
+  width:46px;
+  height:3px;
+  margin-top:18px;
+  border-radius:99px;
+  background:linear-gradient(90deg,#0ea5e9,#10b981);
 }
 
 .welcome-banner-siswa::before {
@@ -77,6 +88,7 @@
   transition: all .3s cubic-bezier(.4,0,.2,1);
   position: relative;
   overflow: hidden;
+  box-shadow:0 3px 12px rgba(11,23,48,.04);
 }
 
 .stat-card-siswa::before {
@@ -204,6 +216,20 @@
   font-weight: 700;
 }
 
+@keyframes pulseGlow {
+  0%, 100% { transform:scale(1); opacity:1; }
+  50% { transform:scale(1.08); opacity:.7; }
+}
+
+.stat-card-siswa,.action-card-siswa,.profile-card-siswa,.cbox{animation:dashboardEnterSiswa .45s var(--ease) both}
+.stat-card-siswa:nth-child(2){animation-delay:.05s}
+.stat-card-siswa:nth-child(3){animation-delay:.1s}
+
+@keyframes dashboardEnterSiswa {
+  from { opacity:0; transform:translateY(8px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .stat-grid-siswa {
@@ -214,6 +240,10 @@
   .welcome-banner-siswa {
     padding: 20px 18px;
   }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stat-card-siswa,.action-card-siswa,.profile-card-siswa,.cbox{animation:none}
 }
 </style>
 

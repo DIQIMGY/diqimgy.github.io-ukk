@@ -10,8 +10,8 @@
     </a>
 
     <div style="text-align:center;margin-bottom:30px">
-      <div style="width:58px;height:58px;border-radius:16px;background:linear-gradient(135deg,var(--crimson),var(--crimson-dark));display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:#fff;margin:0 auto 14px;box-shadow:0 8px 24px rgba(237,27,59,.28)">
-        <i class="bi bi-book-half"></i>
+      <div style="width:58px;height:58px;border-radius:16px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:#fff;margin:0 auto 14px;box-shadow:0 8px 24px rgba(0,0,0,.15);overflow:hidden">
+        <img src="/image/logo.png" alt="Logo" style="width:100%;height:100%;object-fit:contain;">
       </div>
       <h5 style="font-weight:900;color:var(--navy);margin:0 0 5px;font-size:1.15rem;letter-spacing:-.02em">Masuk ke Akun</h5>
       <p style="color:var(--tx3);font-size:.81rem;margin:0">Masukkan email &amp; password Anda</p>

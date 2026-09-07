@@ -31,13 +31,20 @@ class LandingController extends Controller
             ->take(6)
             ->get();
 
+        // Buku segera hadir (coming soon)
+        $bukuSegeraHadir = Buku::where('status_launching', 'segera')
+            ->whereNotNull('tanggal_rilis')
+            ->orderBy('tanggal_rilis')
+            ->take(6)
+            ->get();
+
         $kategoris = Buku::select('kategori')->distinct()->pluck('kategori');
 
         $totalBuku  = Buku::count();
         $totalStok  = Buku::sum('stok');
 
         return view('landing', compact(
-            'bukuPopuler', 'bukuTerbaru', 'bukuStokTerbanyak', 'bukuWaitlist', 'bukuBaruKembali',
+            'bukuPopuler', 'bukuTerbaru', 'bukuStokTerbanyak', 'bukuWaitlist', 'bukuBaruKembali', 'bukuSegeraHadir',
             'kategoris', 'totalBuku', 'totalStok'
         ));
     }

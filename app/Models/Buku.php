@@ -23,12 +23,15 @@ class Buku extends Model
         'is_featured',
         'returned_at',
         'waitlist_count',
+        'status_launching',
+        'tanggal_rilis',
     ];
 
     protected $casts = [
         'is_featured' => 'boolean',
         'returned_at' => 'datetime',
         'rating' => 'decimal:1',
+        'tanggal_rilis' => 'date',
     ];
 
     public function peminjaman()

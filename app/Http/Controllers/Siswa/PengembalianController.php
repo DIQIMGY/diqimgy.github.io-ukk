@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Siswa;
 
 use App\Http\Controllers\Controller;
+use App\Models\Buku;
 use App\Models\Peminjaman;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -29,7 +30,18 @@ class PengembalianController extends Controller
             ->latest()
             ->paginate(10);
 
-        return view('siswa.pengembalian.index', compact('peminjaman'));
+        $bukuDipinjam = Peminjaman::where('anggota_id', $anggota->id)
+            ->whereIn('status', ['dipinjam', 'terlambat'])
+            ->pluck('buku_id');
+        $recommendationSeed = Auth::id() . now()->format('Ymd');
+        $rekomendasiBuku = Buku::where('stok', '>', 0)
+            ->whereNotIn('id', $bukuDipinjam)
+            ->get()
+            ->sortBy(fn ($buku) => crc32($recommendationSeed . ':' . $buku->id))
+            ->take(10)
+            ->values();
+
+        return view('siswa.pengembalian.index', compact('peminjaman', 'rekomendasiBuku'));
     }
 
     public function konfirmasi(Peminjaman $peminjaman)

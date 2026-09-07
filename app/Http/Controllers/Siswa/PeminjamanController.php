@@ -33,7 +33,18 @@ class PeminjamanController extends Controller
 
         $peminjaman = $query->latest()->paginate(10)->withQueryString();
 
-        return view('siswa.peminjaman.index', compact('peminjaman'));
+        $bukuDipinjam = Peminjaman::where('anggota_id', $anggota->id)
+            ->whereIn('status', ['dipinjam', 'terlambat'])
+            ->pluck('buku_id');
+        $recommendationSeed = Auth::id() . now()->format('Ymd');
+        $rekomendasiBuku = Buku::where('stok', '>', 0)
+            ->whereNotIn('id', $bukuDipinjam)
+            ->get()
+            ->sortBy(fn ($buku) => crc32($recommendationSeed . ':' . $buku->id))
+            ->take(10)
+            ->values();
+
+        return view('siswa.peminjaman.index', compact('peminjaman', 'rekomendasiBuku'));
     }
 
     public function create(Request $request)

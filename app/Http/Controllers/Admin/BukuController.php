@@ -41,18 +41,30 @@ class BukuController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'kode_buku'    => 'required|string|unique:buku,kode_buku',
-            'judul'        => 'required|string|max:200',
-            'pengarang'    => 'required|string|max:100',
-            'penerbit'     => 'required|string|max:100',
-            'tahun_terbit' => 'required|digits:4|integer|min:1900|max:' . date('Y'),
-            'kategori'     => 'required|string|max:50',
-            'stok'         => 'required|integer|min:0',
-            'cover'        => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'deskripsi'    => 'nullable|string',
+            'kode_buku'        => 'required|string|unique:buku,kode_buku',
+            'judul'            => 'required|string|max:200',
+            'pengarang'        => 'required|string|max:100',
+            'penerbit'         => 'required|string|max:100',
+            'tahun_terbit'     => 'required|digits:4|integer|min:1900|max:' . date('Y'),
+            'kategori'         => 'required|string|max:50',
+            'stok'             => 'required|integer|min:0',
+            'cover'            => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'deskripsi'        => 'nullable|string',
+            'status_launching' => 'required|in:tersedia,segera',
+            'tanggal_rilis'    => 'nullable|date|after_or_equal:today',
         ]);
 
         $data = $request->except('cover');
+
+        // Validasi: jika status segera, tanggal_rilis wajib
+        if ($request->status_launching === 'segera' && !$request->tanggal_rilis) {
+            return back()->withErrors(['tanggal_rilis' => 'Tanggal rilis harus diisi untuk buku "Segera Hadir"'])->withInput();
+        }
+
+        // Jika tersedia, hapus tanggal_rilis
+        if ($request->status_launching === 'tersedia') {
+            $data['tanggal_rilis'] = null;
+        }
 
         if ($request->hasFile('cover')) {
             $data['cover'] = $request->file('cover')->store('covers', 'public');
@@ -71,18 +83,30 @@ class BukuController extends Controller
     public function update(Request $request, Buku $buku)
     {
         $request->validate([
-            'kode_buku'    => 'required|string|unique:buku,kode_buku,' . $buku->id,
-            'judul'        => 'required|string|max:200',
-            'pengarang'    => 'required|string|max:100',
-            'penerbit'     => 'required|string|max:100',
-            'tahun_terbit' => 'required|digits:4|integer|min:1900|max:' . date('Y'),
-            'kategori'     => 'required|string|max:50',
-            'stok'         => 'required|integer|min:0',
-            'cover'        => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'deskripsi'    => 'nullable|string',
+            'kode_buku'        => 'required|string|unique:buku,kode_buku,' . $buku->id,
+            'judul'            => 'required|string|max:200',
+            'pengarang'        => 'required|string|max:100',
+            'penerbit'         => 'required|string|max:100',
+            'tahun_terbit'     => 'required|digits:4|integer|min:1900|max:' . date('Y'),
+            'kategori'         => 'required|string|max:50',
+            'stok'             => 'required|integer|min:0',
+            'cover'            => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'deskripsi'        => 'nullable|string',
+            'status_launching' => 'required|in:tersedia,segera',
+            'tanggal_rilis'    => 'nullable|date|after_or_equal:today',
         ]);
 
         $data = $request->except('cover');
+
+        // Validasi: jika status segera, tanggal_rilis wajib
+        if ($request->status_launching === 'segera' && !$request->tanggal_rilis) {
+            return back()->withErrors(['tanggal_rilis' => 'Tanggal rilis harus diisi untuk buku "Segera Hadir"'])->withInput();
+        }
+
+        // Jika tersedia, hapus tanggal_rilis
+        if ($request->status_launching === 'tersedia') {
+            $data['tanggal_rilis'] = null;
+        }
 
         if ($request->hasFile('cover')) {
             // Hapus cover lama jika ada

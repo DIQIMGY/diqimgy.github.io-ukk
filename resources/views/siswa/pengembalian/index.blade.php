@@ -240,6 +240,53 @@
   font-size: 1rem;
   margin-bottom: 28px;
 }
+
+/* Compact circulation desk layout */
+.return-page-modern { max-width:1240px; margin:0 auto; }
+.info-banner-modern {
+  margin-bottom:18px;
+  padding:13px 17px;
+  border:1px solid #bfdbfe;
+  border-radius:10px;
+  font-size:.8rem;
+  box-shadow:0 3px 12px rgba(37,99,235,.06);
+}
+.return-table-card { background:#fff; border:1px solid #e5e7eb; border-radius:14px; overflow:hidden; box-shadow:0 5px 18px rgba(20,40,75,.06); }
+.return-table-wrap { overflow-x:auto; }
+.return-table { width:100%; min-width:820px; border-collapse:collapse; }
+.return-table th {
+  padding:11px 18px; background:#f8fafc; border-bottom:1px solid #e7ecf2;
+  color:#64748b; font-size:.67rem; font-weight:800; letter-spacing:.08em;
+  text-transform:uppercase; text-align:left; white-space:nowrap;
+}
+.return-table td { padding:13px 18px; border-bottom:1px solid #eef2f6; font-size:.78rem; color:#334155; vertical-align:middle; white-space:nowrap; }
+.return-table tbody tr { transition:background .16s; }
+.return-table tbody tr:hover { background:#fffafa; }
+.return-table tbody tr:last-child td { border-bottom:0; }
+.return-book { display:flex; align-items:center; gap:11px; min-width:240px; }
+.return-book-cover { width:36px; height:50px; object-fit:cover; border-radius:5px; flex-shrink:0; box-shadow:0 2px 7px rgba(15,23,42,.16); }
+.return-book-placeholder { display:flex; align-items:center; justify-content:center; background:linear-gradient(145deg,#881337,#e11d48); color:rgba(255,255,255,.8); }
+.return-book-title { max-width:250px; overflow:hidden; text-overflow:ellipsis; font-weight:700; color:#14284b; }
+.return-author { display:block; margin-top:3px; color:#94a3b8; font-size:.7rem; font-weight:500; overflow:hidden; text-overflow:ellipsis; max-width:240px; }
+.return-status { display:inline-flex; align-items:center; gap:5px; padding:5px 9px; border-radius:6px; font-size:.68rem; font-weight:700; }
+.return-status.active { background:#eff6ff; color:#2563eb; border:1px solid #bfdbfe; }
+.return-status.late { background:#fff1f2; color:#dc2626; border:1px solid #fecdd3; }
+.return-date { color:#64748b; }
+.return-date.late { color:#dc2626; font-weight:700; }
+.return-fine { color:#dc2626; font-weight:800; }
+.return-fine.none { color:#94a3b8; font-weight:600; }
+.return-action { display:inline-flex; align-items:center; gap:6px; padding:7px 11px; border-radius:7px; color:#fff; font-size:.7rem; font-weight:700; white-space:nowrap; text-decoration:none; }
+.return-action.success { background:#16a34a; box-shadow:0 3px 8px rgba(22,163,74,.2); }
+.return-action.danger { background:#dc2626; box-shadow:0 3px 8px rgba(220,38,38,.2); }
+.return-action:hover { color:#fff; transform:translateY(-1px); }
+.return-pagination { display:flex; justify-content:center; padding:18px 22px; border-top:1px solid #edf1f5; }
+.return-pagination .pagination { gap:5px; }
+.return-pagination .page-link { min-width:32px !important; width:32px; height:32px; padding:0 !important; font-size:.72rem !important; border-radius:7px !important; }
+@media(max-width:768px) {
+  .return-page-modern { width:100%; }
+  .info-banner-modern { align-items:flex-start; }
+  .return-pagination { justify-content:flex-start; overflow-x:auto; }
+}
 </style>
 
 <div class="return-page-modern">
@@ -260,86 +307,67 @@
     <span>Pilih buku yang ingin dikembalikan. Denda keterlambatan dihitung <strong>Rp 1.000 per hari</strong>.</span>
   </div>
 
-  <div class="row g-4">
-    @foreach($peminjaman as $p)
-    @php $late = ($p->status === 'terlambat'); @endphp
-    <div class="col-md-6 col-lg-4">
-      <div class="return-card-modern {{ $late ? 'late' : 'active' }}">
-        
-        <div class="return-card-header">
-          <span class="status-badge-return {{ $late ? 'late' : 'active' }}">
-            @if($late)
-              <i class="bi bi-exclamation-triangle-fill"></i>
-              <span>Terlambat</span>
-            @else
-              <i class="bi bi-circle-fill"></i>
-              <span>Dipinjam</span>
-            @endif
-          </span>
-          <div style="display:flex;align-items:start;gap:12px;margin-top:12px">
-            @if($p->buku && $p->buku->cover)
-              <img src="{{ Storage::url($p->buku->cover) }}" alt="{{ $p->buku->judul }}" 
-                   style="width:50px;height:75px;object-fit:cover;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,.15);flex-shrink:0;">
-            @else
-              <div style="width:50px;height:75px;border-radius:8px;background:linear-gradient(135deg,#881337,#e11d48);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 12px rgba(0,0,0,.15)">
-                <i class="bi bi-book-fill" style="color:rgba(255,255,255,.8);font-size:1.5rem"></i>
-              </div>
-            @endif
-            <div style="flex:1;min-width:0">
-              <h6 class="book-title-return">{{ Str::limit($p->buku->judul??'-', 40) }}</h6>
-              <div class="book-author-return">
-                <i class="bi bi-person-fill"></i>
-                <span>{{ $p->buku->pengarang??'' }}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="return-card-body">
-          <div class="dates-grid-modern">
-            <div class="date-box-modern">
-              <label>Tgl Pinjam</label>
-              <p>{{ $p->tanggal_pinjam->format('d M Y') }}</p>
-            </div>
-            <div class="date-box-modern {{ $late ? 'late' : '' }}">
-              <label>Batas Kembali</label>
-              <p>{{ $p->tanggal_kembali_rencana->format('d M Y') }}</p>
-            </div>
-          </div>
-
-          @if($late)
+  <div class="return-table-card">
+    <div class="return-table-wrap">
+      <table class="return-table">
+        <thead>
+          <tr>
+            <th>Buku</th>
+            <th>Status</th>
+            <th>Tanggal Pinjam</th>
+            <th>Batas Kembali</th>
+            <th>Denda</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach($peminjaman as $p)
           @php
-            $hari  = $p->tanggal_kembali_rencana->diffInDays(\Carbon\Carbon::today());
+            $late = ($p->status === 'terlambat');
+            $hari = $late ? $p->tanggal_kembali_rencana->diffInDays(\Carbon\Carbon::today()) : 0;
             $denda = $hari * 1000;
           @endphp
-          <div class="fine-alert-modern">
-            <i class="bi bi-exclamation-triangle-fill"></i>
-            <div class="fine-alert-content">
-              <div class="title">Terlambat {{ $hari }} hari</div>
-              <div class="amount">Estimasi denda: <strong>Rp {{ number_format($denda,0,',','.') }}</strong></div>
-            </div>
-          </div>
-          @endif
-        </div>
-
-        <div class="return-card-footer">
-          <a href="{{ route('siswa.pengembalian.konfirmasi', $p) }}"
-             class="btn-return-modern {{ $late ? 'danger' : 'success' }}">
-            <i class="bi bi-box-arrow-in-left"></i>
-            <span>{{ $late ? 'Kembalikan (Ada Denda)' : 'Kembalikan Buku' }}</span>
-          </a>
-        </div>
-
-      </div>
+          <tr>
+            <td>
+              <div class="return-book">
+                @if($p->buku && $p->buku->cover)
+                  <img src="{{ Storage::url($p->buku->cover) }}" alt="{{ $p->buku->judul }}" class="return-book-cover">
+                @else
+                  <div class="return-book-cover return-book-placeholder"><i class="bi bi-book-fill"></i></div>
+                @endif
+                <div>
+                  <div class="return-book-title">{{ $p->buku->judul ?? '-' }}</div>
+                  <span class="return-author"><i class="bi bi-person"></i> {{ $p->buku->pengarang ?? '-' }}</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="return-status {{ $late ? 'late' : 'active' }}">
+                <i class="bi {{ $late ? 'bi-exclamation-circle-fill' : 'bi-circle-fill' }}"></i>
+                {{ $late ? 'Terlambat' : 'Dipinjam' }}
+              </span>
+            </td>
+            <td class="return-date">{{ $p->tanggal_pinjam->format('d M Y') }}</td>
+            <td class="return-date {{ $late ? 'late' : '' }}">{{ $p->tanggal_kembali_rencana->format('d M Y') }}</td>
+            <td class="return-fine {{ $late ? '' : 'none' }}">{{ $late ? 'Rp ' . number_format($denda, 0, ',', '.') : 'Tidak ada' }}</td>
+            <td>
+              <a href="{{ route('siswa.pengembalian.konfirmasi', $p) }}" class="return-action {{ $late ? 'danger' : 'success' }}">
+                <i class="bi bi-box-arrow-in-left"></i> Kembalikan
+              </a>
+            </td>
+          </tr>
+          @endforeach
+        </tbody>
+      </table>
     </div>
-    @endforeach
   </div>
 
   @if($peminjaman->hasPages())
-  <div style="margin-top: 32px; padding-top: 28px; border-top: 2px solid rgba(237,27,59,0.1); display: flex; justify-content: center;">
-    {{ $peminjaman->links() }}
+  <div class="return-pagination">
+    {{ $peminjaman->links('vendor.pagination.custom-simple') }}
   </div>
   @endif
   @endif
 </div>
+@include('siswa.partials.rekomendasi-buku')
 @endsection

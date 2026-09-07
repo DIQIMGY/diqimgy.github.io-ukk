@@ -29,11 +29,11 @@ class PeminjamanSeeder extends Seeder
         }
 
         $peminjaman = [
-            // === SEDANG DIPINJAM (5 data) ===
+            // === SEDANG DIPINJAM (3 data) ===
             [
                 'kode_pinjam' => 'PJ' . str_pad(1, 5, '0', STR_PAD_LEFT),
                 'anggota_id' => $anggota->id,
-                'buku_id' => $bukuIds[0] ?? 1, // The Seven Husbands
+                'buku_id' => $bukuIds[0] ?? 1, // Cantik Itu Luka
                 'tanggal_pinjam' => Carbon::now()->subDays(5),
                 'tanggal_kembali_rencana' => Carbon::now()->addDays(9),
                 'tanggal_kembali_aktual' => null,
@@ -44,7 +44,7 @@ class PeminjamanSeeder extends Seeder
             [
                 'kode_pinjam' => 'PJ' . str_pad(2, 5, '0', STR_PAD_LEFT),
                 'anggota_id' => $anggota->id,
-                'buku_id' => $bukuIds[1] ?? 2, // The Night Circus
+                'buku_id' => $bukuIds[1] ?? 2, // Dorian Gray
                 'tanggal_pinjam' => Carbon::now()->subDays(3),
                 'tanggal_kembali_rencana' => Carbon::now()->addDays(11),
                 'tanggal_kembali_aktual' => null,
@@ -55,7 +55,7 @@ class PeminjamanSeeder extends Seeder
             [
                 'kode_pinjam' => 'PJ' . str_pad(3, 5, '0', STR_PAD_LEFT),
                 'anggota_id' => $anggota->id,
-                'buku_id' => $bukuIds[3] ?? 4, // Addie LaRue
+                'buku_id' => $bukuIds[5] ?? 6, // Stardust
                 'tanggal_pinjam' => Carbon::now()->subDays(10),
                 'tanggal_kembali_rencana' => Carbon::now()->addDays(4),
                 'tanggal_kembali_aktual' => null,
@@ -63,102 +63,47 @@ class PeminjamanSeeder extends Seeder
                 'denda' => 0,
                 'keterangan' => null,
             ],
+
+            // === SUDAH DIKEMBALIKAN (3 data) ===
             [
                 'kode_pinjam' => 'PJ' . str_pad(4, 5, '0', STR_PAD_LEFT),
                 'anggota_id' => $anggota->id,
-                'buku_id' => $bukuIds[15] ?? 16, // Happy Place
-                'tanggal_pinjam' => Carbon::now()->subDays(2),
-                'tanggal_kembali_rencana' => Carbon::now()->addDays(12),
-                'tanggal_kembali_aktual' => null,
-                'status' => 'dipinjam',
-                'denda' => 0,
-                'keterangan' => 'Weekend reading',
-            ],
-            [
-                'kode_pinjam' => 'PJ' . str_pad(5, 5, '0', STR_PAD_LEFT),
-                'anggota_id' => $anggota->id,
-                'buku_id' => $bukuIds[16] ?? 17, // Fourth Wing
-                'tanggal_pinjam' => Carbon::now()->subDays(7),
-                'tanggal_kembali_rencana' => Carbon::now()->addDays(7),
-                'tanggal_kembali_aktual' => null,
-                'status' => 'dipinjam',
-                'denda' => 0,
-                'keterangan' => null,
-            ],
-
-            // === SUDAH DIKEMBALIKAN (5 data) ===
-            [
-                'kode_pinjam' => 'PJ' . str_pad(6, 5, '0', STR_PAD_LEFT),
-                'anggota_id' => $anggota->id,
-                'buku_id' => $bukuIds[10] ?? 11, // Catcher in the Rye (baru dikembalikan)
+                'buku_id' => $bukuIds[2] ?? 3, // Jane Eyre (baru dikembalikan)
                 'tanggal_pinjam' => Carbon::now()->subDays(16),
                 'tanggal_kembali_rencana' => Carbon::now()->subDays(2),
-                'tanggal_kembali_aktual' => Carbon::now()->subHours(2),
-                'status' => 'dikembalikan',
-                'denda' => 0,
-                'keterangan' => 'Tepat waktu',
-            ],
-            [
-                'kode_pinjam' => 'PJ' . str_pad(7, 5, '0', STR_PAD_LEFT),
-                'anggota_id' => $anggota->id,
-                'buku_id' => $bukuIds[11] ?? 12, // Midnight Library
-                'tanggal_pinjam' => Carbon::now()->subDays(19),
-                'tanggal_kembali_rencana' => Carbon::now()->subDays(5),
                 'tanggal_kembali_aktual' => Carbon::now()->subHours(5),
                 'status' => 'dikembalikan',
                 'denda' => 0,
                 'keterangan' => 'Tepat waktu',
             ],
             [
-                'kode_pinjam' => 'PJ' . str_pad(8, 5, '0', STR_PAD_LEFT),
+                'kode_pinjam' => 'PJ' . str_pad(5, 5, '0', STR_PAD_LEFT),
                 'anggota_id' => $anggota->id,
-                'buku_id' => $bukuIds[12] ?? 13, // Kite Runner
-                'tanggal_pinjam' => Carbon::now()->subDays(15),
-                'tanggal_kembali_rencana' => Carbon::now()->subDays(1),
-                'tanggal_kembali_aktual' => Carbon::now()->subMinutes(45),
+                'buku_id' => $bukuIds[3] ?? 4, // Pride & Prejudice
+                'tanggal_pinjam' => Carbon::now()->subDays(19),
+                'tanggal_kembali_rencana' => Carbon::now()->subDays(5),
+                'tanggal_kembali_aktual' => Carbon::now()->subHours(12),
                 'status' => 'dikembalikan',
                 'denda' => 0,
                 'keterangan' => 'Tepat waktu',
             ],
             [
-                'kode_pinjam' => 'PJ' . str_pad(9, 5, '0', STR_PAD_LEFT),
+                'kode_pinjam' => 'PJ' . str_pad(6, 5, '0', STR_PAD_LEFT),
                 'anggota_id' => $anggota->id,
-                'buku_id' => $bukuIds[13] ?? 14, // Life of Pi
-                'tanggal_pinjam' => Carbon::now()->subDays(17),
-                'tanggal_kembali_rencana' => Carbon::now()->subDays(3),
-                'tanggal_kembali_aktual' => Carbon::now()->subHours(3),
-                'status' => 'dikembalikan',
-                'denda' => 0,
-                'keterangan' => 'Tepat waktu',
-            ],
-            [
-                'kode_pinjam' => 'PJ' . str_pad(10, 5, '0', STR_PAD_LEFT),
-                'anggota_id' => $anggota->id,
-                'buku_id' => $bukuIds[14] ?? 15, // Book Thief
+                'buku_id' => $bukuIds[8] ?? 9, // Harry Potter
                 'tanggal_pinjam' => Carbon::now()->subDays(15),
                 'tanggal_kembali_rencana' => Carbon::now()->subDays(1),
-                'tanggal_kembali_aktual' => Carbon::now()->subHour(),
+                'tanggal_kembali_aktual' => Carbon::now()->subHours(8),
                 'status' => 'dikembalikan',
                 'denda' => 0,
                 'keterangan' => 'Tepat waktu',
             ],
 
-            // === TERLAMBAT (2 data) ===
+            // === TERLAMBAT (1 data) ===
             [
-                'kode_pinjam' => 'PJ' . str_pad(11, 5, '0', STR_PAD_LEFT),
+                'kode_pinjam' => 'PJ' . str_pad(7, 5, '0', STR_PAD_LEFT),
                 'anggota_id' => $anggota->id,
-                'buku_id' => $bukuIds[20] ?? 21, // Game of Thrones
-                'tanggal_pinjam' => Carbon::now()->subDays(25),
-                'tanggal_kembali_rencana' => Carbon::now()->subDays(11),
-                'tanggal_kembali_aktual' => Carbon::now()->subDays(8),
-                'status' => 'dikembalikan',
-                'denda' => 9000, // 3 hari x 3000
-                'keterangan' => 'Terlambat 3 hari',
-            ],
-            [
-                'kode_pinjam' => 'PJ' . str_pad(12, 5, '0', STR_PAD_LEFT),
-                'anggota_id' => $anggota->id,
-                'buku_id' => $bukuIds[4] ?? 5, // Good Girl's Guide
+                'buku_id' => $bukuIds[1] ?? 2, // Dorian Gray (dipinjam lagi)
                 'tanggal_pinjam' => Carbon::now()->subDays(20),
                 'tanggal_kembali_rencana' => Carbon::now()->subDays(6),
                 'tanggal_kembali_aktual' => null,
@@ -172,9 +117,9 @@ class PeminjamanSeeder extends Seeder
             Peminjaman::create($data);
         }
 
-        $this->command->info('✅ 12 data peminjaman berhasil ditambahkan!');
-        $this->command->info('   - 5 sedang dipinjam');
-        $this->command->info('   - 5 sudah dikembalikan');
-        $this->command->info('   - 2 terlambat');
+        $this->command->info('✅ 7 data peminjaman berhasil ditambahkan!');
+        $this->command->info('   - 3 sedang dipinjam');
+        $this->command->info('   - 3 sudah dikembalikan');
+        $this->command->info('   - 1 terlambat');
     }
 }

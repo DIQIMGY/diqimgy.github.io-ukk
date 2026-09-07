@@ -5,6 +5,8 @@
 <style>
 .history-page-modern {
   animation: fadeInUp 0.5s ease;
+  max-width:1180px;
+  margin:0 auto;
 }
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(20px); }
@@ -18,9 +20,21 @@
   gap: 16px;
   margin-bottom: 24px;
   padding: 20px;
-  background: linear-gradient(135deg, rgba(237,27,59,0.04) 0%, rgba(237,27,59,0.01) 100%);
+  background:linear-gradient(110deg,#fff 0%,#fff 68%,#fff7f8 100%);
   border-radius: 16px;
-  border: 1.5px solid rgba(237,27,59,0.1);
+  border:1px solid rgba(20,40,75,.08);
+  box-shadow:0 8px 24px rgba(20,40,75,.06);
+  position:relative;
+  overflow:hidden;
+}
+.toolbar-modern::before {
+  content:'';
+  position:absolute;
+  left:0;
+  top:0;
+  bottom:0;
+  width:4px;
+  background:linear-gradient(180deg,var(--crimson),#f59e0b);
 }
 .btn-add-modern {
   display: inline-flex;
@@ -82,19 +96,19 @@
 }
 .history-card-modern {
   background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
-  border-radius: 24px;
-  padding: 32px;
+  border-radius:18px;
+  padding:28px;
   box-shadow: 0 8px 32px rgba(20,40,75,0.08),
               0 2px 8px rgba(20,40,75,0.04);
-  border: 1px solid rgba(20,40,75,0.06);
+  border:1px solid rgba(20,40,75,.08);
 }
 .card-header-modern {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 28px;
-  padding-bottom: 20px;
-  border-bottom: 2px solid rgba(237,27,59,0.1);
+  margin-bottom:22px;
+  padding-bottom:16px;
+  border-bottom:1px solid rgba(20,40,75,.09);
 }
 .card-title-modern {
   display: flex;
@@ -121,13 +135,14 @@
 .transaction-list-modern {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap:12px;
 }
 .transaction-item-modern {
-  background: white;
-  border-radius: 16px;
-  padding: 24px;
-  border: 2px solid rgba(20,40,75,0.06);
+  background:linear-gradient(110deg,#fff 0%,#fff 78%,#f8fafc 100%);
+  border-radius:14px;
+  padding:20px;
+  border:1px solid rgba(20,40,75,.08);
+  border-left:4px solid #cbd5e1;
   transition: all 0.3s ease;
   display: grid;
   grid-template-columns: 1fr auto;
@@ -135,7 +150,8 @@
   align-items: start;
 }
 .transaction-item-modern:hover {
-  border-color: rgba(237,27,59,0.2);
+  border-color:rgba(237,27,59,.2);
+  border-left-color:var(--crimson);
   box-shadow: 0 4px 16px rgba(237,27,59,0.08);
   transform: translateY(-2px);
 }
@@ -144,6 +160,9 @@
   flex-direction: column;
   gap: 12px;
 }
+.transaction-item-modern:has(.status-badge-trx.dipinjam) { border-left-color:#3b82f6; }
+.transaction-item-modern:has(.status-badge-trx.terlambat) { border-left-color:#f59e0b; }
+.transaction-item-modern:has(.status-badge-trx.dikembalikan) { border-left-color:#16a34a; }
 .trx-book {
   font-size: 1.1rem;
   font-weight: 800;
@@ -228,6 +247,17 @@
   color: #64748b;
   margin-bottom: 24px;
 }
+
+.transaction-item-modern { animation:transactionIn .4s var(--ease) both; }
+.transaction-item-modern:nth-child(2n) { animation-delay:.06s; }
+@keyframes transactionIn {
+  from { opacity:0; transform:translateY(8px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .transaction-item-modern { animation:none; }
+}
 @media (max-width: 768px) {
   .transaction-item-modern {
     grid-template-columns: 1fr;
@@ -237,6 +267,73 @@
     justify-content: space-between;
     align-items: center;
   }
+  .history-card-modern { padding:18px; }
+  .card-title-modern { font-size:1.05rem; }
+  .count-badge-modern { padding:6px 10px; font-size:.75rem; }
+  .transaction-item-modern { padding:16px; }
+}
+
+/* Compact library register layout */
+.history-page-modern { max-width:1240px; }
+.history-card-modern { padding:0; overflow:hidden; border-radius:14px; }
+.card-header-modern { margin:0; padding:18px 22px; background:#fff; }
+.card-title-modern { font-size:1rem; gap:9px; }
+.card-title-modern i { font-size:1.15rem; }
+.count-badge-modern { padding:5px 10px; border-radius:7px; font-size:.72rem; }
+.transaction-list-modern { display:block; }
+.transaction-table-wrap { overflow-x:auto; }
+.transaction-table { width:100%; min-width:760px; border-collapse:collapse; }
+.transaction-table th {
+  padding:11px 18px;
+  background:#f8fafc;
+  border-top:1px solid #edf1f5;
+  border-bottom:1px solid #e7ecf2;
+  color:#64748b;
+  font-size:.67rem;
+  font-weight:800;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  text-align:left;
+  white-space:nowrap;
+}
+.transaction-table td {
+  padding:13px 18px;
+  border-bottom:1px solid #eef2f6;
+  color:#334155;
+  font-size:.78rem;
+  vertical-align:middle;
+  white-space:nowrap;
+}
+.transaction-table tbody tr { transition:background .16s; }
+.transaction-table tbody tr:hover { background:#fff8f9; }
+.transaction-table tbody tr:last-child td { border-bottom:0; }
+.table-book { display:flex; align-items:center; gap:11px; min-width:230px; }
+.table-book-cover {
+  width:34px; height:48px; object-fit:cover; border-radius:5px;
+  flex-shrink:0; box-shadow:0 2px 7px rgba(15,23,42,.16);
+}
+.table-book-placeholder {
+  display:flex; align-items:center; justify-content:center;
+  background:linear-gradient(145deg,#0f1f3d,#2055a5);
+  color:rgba(255,255,255,.75);
+}
+.table-book-title { max-width:240px; overflow:hidden; text-overflow:ellipsis; font-weight:700; color:#14284b; }
+.table-date { color:#64748b; }
+.table-date i { color:#94a3b8; margin-right:5px; }
+.table-date.late { color:#dc2626; font-weight:700; }
+.table-date.late i { color:#dc2626; }
+.table-fine { font-weight:700; color:#dc2626; }
+.table-fine.none { color:#94a3b8; font-weight:600; }
+.table-status { padding:5px 9px; border-radius:6px; font-size:.68rem; }
+.table-pagination { display:flex; justify-content:center; padding:18px 22px; border-top:1px solid #edf1f5; }
+.table-pagination .pagination { gap:5px; }
+.table-pagination .page-link { min-width:32px !important; width:32px; height:32px; padding:0 !important; font-size:.72rem !important; border-radius:7px !important; }
+@media(max-width:768px) {
+  .toolbar-modern { padding:14px; }
+  .toolbar-modern .btn-add-modern { width:100%; justify-content:center; }
+  .filter-group { width:100%; }
+  .filter-select { flex:1; min-width:0; }
+  .table-pagination { justify-content:flex-start; overflow-x:auto; }
 }
 </style>
 
@@ -269,58 +366,51 @@
     </div>
 
     @forelse($peminjaman as $p)
-      <div class="transaction-list-modern">
-        <div class="transaction-item-modern">
-          <div class="trx-main">
-            <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
-              @if($p->buku && $p->buku->cover)
-                <img src="{{ Storage::url($p->buku->cover) }}" alt="{{ $p->buku->judul }}" 
-                     style="width:44px;height:66px;object-fit:cover;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,.15);flex-shrink:0;">
-              @else
-                <div style="width:44px;height:66px;border-radius:8px;background:linear-gradient(135deg,#0f1f3d,#1e4080);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 12px rgba(0,0,0,.15)">
-                  <i class="bi bi-book-fill" style="color:rgba(255,255,255,.7);font-size:1.3rem"></i>
+      @if($loop->first)
+      <div class="transaction-table-wrap">
+        <table class="transaction-table">
+          <thead>
+            <tr>
+              <th>Buku</th>
+              <th>Status</th>
+              <th>Tanggal Pinjam</th>
+              <th>Batas Kembali</th>
+              <th>Dikembalikan</th>
+              <th>Denda</th>
+            </tr>
+          </thead>
+          <tbody>
+      @endif
+            <tr>
+              <td>
+                <div class="table-book">
+                  @if($p->buku && $p->buku->cover)
+                    <img src="{{ Storage::url($p->buku->cover) }}" alt="{{ $p->buku->judul }}" class="table-book-cover">
+                  @else
+                    <div class="table-book-cover table-book-placeholder"><i class="bi bi-book-fill"></i></div>
+                  @endif
+                  <span class="table-book-title">{{ $p->buku->judul ?? '-' }}</span>
                 </div>
-              @endif
-              <div class="trx-book">{{ $p->buku->judul ?? '-' }}</div>
-            </div>
-            <div class="trx-dates">
-              <div class="trx-date-item">
-                <i class="bi bi-calendar-check"></i> Tanggal Pinjam
-                <strong>{{ $p->tanggal_pinjam->format('d M Y') }}</strong>
-              </div>
-              <div class="trx-date-item {{ $p->status === 'terlambat' ? 'late' : '' }}">
-                <i class="bi bi-calendar-x"></i> Batas Kembali
-                <strong>{{ $p->tanggal_kembali_rencana->format('d M Y') }}</strong>
-              </div>
-              <div class="trx-date-item">
-                <i class="bi bi-calendar-check-fill"></i> Tgl Kembali
-                <strong>{{ $p->tanggal_kembali_aktual ? $p->tanggal_kembali_aktual->format('d M Y') : 'Belum dikembalikan' }}</strong>
-              </div>
-            </div>
-          </div>
-          <div class="trx-side">
-            @if($p->status === 'dipinjam')
-              <span class="status-badge-trx dipinjam">
-                <i class="bi bi-circle-fill"></i>
-                <span>Dipinjam</span>
-              </span>
-            @elseif($p->status === 'terlambat')
-              <span class="status-badge-trx terlambat">
-                <i class="bi bi-exclamation-circle-fill"></i>
-                <span>Terlambat</span>
-              </span>
-            @else
-              <span class="status-badge-trx dikembalikan">
-                <i class="bi bi-check-circle-fill"></i>
-                <span>Dikembalikan</span>
-              </span>
-            @endif
-            <span class="trx-denda {{ $p->denda > 0 ? 'has' : 'none' }}">
-              {{ $p->denda > 0 ? 'Rp ' . number_format($p->denda, 0, ',', '.') : 'Tidak ada denda' }}
-            </span>
-          </div>
-        </div>
+              </td>
+              <td>
+                @if($p->status === 'dipinjam')
+                  <span class="status-badge-trx dipinjam table-status"><i class="bi bi-circle-fill"></i> Dipinjam</span>
+                @elseif($p->status === 'terlambat')
+                  <span class="status-badge-trx terlambat table-status"><i class="bi bi-exclamation-circle-fill"></i> Terlambat</span>
+                @else
+                  <span class="status-badge-trx dikembalikan table-status"><i class="bi bi-check-circle-fill"></i> Dikembalikan</span>
+                @endif
+              </td>
+              <td class="table-date"><i class="bi bi-calendar3"></i>{{ $p->tanggal_pinjam->format('d M Y') }}</td>
+              <td class="table-date {{ $p->status === 'terlambat' ? 'late' : '' }}"><i class="bi bi-calendar-x"></i>{{ $p->tanggal_kembali_rencana->format('d M Y') }}</td>
+              <td class="table-date">{{ $p->tanggal_kembali_aktual ? $p->tanggal_kembali_aktual->format('d M Y') : 'Belum kembali' }}</td>
+              <td class="table-fine {{ $p->denda > 0 ? '' : 'none' }}">{{ $p->denda > 0 ? 'Rp ' . number_format($p->denda, 0, ',', '.') : 'Tidak ada' }}</td>
+            </tr>
+      @if($loop->last)
+          </tbody>
+        </table>
       </div>
+      @endif
     @empty
       <div class="empty-state-modern">
         <i class="bi bi-inbox"></i>
@@ -334,10 +424,11 @@
     @endforelse
 
     @if($peminjaman->hasPages())
-      <div style="margin-top: 24px; padding-top: 24px; border-top: 2px solid rgba(237,27,59,0.1)">
-        {{ $peminjaman->links() }}
+      <div class="table-pagination">
+        {{ $peminjaman->links('vendor.pagination.custom-simple') }}
       </div>
     @endif
   </div>
 </div>
+@include('siswa.partials.rekomendasi-buku')
 @endsection

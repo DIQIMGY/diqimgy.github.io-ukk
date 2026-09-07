@@ -28,6 +28,17 @@
   position: relative;
   overflow: hidden;
   border: 1px solid rgba(255,255,255,.08);
+  isolation:isolate;
+}
+
+.welcome-banner-lib > div:first-child::after {
+  content:'';
+  display:block;
+  width:46px;
+  height:3px;
+  margin-top:18px;
+  border-radius:99px;
+  background:linear-gradient(90deg,var(--crimson),var(--gold-400));
 }
 
 .welcome-banner-lib::before {
@@ -84,6 +95,7 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  box-shadow:0 3px 12px rgba(11,23,48,.04);
 }
 
 .stat-card-lib::before {
@@ -288,6 +300,16 @@
   border-bottom: none;
 }
 
+.stat-card-lib,.qa-card-lib,.cbox{animation:dashboardEnter .45s var(--ease) both}
+.stat-card-lib:nth-child(2){animation-delay:.05s}
+.stat-card-lib:nth-child(3){animation-delay:.1s}
+.stat-card-lib:nth-child(4){animation-delay:.15s}
+
+@keyframes dashboardEnter {
+  from { opacity:0; transform:translateY(8px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
 .timeline-dot-lib {
   width: 10px;
   height: 10px;
@@ -380,6 +402,10 @@
   .stat-value-lib {
     font-size: 1.4rem;
   }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stat-card-lib,.qa-card-lib,.cbox{animation:none}
 }
 </style>
 

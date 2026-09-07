@@ -340,7 +340,40 @@
             </div>
           </div>
 
-          <div class="form-actions-modern">
+          <div class="form-section-title" style="margin-top:32px">
+            <i class="bi bi-rocket-takeoff-fill"></i>
+            <span>Status Launching</span>
+          </div>
+
+          <div class="row g-4">
+            <div class="col-md-6">
+              <label class="form-label-modern">
+                Status Ketersediaan
+                <span class="required-mark">*</span>
+              </label>
+              <select name="status_launching" class="form-control-modern" id="statusLaunching" onchange="toggleTanggalRilis()" required>
+                <option value="tersedia" {{ old('status_launching', $buku->status_launching) == 'tersedia' ? 'selected' : '' }}>Sudah Tersedia (Langsung Launching)</option>
+                <option value="segera" {{ old('status_launching', $buku->status_launching) == 'segera' ? 'selected' : '' }}>Segera Hadir (Coming Soon)</option>
+              </select>
+              <div class="form-text-modern">
+                <i class="bi bi-info-circle"></i>
+                <span>Pilih "Segera Hadir" untuk buku yang belum tersedia dipinjam</span>
+              </div>
+            </div>
+
+            <div class="col-md-6" id="tanggalRilisWrapper" style="display:none">
+              <label class="form-label-modern">
+                Tanggal Rilis
+              </label>
+              <input type="date" name="tanggal_rilis" class="form-control-modern" value="{{ old('tanggal_rilis', $buku->tanggal_rilis?->format('Y-m-d')) }}" id="tanggalRilis" min="{{ date('Y-m-d') }}">
+              <div class="form-text-modern">
+                <i class="bi bi-calendar-event"></i>
+                <span>Estimasi tanggal buku tersedia untuk dipinjam</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-actions-modern" style="margin-top:32px">
             <button type="submit" class="btn-submit-modern">
               <i class="bi bi-check-circle-fill"></i>
               <span>Perbarui Buku</span>
@@ -368,6 +401,26 @@ function previewCover(input) {
     reader.readAsDataURL(input.files[0]);
   }
 }
+
+function toggleTanggalRilis() {
+  const status = document.getElementById('statusLaunching').value;
+  const wrapper = document.getElementById('tanggalRilisWrapper');
+  const input = document.getElementById('tanggalRilis');
+  
+  if (status === 'segera') {
+    wrapper.style.display = 'block';
+    input.required = true;
+  } else {
+    wrapper.style.display = 'none';
+    input.required = false;
+    input.value = '';
+  }
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+  toggleTanggalRilis();
+});
 </script>
 @endpush
 @endsection

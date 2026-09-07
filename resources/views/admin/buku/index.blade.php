@@ -12,6 +12,19 @@
   margin-bottom: 24px;
   flex-wrap: wrap;
   gap: 16px;
+  position:relative;
+  z-index:1;
+}
+
+.page-header h1 { letter-spacing:-.035em; }
+.page-header > div:first-child::before {
+  content:'KOLEKSI PERPUSTAKAAN';
+  display:block;
+  color:var(--crimson);
+  font-size:.64rem;
+  font-weight:900;
+  letter-spacing:.16em;
+  margin-bottom:7px;
 }
 
 .search-toolbar {
@@ -19,18 +32,30 @@
   gap: 12px;
   flex-wrap: wrap;
   align-items: center;
-  background: #fff;
+  background:linear-gradient(110deg,#fff 0%,#fff 70%,#fff7f8 100%);
   padding: 16px 20px;
   border-radius: 16px;
   border: 1px solid #f0f0f0;
   margin-bottom: 24px;
-  box-shadow: 0 2px 8px rgba(0,0,0,.04);
+  box-shadow:0 8px 24px rgba(20,40,75,.06);
+  position:relative;
+  overflow:hidden;
+}
+
+.search-toolbar::before {
+  content:'';
+  position:absolute;
+  left:0;
+  top:0;
+  bottom:0;
+  width:4px;
+  background:linear-gradient(180deg,var(--crimson),#f59e0b);
 }
 
 .book-grid-modern {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 20px;
+  gap: 22px;
   margin-bottom: 24px;
 }
 
@@ -39,8 +64,25 @@
   border-radius: 16px;
   overflow: hidden;
   border: 1px solid #f0f0f0;
-  transition: all .3s cubic-bezier(.4,0,.2,1);
+  transition:transform .3s cubic-bezier(.4,0,.2,1),box-shadow .3s,border-color .3s;
   cursor: pointer;
+  box-shadow:0 4px 14px rgba(20,40,75,.05);
+  position:relative;
+}
+
+.book-card-modern::before {
+  content:'';
+  position:absolute;
+  left:18px;
+  right:18px;
+  bottom:-1px;
+  height:3px;
+  border-radius:99px 99px 0 0;
+  background:linear-gradient(90deg,var(--crimson),#f59e0b);
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform .3s ease;
+  z-index:2;
 }
 
 .book-card-modern:hover {
@@ -49,12 +91,15 @@
   border-color: var(--crimson);
 }
 
+.book-card-modern:hover::before { transform:scaleX(1); }
+
 .book-cover-wrapper {
   position: relative;
   width: 100%;
   padding-top: 140%;
   background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
   overflow: hidden;
+  isolation:isolate;
 }
 
 .book-cover-wrapper img {
@@ -64,7 +109,10 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition:transform .5s cubic-bezier(.2,.7,.2,1),filter .3s;
 }
+
+.book-card-modern:hover .book-cover-wrapper img { transform:scale(1.06); filter:saturate(1.08); }
 
 .book-placeholder {
   position: absolute;
@@ -105,6 +153,9 @@
 
 .book-info {
   padding: 16px;
+  min-height:178px;
+  display:flex;
+  flex-direction:column;
 }
 
 .book-category {
@@ -139,6 +190,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
+  margin-top:auto;
 }
 
 .book-actions {
@@ -175,6 +227,32 @@
   background: #fef2f2;
   border-color: #ef4444;
   color: #ef4444;
+}
+
+.book-card-modern { animation:bookCardIn .45s var(--ease) both; }
+.book-card-modern:nth-child(2n) { animation-delay:.05s; }
+.book-card-modern:nth-child(3n) { animation-delay:.1s; }
+.book-card-modern:nth-child(4n) { animation-delay:.15s; }
+
+@keyframes bookCardIn {
+  from { opacity:0; transform:translateY(12px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .book-card-modern { animation:none; }
+  .book-card-modern:hover .book-cover-wrapper img { transform:none; }
+}
+
+@media (max-width:576px) {
+  .page-header { align-items:flex-start; }
+  .search-toolbar { padding:14px; }
+  .book-grid-modern { grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+  .book-info { padding:12px; min-height:170px; }
+  .book-title-modern { font-size:.84rem; }
+  .book-author-modern { font-size:.72rem; }
+  .book-category { font-size:.6rem; padding:3px 7px; }
+  .book-stok-badge { top:8px; right:8px; padding:3px 7px; font-size:.62rem; }
 }
 </style>
 
@@ -235,14 +313,14 @@
   @foreach($buku as $i => $b)
   @php
     $gradients = [
-      'linear-gradient(150deg,#667eea,#764ba2)',
-      'linear-gradient(150deg,#f093fb,#f5576c)',
-      'linear-gradient(150deg,#4facfe,#00f2fe)',
-      'linear-gradient(150deg,#43e97b,#38f9d7)',
-      'linear-gradient(150deg,#fa709a,#fee140)',
-      'linear-gradient(150deg,#30cfd0,#330867)',
-      'linear-gradient(150deg,#a8edea,#fed6e3)',
-      'linear-gradient(150deg,#ff9a9e,#fecfef)',
+      'linear-gradient(150deg,#0b1730,#2055a5)',
+      'linear-gradient(150deg,#a01228,#ed1b3b)',
+      'linear-gradient(150deg,#075985,#0ea5e9)',
+      'linear-gradient(150deg,#065f46,#10b981)',
+      'linear-gradient(150deg,#92400e,#f59e0b)',
+      'linear-gradient(150deg,#164e63,#0891b2)',
+      'linear-gradient(150deg,#334155,#64748b)',
+      'linear-gradient(150deg,#881337,#fb7185)',
     ];
     $grad = $gradients[$i % count($gradients)];
   @endphp
