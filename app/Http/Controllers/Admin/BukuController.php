@@ -27,7 +27,7 @@ class BukuController extends Controller
             $query->where('kategori', $request->kategori);
         }
 
-        $buku      = $query->latest()->paginate(10)->withQueryString();
+        $buku      = $query->latest()->paginate(30)->withQueryString();
         $kategoris = Buku::select('kategori')->distinct()->pluck('kategori');
 
         return view('admin.buku.index', compact('buku', 'kategoris'));
@@ -118,7 +118,9 @@ class BukuController extends Controller
 
         $buku->update($data);
 
-        return redirect()->route('admin.buku.index')->with('success', 'Data buku berhasil diperbarui.');
+        $page = $request->input('page', 1);
+        return redirect()->route('admin.buku.index', ['page' => $page])
+            ->with('success', 'Data buku berhasil diperbarui.');
     }
 
     public function destroy(Buku $buku)
@@ -128,7 +130,9 @@ class BukuController extends Controller
         }
         $buku->delete();
 
-        return redirect()->route('admin.buku.index')->with('success', 'Buku berhasil dihapus.');
+        $page = request('page', 1);
+        return redirect()->route('admin.buku.index', ['page' => $page])
+            ->with('success', 'Buku berhasil dihapus.');
     }
 
     public function show(Buku $buku)

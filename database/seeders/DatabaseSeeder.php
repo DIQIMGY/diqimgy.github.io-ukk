@@ -59,6 +59,10 @@ class DatabaseSeeder extends Seeder
         $this->command->info('📚 Menjalankan BukuSeeder...');
         $this->call(BukuSeeder::class);
 
+        // ─── Series Buku ──────────────────────────────────────────────────
+        $this->command->info('📖 Menjalankan SeriesSeeder...');
+        $this->call(SeriesSeeder::class);
+
         // ─── Peminjaman ───────────────────────────────────────────────────
         $this->command->info('📋 Menjalankan PeminjamanSeeder...');
         $this->call(PeminjamanSeeder::class);

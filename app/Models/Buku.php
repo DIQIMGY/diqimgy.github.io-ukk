@@ -39,6 +39,12 @@ class Buku extends Model
         return $this->hasMany(Peminjaman::class);
     }
 
+    public function series()
+    {
+        return $this->belongsToMany(Series::class, 'series_buku')
+                    ->withPivot(['urutan_baca', 'urutan_terbit', 'is_penutup']);
+    }
+
     public function isAvailable(): bool
     {
         return $this->stok > 0;

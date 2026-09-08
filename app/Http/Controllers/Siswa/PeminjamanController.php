@@ -66,7 +66,7 @@ class PeminjamanController extends Controller
             });
         }
 
-        $buku = $query->paginate(9)->withQueryString();
+        $buku = $query->paginate(30)->withQueryString();
 
         return view('siswa.peminjaman.create', compact('buku', 'search'));
     }

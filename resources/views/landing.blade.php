@@ -556,23 +556,101 @@ a{text-decoration:none;color:inherit}
 }
 .sec-cream{background:var(--bg-pink)}
 
-/* ══════════════ STOK TERBANYAK CARD (horizontal) ══════════════ */
-.stok-card{
-  background:#fff;border-radius:var(--r);
-  border:1px solid var(--border);box-shadow:var(--sh);
-  display:flex;gap:0;overflow:hidden;
-  transition:transform .22s,box-shadow .22s;
+/* ══════════════ KOLEKSI SERIES ══════════════ */
+/* ─── Grid 3 kolom – seperti "Shop By Category" ─── */
+.sr-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:0;
 }
-.stok-card:hover{transform:translateY(-3px);box-shadow:var(--sh2)}
-.stok-card-cover{
-  width:80px;min-width:80px;height:120px;
-  position:relative;overflow:hidden;background:#dde4ef;flex-shrink:0;
+.sr-cell{
+  padding:20px 24px;
+  border-bottom:1px solid #e8e8e8;
+  border-right:1px solid #e8e8e8;
+  /* display diurus oleh JS */
 }
-.stok-card-cover img{width:100%;height:100%;object-fit:cover}
-.stok-card-cover::before{content:'';position:absolute;left:0;top:0;bottom:0;width:5px;background:linear-gradient(to right,rgba(0,0,0,.25),transparent);z-index:2}
-.stok-card-body{padding:12px 14px;flex:1;min-width:0;display:flex;flex-direction:column;justify-content:space-between}
-.stok-bar-wrap{height:6px;background:#f1f5f9;border-radius:99px;overflow:hidden;margin-top:8px}
-.stok-bar{height:100%;border-radius:99px;transition:width .8s ease}
+.sr-cell:nth-child(3n){border-right:none}
+
+/* Satu sel = flex row */
+.sr-item{
+  display:flex;gap:16px;
+  text-decoration:none;color:inherit;
+  align-items:flex-start;
+}
+/* ─── Cover portrait ─── */
+.sr-cover{
+  flex:0 0 82px;width:82px;height:118px;
+  border-radius:4px;overflow:hidden;
+  background:#dde3ed;
+  box-shadow:2px 2px 8px rgba(0,0,0,.15);
+  position:relative;flex-shrink:0;
+}
+.sr-cover img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s}
+.sr-item:hover .sr-cover img{transform:scale(1.06)}
+.sr-cover-ph{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:5px;padding:8px;text-align:center;
+}
+.sr-cover-ph i{font-size:1.4rem;color:rgba(255,255,255,.7)}
+.sr-cover-ph span{font-size:.58rem;font-weight:700;color:rgba(255,255,255,.8);line-height:1.3}
+/* ─── Konten Kanan ─── */
+.sr-content{flex:1;min-width:0;padding-top:1px}
+.sr-name{
+  font-size:.93rem;font-weight:800;color:#1a1a1a;
+  line-height:1.25;margin-bottom:3px;
+}
+.sr-author{font-size:.72rem;color:#888;font-weight:400;margin-bottom:7px}
+.sr-booklist{
+  list-style:none;padding:0;margin:0 0 8px;
+  display:flex;flex-direction:column;gap:1px;
+}
+.sr-booklist li{
+  font-size:.72rem;color:#555;line-height:1.5;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.sr-booklist li.more{color:#aaa}
+.sr-viewmore{
+  font-size:.73rem;font-weight:600;color:#222;
+  display:inline-flex;align-items:center;gap:3px;
+  transition:color .18s;
+}
+.sr-viewmore i{font-size:.62rem;transition:transform .18s}
+.sr-item:hover .sr-viewmore{color:var(--crimson)}
+.sr-item:hover .sr-viewmore i{transform:translateX(3px)}
+
+/* ─── Pagination dots & arrows ─── */
+.sr-pagination{
+  display:flex;align-items:center;justify-content:center;
+  gap:14px;margin-top:22px;
+}
+.sr-nav-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:36px;height:36px;border-radius:50%;
+  border:1.5px solid #ddd;background:#fff;
+  color:#555;font-size:.9rem;cursor:pointer;transition:all .2s;
+}
+.sr-nav-btn:hover:not([disabled]){background:var(--crimson);color:#fff;border-color:var(--crimson)}
+.sr-nav-btn[disabled]{opacity:.3;cursor:not-allowed}
+.sr-dots{display:flex;align-items:center;gap:6px}
+.sr-dot{
+  width:7px;height:7px;border-radius:50%;background:#ccc;
+  cursor:pointer;transition:all .22s;border:none;padding:0;
+}
+.sr-dot.active{background:var(--crimson);width:20px;border-radius:99px}
+
+/* ─── Responsive ─── */
+@media(max-width:991px){
+  .sr-grid{grid-template-columns:repeat(2,1fr)}
+  .sr-cell:nth-child(3n){border-right:1px solid #e8e8e8}
+  .sr-cell:nth-child(2n){border-right:none}
+}
+@media(max-width:580px){
+  .sr-grid{grid-template-columns:1fr}
+  .sr-cell{border-right:none !important}
+  .sr-cover{flex:0 0 68px;width:68px;height:98px}
+  .sr-name{font-size:.87rem}
+}
 
 /* ══════════════ PROMO BANNER ══════════════ */
 .promo-wrap{
@@ -1376,7 +1454,7 @@ a{text-decoration:none;color:inherit}
         <a href="{{ route('landing') }}" class="lnav-link active" id="nl-home">Beranda</a>
         <a href="#populer"  class="lnav-link" id="nl-pop">Populer</a>
         <a href="#terbaru"  class="lnav-link" id="nl-new">Terbaru</a>
-        <a href="#stok"     class="lnav-link" id="nl-stok">Stok</a>
+        <a href="#series"   class="lnav-link" id="nl-stok">Series</a>
         <a href="#kategori" class="lnav-link" id="nl-kat">Kategori</a>
         <a href="#baru-kembali" class="lnav-link" id="nl-bk">Baru Kembali</a>
         <a href="#waitlist" class="lnav-link" id="nl-wait">Waitlist</a>
@@ -1416,7 +1494,7 @@ a{text-decoration:none;color:inherit}
 
     {{-- Mobile menu dropdown --}}
     <div id="mobileMenu" style="display:none;padding:8px 16px 14px;border-top:1px solid var(--border)">
-      @foreach(['Beranda'=>route('landing'),'Populer'=>'#populer','Terbaru'=>'#terbaru','Stok Terbanyak'=>'#stok','Kategori'=>'#kategori','Baru Kembali'=>'#baru-kembali','Waitlist'=>'#waitlist'] as $label=>$href)
+      @foreach(['Beranda'=>route('landing'),'Populer'=>'#populer','Terbaru'=>'#terbaru','Koleksi Series'=>'#series','Kategori'=>'#kategori','Baru Kembali'=>'#baru-kembali','Waitlist'=>'#waitlist'] as $label=>$href)
       <a href="{{ $href }}" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:9px;font-size:.84rem;font-weight:600;color:var(--tx2);transition:background .15s"
          onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background=''" onclick="document.getElementById('mobileMenu').style.display='none'">
         {{ $label }}
@@ -1791,64 +1869,145 @@ a{text-decoration:none;color:inherit}
   </div>
 </section>
 
-{{-- ══ STOK TERBANYAK ══ --}}
-<section class="lsec sec-cream" id="stok">
+{{-- ══ KOLEKSI SERIES ══ --}}
+@if(isset($semuaSeries) && $semuaSeries->isNotEmpty())
+<section class="lsec" id="series" style="background:#fff">
   <div class="lsec-inner">
-    <div class="lsec-header">
-      <div>
-        <div class="lsec-badge green"><i class="bi bi-check-circle-fill"></i> Banyak Tersedia</div>
-        <h2 class="lsec-title">Stok <span class="gold" style="color:var(--green)">Terbanyak</span></h2>
-        <p class="lsec-sub">Buku dengan ketersediaan stok paling banyak</p>
-      </div>
-      <a href="{{ route('register') }}" class="see-all">Pinjam Sekarang <i class="bi bi-arrow-right"></i></a>
+
+    {{-- Header: judul kiri + tombol View All kanan --}}
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px">
+      <h2 style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:800;color:#1a1a1a;margin:0">
+        Koleksi Series
+      </h2>
+      <a href="{{ route('series.index') }}"
+         style="display:inline-flex;align-items:center;gap:7px;background:var(--crimson);color:#fff;font-size:.8rem;font-weight:700;padding:9px 20px;border-radius:99px;transition:opacity .18s"
+         onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+        View All <i class="bi bi-arrow-right"></i>
+      </a>
     </div>
-    @if($bukuStokTerbanyak->isEmpty())
-    <p style="text-align:center;padding:32px;color:var(--tx4)">Belum ada data.</p>
-    @else
-    @php $maxStok = max($bukuStokTerbanyak->first()->stok, 1); @endphp
-    <div class="row g-3">
-      @foreach($bukuStokTerbanyak as $si => $sb)
+
+    {{-- Garis tipis atas --}}
+    <div style="border-top:1.5px solid #e8e8e8;margin-bottom:0"></div>
+
+    {{-- Grid semua series — JS yang urus show/hide per 9 --}}
+    <div class="sr-grid" id="srGrid">
+      @foreach($semuaSeries as $ser)
       @php
-        $pct    = round($sb->stok / $maxStok * 100);
-        $colors = ['#2563eb','#7c3aed','#059669','#d97706'];
-        $bcol   = $colors[$si % count($colors)];
-        $bgrad  = ['#0f1f3d,#1e4080','#3b0764,#6d28d9','#064e3b,#059669','#78350f,#d97706'];
+        $coverBuku   = $ser->buku->first();
+        $previewList = $ser->bukuPreview->take(5);
       @endphp
-      <div class="col-sm-6 col-lg-3">
-        <div class="bk" style="height:100%">
-          <div class="bk-cov">
-            @if($sb->cover)<img src="{{ Storage::url($sb->cover) }}" alt="{{ $sb->judul }}">
-            @else<div class="bk-ph g{{ $si%8 }}"><span class="pi"><i class="bi bi-book-fill"></i></span><span class="pt">{{ $sb->judul }}</span><span class="pa">{{ $sb->pengarang }}</span></div>@endif
-            <span class="bk-badge b-ada" style="font-size:.68rem;padding:3px 9px">
-              <i class="bi bi-boxes" style="font-size:.65rem"></i> {{ $sb->stok }} stok
+      <div class="sr-cell" data-idx="{{ $loop->index }}">
+        <a href="{{ route('series.show', $ser->slug) }}" class="sr-item">
+
+          {{-- Cover --}}
+          <div class="sr-cover">
+            @if($coverBuku && $coverBuku->cover)
+              @if(Str::startsWith($coverBuku->cover, 'http'))
+                <img src="{{ $coverBuku->cover }}" alt="{{ $ser->nama_series }}" loading="lazy">
+              @else
+                <img src="{{ Storage::url($coverBuku->cover) }}" alt="{{ $ser->nama_series }}" loading="lazy">
+              @endif
+            @else
+              <div class="sr-cover-ph g{{ $loop->index % 8 }}" style="position:absolute;inset:0">
+                <i class="bi bi-book-fill"></i>
+                <span>{{ $ser->nama_series }}</span>
+              </div>
+            @endif
+          </div>
+
+          {{-- Konten --}}
+          <div class="sr-content">
+            <div class="sr-name">{{ $ser->nama_series }}</div>
+            <div class="sr-author">{{ $ser->penulis }} &bull; {{ $ser->buku_count }} buku</div>
+            <ul class="sr-booklist">
+              @foreach($previewList as $bk)
+                <li>{{ $bk->judul }}</li>
+              @endforeach
+              @if($ser->buku_count > $previewList->count())
+                <li class="more">dan {{ $ser->buku_count - $previewList->count() }} lainnya...</li>
+              @endif
+            </ul>
+            <span class="sr-viewmore">
+              View More <i class="bi bi-chevron-right"></i>
             </span>
           </div>
-          <div class="bk-body">
-            <div class="bk-cat">{{ $sb->kategori }}</div>
-            <div class="bk-ttl">{{ $sb->judul }}</div>
-            <div class="bk-ath"><i class="bi bi-person" style="font-size:.65rem"></i> {{ $sb->pengarang }}</div>
-            {{-- Stok bar --}}
-            <div style="margin-bottom:10px">
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px">
-                <span style="font-size:.67rem;font-weight:600;color:var(--tx3)">Ketersediaan</span>
-                <span style="font-size:.7rem;font-weight:800;color:{{ $bcol }}">{{ $sb->stok }} buku</span>
-              </div>
-              <div class="stok-bar-wrap">
-                <div class="stok-bar" style="width:{{ $pct }}%;background:{{ $bcol }}"></div>
-              </div>
-            </div>
-            <div class="bk-foot">
-              <span class="bk-meta"><i class="bi bi-box-seam" style="font-size:.65rem"></i>{{ $sb->penerbit }}</span>
-              <a href="{{ route('register') }}" class="btn-bk"><i class="bi bi-book"></i>Pinjam</a>
-            </div>
-          </div>
-        </div>
+
+        </a>
       </div>
       @endforeach
     </div>
-    @endif
+
+    {{-- Pagination dots — JS inject kalau perlu --}}
+    <div class="sr-pagination" id="srPagination" style="display:none">
+      <button class="sr-nav-btn" id="srPrev"><i class="bi bi-chevron-left"></i></button>
+      <div class="sr-dots" id="srDots"></div>
+      <button class="sr-nav-btn" id="srNext"><i class="bi bi-chevron-right"></i></button>
+    </div>
+
   </div>
 </section>
+
+<script>
+(function(){
+  const PER_PAGE   = 9;
+  const cells      = Array.from(document.querySelectorAll('#srGrid .sr-cell'));
+  const total      = cells.length;
+  if(!total) return;
+
+  const totalPages  = Math.ceil(total / PER_PAGE);
+  let   current     = 0;
+
+  const pagination  = document.getElementById('srPagination');
+  const dotsWrap    = document.getElementById('srDots');
+  const prevBtn     = document.getElementById('srPrev');
+  const nextBtn     = document.getElementById('srNext');
+
+  // Buat dots hanya kalau > 1 halaman
+  if(totalPages > 1){
+    pagination.style.display = 'flex';
+    for(let i = 0; i < totalPages; i++){
+      const d = document.createElement('button');
+      d.className = 'sr-dot';
+      d.addEventListener('click', () => goTo(i));
+      dotsWrap.appendChild(d);
+    }
+  }
+
+  function goTo(page){
+    current = Math.max(0, Math.min(page, totalPages - 1));
+    const start = current * PER_PAGE;
+    const end   = start + PER_PAGE;
+
+    // Show/hide cells
+    cells.forEach((c, i) => {
+      const show = i >= start && i < end;
+      c.style.display = show ? 'block' : 'none';
+      // Reset border bawah
+      c.style.borderBottom = '1px solid #e8e8e8';
+    });
+
+    // Hapus border bawah di baris terbawah yang visible
+    const visible = cells.filter(c => c.style.display !== 'none');
+    visible.slice(-3).forEach(c => c.style.borderBottom = 'none');
+
+    // Update dots
+    dotsWrap.querySelectorAll('.sr-dot').forEach((d, i) => {
+      d.classList.toggle('active', i === current);
+    });
+
+    // Update tombol
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === totalPages - 1;
+  }
+
+  prevBtn.addEventListener('click', () => goTo(current - 1));
+  nextBtn.addEventListener('click', () => goTo(current + 1));
+
+  // Inisialisasi halaman pertama
+  goTo(0);
+})();
+</script>
+@endif
 
 {{-- ══ KATEGORI dengan Foto Buku & Pagination ══ --}}
 <section class="lsec" id="kategori" style="background:#fff">
@@ -1859,6 +2018,19 @@ a{text-decoration:none;color:inherit}
         <h2 class="lsec-title">Buku <span>Berdasarkan Kategori</span></h2>
         <p class="lsec-sub">Temukan buku sesuai minat kamu</p>
       </div>
+      {{-- Tombol Lihat Semua --}}
+      <a href="{{ route('buku.all') }}" 
+         style="display:inline-flex;align-items:center;gap:7px;
+                padding:10px 20px;border-radius:8px;
+                background:var(--crimson);color:#fff;
+                font-size:.82rem;font-weight:700;
+                transition:all .2s;text-decoration:none;
+                box-shadow:0 4px 12px rgba(237,27,59,.25)"
+         onmouseover="this.style.background='var(--crimson-dk)';this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 18px rgba(237,27,59,.35)'"
+         onmouseout="this.style.background='var(--crimson)';this.style.transform='translateY(0)';this.style.boxShadow='0 4px 12px rgba(237,27,59,.25)'">
+        <span>Lihat Semua</span>
+        <i class="bi bi-arrow-right" style="font-size:.75rem"></i>
+      </a>
     </div>
 
     @php

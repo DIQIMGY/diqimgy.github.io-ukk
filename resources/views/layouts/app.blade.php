@@ -1180,6 +1180,9 @@ label.form-label{font-size:.8rem;font-weight:600;margin-bottom:6px;color:var(--t
         <a href="{{ route('admin.anggota.index') }}" data-label="Kelola Anggota" class="sb-item {{ request()->routeIs('admin.anggota.*')?'active':'' }}">
           <span class="sb-icon"><i class="bi bi-people-fill"></i></span><span class="sb-item-label">Kelola Anggota</span>
         </a>
+        <a href="{{ route('admin.series.index') }}" data-label="Koleksi Series" class="sb-item {{ request()->routeIs('admin.series.*')?'active':'' }}">
+          <span class="sb-icon"><i class="bi bi-collection-fill"></i></span><span class="sb-item-label">Koleksi Series</span>
+        </a>
         <div class="sb-section">Transaksi</div>
         <a href="{{ route('admin.transaksi.index') }}" data-label="Peminjaman" class="sb-item {{ request()->routeIs('admin.transaksi.*')?'active':'' }}">
           <span class="sb-icon"><i class="bi bi-arrow-left-right"></i></span><span class="sb-item-label">Peminjaman</span>

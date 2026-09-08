@@ -244,6 +244,7 @@
         <form method="POST" action="{{ route('admin.buku.update', $buku) }}" enctype="multipart/form-data">
           @csrf
           @method('PUT')
+          <input type="hidden" name="page" value="{{ request('page', 1) }}">
 
           <div class="form-section-title">
             <i class="bi bi-card-heading"></i>

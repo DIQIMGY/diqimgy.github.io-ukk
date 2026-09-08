@@ -4,10 +4,16 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\Siswa;
 use App\Http\Controllers\LandingController;
+use App\Http\Controllers\SeriesController;
 use Illuminate\Support\Facades\Route;
 
 // ── Landing Page ──────────────────────────────────────────────────────────────
 Route::get('/', [LandingController::class, 'index'])->name('landing');
+Route::get('/buku', [LandingController::class, 'allBooks'])->name('buku.all');
+
+// ── Series ────────────────────────────────────────────────────────────────────
+Route::get('/series', [SeriesController::class, 'index'])->name('series.index');
+Route::get('/series/{slug}', [SeriesController::class, 'show'])->name('series.show');
 
 // ── Auth ─────────────────────────────────────────────────────────────────────
 Route::middleware('guest')->group(function () {
@@ -45,6 +51,18 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::put('/transaksi/{transaksi}',            [Admin\TransaksiController::class, 'update'])->name('transaksi.update');
     Route::post('/transaksi/{transaksi}/kembali',   [Admin\TransaksiController::class, 'pengembalian'])->name('transaksi.kembali');
     Route::delete('/transaksi/{transaksi}',         [Admin\TransaksiController::class, 'destroy'])->name('transaksi.destroy');
+
+    // Series
+    Route::get('/series',                                        [Admin\SeriesController::class, 'index'])->name('series.index');
+    Route::get('/series/create',                                 [Admin\SeriesController::class, 'create'])->name('series.create');
+    Route::post('/series',                                       [Admin\SeriesController::class, 'store'])->name('series.store');
+    Route::get('/series/{series}/edit',                          [Admin\SeriesController::class, 'edit'])->name('series.edit');
+    Route::put('/series/{series}',                               [Admin\SeriesController::class, 'update'])->name('series.update');
+    Route::delete('/series/{series}',                            [Admin\SeriesController::class, 'destroy'])->name('series.destroy');
+    Route::post('/series/{series}/buku',                         [Admin\SeriesController::class, 'tambahBuku'])->name('series.buku.tambah');
+    Route::delete('/series/{series}/buku/{buku}',                [Admin\SeriesController::class, 'hapusBuku'])->name('series.buku.hapus');
+    Route::post('/series/{series}/urutan',                       [Admin\SeriesController::class, 'updateUrutan'])->name('series.urutan');
+    Route::post('/series/{series}/buku/{buku}/penutup',          [Admin\SeriesController::class, 'togglePenutup'])->name('series.buku.penutup');
 });
 
 // ── Siswa ─────────────────────────────────────────────────────────────────────
