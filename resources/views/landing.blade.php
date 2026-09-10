@@ -36,8 +36,9 @@
   --sh2:0 12px 40px rgba(237,27,59,.15);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--tx1);-webkit-font-smoothing:antialiased}
+html{scroll-behavior:smooth;width:100%;max-width:100%;overflow-x:clip}
+body{width:100%;max-width:100%;overflow-x:clip;font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--tx1);-webkit-font-smoothing:antialiased}
+img{max-width:100%;}
 a{text-decoration:none;color:inherit}
 ::-webkit-scrollbar{width:5px}
 ::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:99px}
@@ -713,206 +714,409 @@ a{text-decoration:none;color:inherit}
   background:var(--crimson);
 }
 
-/* ══════════════ FEATURED BOOK SECTION ══════════════ */
+/* ══════════════ REKOMENDASI MINGGU INI (NEW DESIGN) ══════════════ */
 .featured-book-section{
-  background:#fafbfc;
-  padding:80px 20px;
+  background:#fff;
+  padding:42px 24px;
   position:relative;
   overflow:hidden;
 }
-.featured-book-section::before{
-  content:'';position:absolute;
-  top:0;left:0;right:0;bottom:0;
-  background:
-    radial-gradient(circle at 85% 15%, rgba(237,27,59,.03) 0%, transparent 40%),
-    radial-gradient(circle at 15% 85%, rgba(194,164,113,.04) 0%, transparent 40%);
-  pointer-events:none;
-}
 
 .featured-container{
-  max-width:1200px;margin:0 auto;
+  max-width:1280px;margin:0 auto;
   display:grid;
-  grid-template-columns:400px 1fr;
-  gap:70px;align-items:center;
+  grid-template-columns:minmax(180px,.85fr) minmax(190px,1fr) minmax(380px,2.15fr);
+  gap:22px;align-items:start;
   position:relative;z-index:1;
-  background:#fff;
-  border-radius:24px;
-  padding:60px;
-  box-shadow:0 2px 16px rgba(0,0,0,.04);
-  border:1px solid rgba(0,0,0,.06);
 }
 
-/* Left: Cover Side */
-.featured-cover-side{
-  position:relative;
-  display:flex;align-items:center;justify-content:center;
-}
-.featured-cover-wrapper{
-  width:100%;
-  position:relative;
-}
-.featured-cover-img,
-.featured-cover-placeholder{
-  width:100%;
-  aspect-ratio:2/3;
-  border-radius:12px;
-  box-shadow:
-    0 12px 40px rgba(0,0,0,.12),
-    0 0 0 1px rgba(0,0,0,.05);
-  object-fit:cover;
-}
-.featured-cover-placeholder{
-  background:linear-gradient(135deg, #f1f5f9, #e2e8f0);
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  gap:14px;color:#64748b;
-}
-.featured-cover-placeholder i{font-size:3.5rem;opacity:.3}
-.featured-cover-title{
-  font-size:1.05rem;font-weight:700;
-  padding:0 20px;text-align:center;
-  color:#475569;
+/* Left: Text Info (Compact) */
+.featured-text-side{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding-right:6px;
 }
 
-.featured-badge{
-  position:absolute;top:16px;right:-10px;
-  background:#fff;
-  color:var(--crimson);font-weight:800;font-size:.75rem;
-  padding:8px 16px;border-radius:99px;
-  box-shadow:0 4px 12px rgba(0,0,0,.1);
-  border:1px solid rgba(237,27,59,.15);
-  display:flex;align-items:center;gap:6px;
-  letter-spacing:.02em;
-}
-.featured-badge i{color:var(--crimson)}
-
-/* Right: Info Side */
-.featured-info-side{
-  color:var(--tx1);
-}
-.featured-info-content{
-  max-width:100%;
-}
-
-.featured-label{
-  display:inline-flex;align-items:center;gap:7px;
+.featured-eyebrow{
+  display:inline-flex;align-items:center;gap:3px;
   background:rgba(237,27,59,.06);
   border:1px solid rgba(237,27,59,.15);
-  color:var(--crimson);font-weight:700;font-size:.76rem;
-  padding:7px 16px;border-radius:99px;
-  margin-bottom:18px;letter-spacing:.03em;
+  color:var(--crimson);font-weight:700;font-size:.62rem;
+  padding:3px 9px;border-radius:99px;
+  margin-bottom:8px;letter-spacing:.02em;
+  width:fit-content;
 }
 
 .featured-title{
   font-family:'Playfair Display',serif;
-  font-size:clamp(1.9rem, 4vw, 2.8rem);
+  font-size:1.65rem;
   font-weight:800;color:var(--navy);
-  margin-bottom:16px;line-height:1.2;
-  letter-spacing:-.02em;
+  margin-bottom:7px;line-height:1.2;
+  letter-spacing:-.01em;
 }
 
-.featured-meta{
-  display:flex;gap:20px;margin-bottom:24px;
-  flex-wrap:wrap;
-}
-.featured-author,
-.featured-category{
-  display:flex;align-items:center;gap:7px;
-  font-size:.88rem;color:var(--tx3);
-  font-weight:600;
-}
-.featured-author i{color:var(--navy);font-size:.95rem}
-.featured-category i{color:var(--crimson);font-size:.95rem}
-
-.featured-stats{
-  display:grid;grid-template-columns:repeat(3, 1fr);
-  gap:12px;margin-bottom:26px;
-}
-.featured-stat{
-  background:#fafbfc;
-  border:1px solid rgba(0,0,0,.06);
-  border-radius:10px;padding:14px 10px;
-  text-align:center;
-  transition:all .2s;
-}
-.featured-stat:hover{
-  background:#fff;
-  box-shadow:0 2px 8px rgba(0,0,0,.06);
-  transform:translateY(-2px);
-}
-.featured-stat-value{
-  font-size:1.65rem;font-weight:800;
-  color:var(--navy);line-height:1;
-  margin-bottom:5px;
-}
-.featured-stat-label{
-  font-size:.72rem;color:var(--tx3);
-  font-weight:600;text-transform:uppercase;
-  letter-spacing:.03em;
+.featured-title .highlight{
+  color:var(--crimson);
 }
 
 .featured-description{
-  margin-bottom:28px;
-}
-.featured-description p{
-  font-size:.96rem;color:var(--tx2);
-  line-height:1.7;margin:0;
+  font-size:.82rem;color:var(--tx2);
+  line-height:1.5;
+  margin-bottom:8px;
 }
 
-.featured-actions{
-  display:flex;gap:12px;flex-wrap:wrap;
+.featured-book-intro{
+  background:rgba(237,27,59,.03);
+  border-left:2px solid var(--crimson);
+  padding:8px;
+  margin-bottom:12px;
+  border-radius:4px;
 }
-.featured-btn-primary,
-.featured-btn-secondary,
-.featured-btn-disabled{
-  display:inline-flex;align-items:center;gap:9px;
-  padding:13px 26px;border-radius:99px;
-  font-weight:700;font-size:.88rem;
-  transition:all .25s;cursor:pointer;
-  text-decoration:none;border:none;
-  letter-spacing:.01em;
+
+.featured-book-intro-label{
+  font-size:.68rem;
+  font-weight:700;
+  color:var(--crimson);
+  text-transform:uppercase;
+  letter-spacing:.02em;
+  margin-bottom:4px;
 }
-.featured-btn-primary{
+
+.featured-book-intro-title{
+  font-size:.9rem;
+  font-weight:800;
+  color:var(--navy);
+  margin-bottom:4px;
+  line-height:1.2;
+}
+
+.featured-book-intro-text{
+  font-size:.76rem;
+  color:var(--tx3);
+  line-height:1.4;
+}
+
+.featured-view-all{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:6px 12px;border-radius:99px;
+  font-weight:700;font-size:.75rem;
   background:var(--crimson);
   color:#fff;
-  box-shadow:0 4px 14px rgba(237,27,59,.25);
+  box-shadow:0 2px 8px rgba(237,27,59,.25);
+  transition:all .25s;
+  text-decoration:none;
+  letter-spacing:.01em;
+  width:fit-content;
 }
-.featured-btn-primary:hover{
+.featured-view-all:hover{
   transform:translateY(-2px);
-  box-shadow:0 6px 20px rgba(237,27,59,.35);
+  box-shadow:0 4px 14px rgba(237,27,59,.35);
   background:#c2164a;
   color:#fff;
 }
-.featured-btn-secondary{
+
+/* Center: Big Featured Book */
+.featured-main-book{
   background:#fff;
-  border:1.5px solid rgba(0,0,0,.12);
-  color:var(--tx2);
-}
-.featured-btn-secondary:hover{
-  background:#fafbfc;
-  border-color:rgba(0,0,0,.2);
-  transform:translateY(-2px);
-  box-shadow:0 4px 12px rgba(0,0,0,.08);
-  color:var(--tx1);
-}
-.featured-btn-disabled{
-  background:#f1f5f9;
-  color:#94a3b8;
-  cursor:not-allowed;
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 2px 14px rgba(0,0,0,.07);
   border:1px solid rgba(0,0,0,.06);
+  transition:all .3s;
+  text-decoration:none;
+  color:inherit;
+  display:block;
+  height:fit-content;
 }
+.featured-main-book:hover{
+  transform:translateY(-5px);
+  box-shadow:0 10px 28px rgba(0,0,0,.12);
+  border-color:rgba(237,27,59,.25);
+}
+
+.featured-main-cover{
+  width:100%;
+  aspect-ratio:3/4.3;
+  object-fit:cover;
+  background:linear-gradient(135deg, #f1f5f9, #e2e8f0);
+}
+
+.featured-main-info{
+  padding:14px;
+}
+
+.featured-main-badge{
+  display:inline-flex;align-items:center;gap:3px;
+  background:rgba(237,27,59,.08);
+  color:var(--crimson);
+  font-size:.58rem;font-weight:800;
+  padding:3px 7px;border-radius:99px;
+  margin-bottom:5px;
+  text-transform:uppercase;
+  letter-spacing:.02em;
+}
+
+.featured-main-title{
+  font-size:.95rem;font-weight:800;
+  color:var(--navy);
+  line-height:1.3;
+  margin-bottom:4px;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+
+.featured-main-author{
+  font-size:.72rem;color:var(--tx3);
+  font-weight:600;
+  display:flex;align-items:center;gap:3px;
+  margin-bottom:5px;
+}
+
+.featured-main-category{
+  display:inline-block;
+  font-size:.66rem;font-weight:700;
+  color:var(--gold-dark);
+  background:rgba(194,164,113,.12);
+  padding:3px 7px;border-radius:99px;
+}
+
+/* Right: Small Books Grid (2x2) */
+.featured-small-grid{
+  display:grid;
+  grid-template-columns:repeat(2, 1fr);
+  gap:16px;
+}
+
+.featured-small-book{
+  background:#fff;
+  border-radius:10px;
+  overflow:hidden;
+  box-shadow:0 2px 8px rgba(0,0,0,.06);
+  border:1px solid rgba(0,0,0,.05);
+  transition:all .3s;
+  text-decoration:none;
+  color:inherit;
+  display:block;
+}
+.featured-small-book:hover{
+  transform:translateY(-3px);
+  box-shadow:0 6px 18px rgba(0,0,0,.1);
+  border-color:rgba(237,27,59,.2);
+}
+
+.featured-small-cover{
+  width:100%;
+  aspect-ratio:3/4;
+  object-fit:cover;
+  background:linear-gradient(135deg, #f1f5f9, #e2e8f0);
+}
+
+.featured-small-info{
+  padding:7px;
+}
+
+.featured-small-title{
+  font-size:.68rem;font-weight:700;
+  color:var(--navy);
+  line-height:1.25;
+  margin-bottom:3px;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+
+.featured-small-author{
+  font-size:.6rem;color:var(--tx3);
+  font-weight:600;
+  display:flex;align-items:center;gap:2px;
+  margin-bottom:4px;
+}
+
+.featured-small-category{
+  display:inline-block;
+  font-size:.56rem;font-weight:700;
+  color:var(--crimson);
+  background:rgba(237,27,59,.08);
+  padding:2px 6px;border-radius:99px;
+  text-transform:uppercase;
+  letter-spacing:.02em;
+}
+  transition:all .3s;
+  text-decoration:none;
+  color:inherit;
+  display:block;
+}
+.featured-small-book:hover{
+  transform:translateY(-4px);
+  box-shadow:0 8px 24px rgba(0,0,0,.12);
+  border-color:rgba(237,27,59,.2);
+}
+
+.featured-small-cover{
+  width:100%;
+  aspect-ratio:3/4;
+  object-fit:cover;
+  background:linear-gradient(135deg, #f1f5f9, #e2e8f0);
+}
+
+.featured-small-info{
+  padding:11px;
+}
+
+.featured-small-title{
+  font-size:.82rem;font-weight:700;
+  color:var(--navy);
+  line-height:1.25;
+  margin-bottom:4px;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+
+.featured-small-author{
+  font-size:.65rem;color:var(--tx3);
+  font-weight:600;
+  display:flex;align-items:center;gap:3px;
+  margin-bottom:6px;
+}
+
+.featured-small-category{
+  display:inline-block;
+  font-size:.62rem;font-weight:700;
+  color:var(--crimson);
+  background:rgba(237,27,59,.08);
+  padding:3px 8px;border-radius:99px;
+  text-transform:uppercase;
+  letter-spacing:.02em;
+}
+
+/* Editorial showcase treatment */
+.featured-book-section{
+  background:
+    linear-gradient(120deg,rgba(255,255,255,.92),rgba(255,247,239,.92)),
+    repeating-linear-gradient(90deg,transparent 0,transparent 80px,rgba(20,40,75,.035) 81px,transparent 82px);
+  padding:76px 24px 84px;
+  border-top:1px solid rgba(20,40,75,.08);
+  border-bottom:1px solid rgba(20,40,75,.08);
+}
+.featured-container{
+  max-width:844px;
+  grid-template-columns:200px 300px 300px;
+  gap:36px;
+  align-items:center;
+}
+.featured-text-side{
+  padding:18px 0 18px 24px;
+  border-left:3px solid var(--crimson);
+}
+.featured-eyebrow{
+  background:var(--navy);
+  border-color:var(--navy);
+  color:#fff;
+  font-size:.66rem;
+  padding:5px 11px;
+  margin-bottom:16px;
+}
+.featured-title{
+  font-size:clamp(1.8rem,2.6vw,2.55rem);
+  line-height:1.05;
+  letter-spacing:-.02em;
+  margin-bottom:14px;
+}
+.featured-description{
+  color:#536174;
+  font-size:.82rem;
+  line-height:1.7;
+  margin-bottom:18px;
+}
+.featured-book-intro{
+  background:rgba(255,255,255,.75);
+  border:1px solid rgba(20,40,75,.1);
+  border-left:0;
+  padding:12px 13px;
+  margin-bottom:18px;
+  border-radius:0 10px 10px 0;
+}
+.featured-book-intro-label{font-size:.61rem;letter-spacing:.08em}
+.featured-book-intro-title{font-size:.86rem;margin-bottom:5px}
+.featured-book-intro-text{font-size:.7rem;line-height:1.5}
+.featured-view-all{
+  border-radius:7px;
+  padding:8px 14px;
+  font-size:.7rem;
+  background:var(--crimson);
+}
+.featured-main-book{
+  border-radius:8px;
+  box-shadow:0 18px 38px rgba(20,40,75,.16),0 3px 8px rgba(20,40,75,.08);
+  height:540px;
+  display:flex;
+  flex-direction:column;
+}
+.featured-main-cover{flex:none;width:100%;height:auto;aspect-ratio:2/3}
+.featured-main-info{padding:14px 16px 16px}
+.featured-main-badge{font-size:.56rem;padding:3px 7px}
+.featured-main-title{font-size:1rem;margin-bottom:5px}
+.featured-main-author{font-size:.7rem;margin-bottom:7px}
+.featured-main-category{font-size:.58rem;padding:3px 8px}
+.featured-small-grid{gap:16px;height:540px;grid-template-rows:repeat(2,minmax(0,1fr))}
+.featured-small-book{border-radius:8px;box-shadow:0 8px 20px rgba(20,40,75,.09);min-height:0;display:flex;flex-direction:column}
+.featured-small-cover{flex:none;width:100%;height:auto;aspect-ratio:2/3}
+.featured-small-info{padding:10px 11px 11px}
+.featured-small-title{font-size:.76rem}
+.featured-small-author{font-size:.61rem}
+.featured-small-category{font-size:.55rem;padding:3px 7px}
 
 /* Responsive */
 @media(max-width:992px){
+  .featured-book-section{padding:58px 20px 64px}
   .featured-container{
     grid-template-columns:1fr;
-    gap:40px;text-align:center;
-    padding:40px 30px;
+    gap:24px;
+    max-width:640px;
   }
-  .featured-cover-wrapper{max-width:280px;margin:0 auto}
-  .featured-info-content{max-width:100%}
-  .featured-meta{justify-content:center}
-  .featured-actions{justify-content:center}
+  .featured-text-side{
+    position:static;
+    text-align:center;
+    padding:0 0 22px;
+    border-left:0;
+    border-bottom:3px solid var(--crimson);
+  }
+  .featured-eyebrow{
+    display:inline-flex;
+  }
+  .featured-description{max-width:520px;margin-left:auto;margin-right:auto}
+  .featured-book-intro{max-width:420px;margin-left:auto;margin-right:auto;text-align:left;border-left:1px solid rgba(20,40,75,.1);border-radius:10px}
+  .featured-main-book{
+    max-width:350px;
+    margin:0 auto;
+    height:auto;
+  }
+  .featured-small-grid{
+    grid-template-columns:repeat(2, 1fr);
+    grid-template-rows:none;
+    height:auto;
+    max-width:500px;
+    margin:0 auto;
+  }
+  .featured-main-cover{height:auto;aspect-ratio:2/3;flex:none}
+  .featured-small-book{display:block}
+  .featured-small-cover{height:auto;aspect-ratio:2/3;flex:none}
+}
+
+@media(max-width:576px){
+  .featured-book-section{padding:44px 16px 52px}
+  .featured-title{font-size:2rem}
+  .featured-description{font-size:.76rem}
+  .featured-small-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    max-width:none;
+  }
 }
 
 /* ══════════════ BARU DIKEMBALIKAN SECTION ══════════════ */
@@ -1633,106 +1837,102 @@ a{text-decoration:none;color:inherit}
 </section>
 
 
-{{-- ══ FEATURED BOOK ══ --}}
+{{-- ══ REKOMENDASI MINGGU INI ══ --}}
 <section class="featured-book-section">
   @php
-    // Ambil buku dengan peminjaman terbanyak untuk featured
-    $featuredBook = \App\Models\Buku::withCount('peminjaman')
-      ->orderByDesc('peminjaman_count')
-      ->first();
+    // Random buku per hari - seed berdasarkan tanggal
+    $today = date('Y-m-d');
+    $seed = crc32($today);
+    
+    // Ambil 5 buku random (1 featured + 4 small) dengan seed hari ini
+    $recommendedBooks = \App\Models\Buku::where('stok', '>', 0)
+      ->inRandomOrder($seed)
+      ->take(5)
+      ->get();
+    
+    $mainBook = $recommendedBooks->first();
+    $smallBooks = $recommendedBooks->skip(1)->take(4);
   @endphp
   
-  @if($featuredBook)
+  @if($recommendedBooks->count() > 0)
   <div class="featured-container">
-    {{-- Left Side: Book Cover --}}
-    <div class="featured-cover-side">
-      <div class="featured-cover-wrapper">
-        @if($featuredBook->cover)
-          <img src="{{ Storage::url($featuredBook->cover) }}" alt="{{ $featuredBook->judul }}" class="featured-cover-img">
-        @else
-          <div class="featured-cover-placeholder">
-            <i class="bi bi-book-fill"></i>
-            <div class="featured-cover-title">{{ $featuredBook->judul }}</div>
-          </div>
-        @endif
-        
-        {{-- Floating badge --}}
-        <div class="featured-badge">
-          <i class="bi bi-star-fill"></i>
-          <span>Featured</span>
+    {{-- Left: Text Info (Compact) --}}
+    <div class="featured-text-side">
+      <div class="featured-eyebrow">
+        ⭐ Rekomendasi
+      </div>
+      
+      <h2 class="featured-title">
+        Buku Pilihan <span class="highlight">Minggu Ini</span>
+      </h2>
+      
+      <p class="featured-description">
+        Buku yang direkomendasikan untuk kamu minggu ini. Koleksi terbaik pilihan pustakawan untuk menambah wawasan dan pengetahuan.
+      </p>
+      
+      @if($mainBook)
+      <div class="featured-book-intro">
+        <div class="featured-book-intro-label">📚 Pilihan Hari Ini</div>
+        <div class="featured-book-intro-title">{{ Str::limit($mainBook->judul, 35) }}</div>
+        <div class="featured-book-intro-text">
+          Buku pilihan spesial untuk hari ini. Jangan lewatkan!
         </div>
       </div>
+      @endif
+      
+      <a href="{{ url('/buku') }}" class="featured-view-all">
+        <span>View All</span>
+        <i class="bi bi-arrow-right"></i>
+      </a>
     </div>
     
-    {{-- Right Side: Book Info --}}
-    <div class="featured-info-side">
-      <div class="featured-info-content">
-        {{-- Label --}}
-        <div class="featured-label">
-          <i class="bi bi-bookmark-star-fill"></i>
-          <span>Buku Pilihan</span>
+    {{-- Center: Big Featured Book --}}
+    @if($mainBook)
+    <a href="{{ route('register') }}" class="featured-main-book">
+      @if($mainBook->cover)
+        <img src="{{ Storage::url($mainBook->cover) }}" alt="{{ $mainBook->judul }}" class="featured-main-cover">
+      @else
+        <div class="featured-main-cover" style="display:flex;align-items:center;justify-content:center;color:#94a3b8">
+          <i class="bi bi-book-fill" style="font-size:3rem;opacity:.3"></i>
         </div>
-        
-        {{-- Title --}}
-        <h2 class="featured-title">{{ $featuredBook->judul }}</h2>
-        
-        {{-- Author & Category --}}
-        <div class="featured-meta">
-          <div class="featured-author">
-            <i class="bi bi-person-fill"></i>
-            <span>{{ $featuredBook->pengarang }}</span>
-          </div>
-          <div class="featured-category">
-            <i class="bi bi-tag-fill"></i>
-            <span>{{ $featuredBook->kategori }}</span>
-          </div>
+      @endif
+      
+      <div class="featured-main-info">
+        <span class="featured-main-badge">
+          <i class="bi bi-star-fill"></i> Featured
+        </span>
+        <h3 class="featured-main-title">{{ $mainBook->judul }}</h3>
+        <div class="featured-main-author">
+          <i class="bi bi-person-fill"></i>
+          <span>{{ $mainBook->pengarang }}</span>
         </div>
-        
-        {{-- Stats --}}
-        <div class="featured-stats">
-          <div class="featured-stat">
-            <div class="featured-stat-value">{{ $featuredBook->peminjaman_count }}</div>
-            <div class="featured-stat-label">Peminjaman</div>
-          </div>
-          <div class="featured-stat">
-            <div class="featured-stat-value">{{ $featuredBook->stok }}</div>
-            <div class="featured-stat-label">Stok Tersedia</div>
-          </div>
-          <div class="featured-stat">
-            <div class="featured-stat-value">{{ $featuredBook->tahun_terbit }}</div>
-            <div class="featured-stat-label">Tahun Terbit</div>
-          </div>
-        </div>
-        
-        {{-- Description --}}
-        <div class="featured-description">
-          <p>
-            Buku ini menjadi favorit dan paling banyak dipinjam oleh para siswa. 
-            {{ $featuredBook->kategori }} yang menarik dengan pembahasan mendalam, 
-            cocok untuk {{ strtolower($featuredBook->kategori) === 'pemrograman' ? 'belajar coding' : 'menambah wawasan' }} 
-            dan pengembangan diri. Jangan sampai kehabisan!
-          </p>
-        </div>
-        
-        {{-- CTA Buttons --}}
-        <div class="featured-actions">
-          @if($featuredBook->stok > 0)
-            <a href="{{ route('register') }}" class="featured-btn-primary">
-              <i class="bi bi-book"></i>
-              <span>Pinjam Sekarang</span>
-            </a>
-            <a href="{{ route('register') }}" class="featured-btn-secondary">
-              <i class="bi bi-info-circle"></i>
-              <span>Lihat Detail</span>
-            </a>
-          @else
-            <button class="featured-btn-disabled" disabled>
-              <i class="bi bi-x-circle"></i>
-              <span>Stok Habis</span>
-            </button>
-          @endif
-        </div>
+        <span class="featured-main-category">{{ $mainBook->kategori }}</span>
       </div>
+    </a>
+    @endif
+    
+    {{-- Right: Small Books Grid (2x2) --}}
+    <div class="featured-small-grid">
+      @foreach($smallBooks as $book)
+        <a href="{{ route('register') }}" class="featured-small-book">
+          @if($book->cover)
+            <img src="{{ Storage::url($book->cover) }}" alt="{{ $book->judul }}" class="featured-small-cover">
+          @else
+            <div class="featured-small-cover" style="display:flex;align-items:center;justify-content:center;color:#94a3b8">
+              <i class="bi bi-book-fill" style="font-size:1.5rem;opacity:.3"></i>
+            </div>
+          @endif
+          
+          <div class="featured-small-info">
+            <h4 class="featured-small-title">{{ $book->judul }}</h4>
+            <div class="featured-small-author">
+              <i class="bi bi-person-fill"></i>
+              <span>{{ $book->pengarang }}</span>
+            </div>
+            <span class="featured-small-category">{{ $book->kategori }}</span>
+          </div>
+        </a>
+      @endforeach
     </div>
   </div>
   @endif
@@ -2429,42 +2629,117 @@ a{text-decoration:none;color:inherit}
   font-size:.92rem;color:var(--tx3);
   max-width:480px;margin:0 auto;
 }
+
+/* Slider Wrapper */
+.cs-slider-outer{
+  position:relative;
+  display:flex;
+  align-items:center;
+  gap:0;
+}
+
+/* Panah kiri/kanan */
+.cs-arrow{
+  flex-shrink:0;
+  width:40px;height:40px;
+  border-radius:50%;
+  background:#fff;
+  border:1.5px solid #e5e7eb;
+  box-shadow:0 2px 12px rgba(0,0,0,.1);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  transition:all .2s;
+  z-index:2;
+  color:var(--navy);
+  font-size:1rem;
+}
+.cs-arrow:hover{
+  background:var(--crimson);
+  border-color:var(--crimson);
+  color:#fff;
+  box-shadow:0 4px 16px rgba(237,27,59,.35);
+  transform:scale(1.08);
+}
+.cs-arrow:disabled,
+.cs-arrow.disabled{
+  opacity:.35;
+  cursor:not-allowed;
+  pointer-events:none;
+}
+.cs-arrow:disabled:hover,
+.cs-arrow.disabled:hover{
+  background:#fff;
+  border-color:#e5e7eb;
+  color:var(--navy);
+  transform:none;
+  box-shadow:0 2px 12px rgba(0,0,0,.1);
+}
+
 /* Scroll container */
 .cs-scroll-wrap{
   overflow:hidden;
-  margin:0 -24px;
-  padding:0 24px;
+  flex:1;
+  margin:0 12px;
 }
 .cs-scroll{
-  display:flex;gap:20px;
-  overflow-x:auto;
-  scroll-behavior:smooth;
-  padding-bottom:16px;
-  scrollbar-width:thin;
-  scrollbar-color:rgba(237,27,59,.3) rgba(237,27,59,.08);
+  position:relative;
+  height:470px;
+  overflow:hidden;
+  padding:0;
 }
-.cs-scroll::-webkit-scrollbar{height:5px}
-.cs-scroll::-webkit-scrollbar-track{background:rgba(237,27,59,.06);border-radius:99px}
-.cs-scroll::-webkit-scrollbar-thumb{background:rgba(237,27,59,.35);border-radius:99px}
-.cs-scroll::-webkit-scrollbar-thumb:hover{background:rgba(237,27,59,.5)}
+
 /* Card */
 .cs-card{
-  flex:0 0 200px;
+  position:absolute;
+  top:12px;
+  left:50%;
+  width:210px;
+  min-width:0;
   background:#fff;
-  border:1.5px solid rgba(237,27,59,.15);
+  border:1.5px solid rgba(237,27,59,.12);
   border-radius:16px;
   overflow:hidden;
-  box-shadow:0 4px 16px rgba(237,27,59,.12);
-  transition:transform .25s,box-shadow .25s,border-color .25s;
+  box-shadow:0 4px 16px rgba(237,27,59,.08);
+  transform:translateX(-50%) scale(.72);
+  transform-origin:center bottom;
+  opacity:0;
+  filter:blur(1px) saturate(.8);
+  pointer-events:none;
+  transition:transform .45s cubic-bezier(.22,1,.36,1),opacity .35s,filter .35s,box-shadow .35s;
+  z-index:1;
+}
+.cs-card.is-left-back{
+  transform:translateX(calc(-50% - 330px)) translateY(48px) scale(.72) rotate(-5deg);
+  opacity:.52;z-index:2;
+}
+.cs-card.is-left-front{
+  transform:translateX(calc(-50% - 150px)) translateY(18px) scale(.9) rotate(-2deg);
+  opacity:.92;z-index:4;filter:none;pointer-events:auto;
+}
+.cs-card.is-right-front{
+  transform:translateX(calc(-50% + 150px)) translateY(18px) scale(.9) rotate(2deg);
+  opacity:.92;z-index:4;filter:none;pointer-events:auto;
+}
+.cs-card.is-right-back{
+  transform:translateX(calc(-50% + 330px)) translateY(48px) scale(.72) rotate(5deg);
+  opacity:.52;z-index:2;
+}
+.cs-card.is-active{
+  transform:translateX(calc(-50% - 72px)) translateY(0) scale(1) rotate(-1deg);
+  opacity:1;z-index:6;filter:none;pointer-events:auto;
+}
+.cs-card.is-active-next{
+  transform:translateX(calc(-50% + 72px)) translateY(0) scale(1) rotate(1deg);
+  opacity:1;z-index:6;filter:none;pointer-events:auto;
 }
 .cs-card:hover{
-  transform:translateY(-6px);
-  box-shadow:0 16px 32px rgba(237,27,59,.25);
-  border-color:rgba(237,27,59,.35);
+  box-shadow:0 16px 32px rgba(237,27,59,.2);
+  border-color:rgba(237,27,59,.3);
 }
 .cs-cover{
   position:relative;
-  height:270px;
+  aspect-ratio:2/3;
+  height:auto;
   background:#f8f9fa;
   overflow:hidden;
 }
@@ -2480,7 +2755,7 @@ a{text-decoration:none;color:inherit}
 }
 .cs-badge{
   position:absolute;top:10px;left:10px;
-  background:rgba(237,27,59,.95);
+  background:rgba(237,27,59,.92);
   backdrop-filter:blur(6px);
   color:#fff;padding:5px 11px;border-radius:7px;
   font-size:.68rem;font-weight:800;letter-spacing:.06em;
@@ -2496,21 +2771,83 @@ a{text-decoration:none;color:inherit}
   margin-bottom:6px;
 }
 .cs-judul{
-  font-size:.9rem;font-weight:700;color:var(--navy);
+  font-size:.88rem;font-weight:700;color:var(--navy);
   line-height:1.35;margin-bottom:5px;
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
 }
 .cs-penulis{
-  font-size:.78rem;color:var(--tx3);
-  margin-bottom:12px;
+  font-size:.76rem;color:var(--tx3);
+  margin-bottom:10px;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
 .cs-date{
   display:flex;align-items:center;gap:6px;
-  background:rgba(237,27,59,.08);
-  border:1px solid rgba(237,27,59,.18);
-  border-radius:8px;padding:7px 10px;
-  font-size:.76rem;font-weight:600;color:var(--crimson);
+  background:rgba(237,27,59,.07);
+  border:1px solid rgba(237,27,59,.15);
+  border-radius:8px;padding:6px 10px;
+  font-size:.74rem;font-weight:600;color:var(--crimson);
+}
+.cs-launch-date{
+  display:flex;align-items:center;justify-content:center;gap:5px;
+  min-height:38px;
+  padding:8px 10px;
+  background:#fff;
+  border-top:1px solid rgba(237,27,59,.1);
+  color:var(--crimson);
+  font-size:.68rem;font-weight:800;
+  letter-spacing:.02em;
+}
+
+/* Dots */
+.cs-dots{
+  display:flex;justify-content:center;align-items:center;
+  gap:6px;
+  margin-top:24px;
+}
+.cs-dot{
+  width:8px;height:8px;
+  border-radius:99px;
+  background:#e5e7eb;
+  border:none;
+  cursor:pointer;
+  transition:all .25s;
+  padding:0;
+}
+.cs-dot.active{
+  width:24px;
+  background:var(--crimson);
+}
+
+/* Responsive */
+@media(max-width:992px){
+  .cs-scroll{height:430px}
+  .cs-card{width:190px}
+  .cs-card.is-left-back{transform:translateX(calc(-50% - 230px)) translateY(48px) scale(.68) rotate(-5deg)}
+  .cs-card.is-right-back{transform:translateX(calc(-50% + 230px)) translateY(48px) scale(.68) rotate(5deg)}
+  .cs-card.is-left-front{transform:translateX(calc(-50% - 120px)) translateY(18px) scale(.86) rotate(-2deg)}
+  .cs-card.is-right-front{transform:translateX(calc(-50% + 120px)) translateY(18px) scale(.86) rotate(2deg)}
+  .cs-card.is-active{transform:translateX(calc(-50% - 60px)) scale(.96) rotate(-1deg)}
+  .cs-card.is-active-next{transform:translateX(calc(-50% + 60px)) scale(.96) rotate(1deg)}
+}
+@media(max-width:576px){
+  .cs-section{padding:52px 0 58px}
+  .cs-inner{padding:0 16px}
+  .cs-head{margin-bottom:28px}
+  .cs-title{font-size:1.55rem}
+  .cs-sub{font-size:.78rem;line-height:1.55}
+  .cs-slider-outer{margin:0}
+  .cs-scroll-wrap{margin:0 4px}
+  .cs-scroll{height:390px}
+  .cs-card{width:156px}
+  .cs-card.is-left-back{transform:translateX(calc(-50% - 148px)) translateY(70px) scale(.48) rotate(-5deg)}
+  .cs-card.is-right-back{transform:translateX(calc(-50% + 148px)) translateY(70px) scale(.48) rotate(5deg)}
+  .cs-card.is-left-front{transform:translateX(calc(-50% - 82px)) translateY(34px) scale(.68) rotate(-3deg)}
+  .cs-card.is-right-front{transform:translateX(calc(-50% + 82px)) translateY(34px) scale(.68) rotate(3deg)}
+  .cs-card.is-active{transform:translateX(-50%) translateY(0) scale(.92) rotate(0deg)}
+  .cs-card.is-active-next{transform:translateX(calc(-50% + 82px)) translateY(34px) scale(.68) rotate(3deg)}
+  .cs-card.is-active,.cs-card.is-active-next{z-index:6}
+  .cs-launch-date{font-size:.6rem;min-height:34px;padding:7px 4px}
+  .cs-arrow{ width:34px;height:34px;font-size:.85rem; }
 }
 </style>
 
@@ -2524,37 +2861,140 @@ a{text-decoration:none;color:inherit}
       <p class="cs-sub">Tandai kalendermu! Buku-buku baru ini akan segera bisa dipinjam.</p>
     </div>
 
-    <div class="cs-scroll-wrap">
-      <div class="cs-scroll">
-        @foreach($bukuSegeraHadir as $b)
-        <div class="cs-card">
-          <div class="cs-cover">
-            @if($b->cover)
-              <img src="{{ asset('storage/' . $b->cover) }}" alt="{{ $b->judul }}">
-            @else
-              <div class="cs-cover-fallback">
-                <i class="bi bi-book-fill" style="font-size:3rem;color:rgba(237,27,59,.25)"></i>
+    <div class="cs-slider-outer">
+      {{-- Panah Kiri --}}
+      <button class="cs-arrow" id="csArrowPrev" onclick="csSlide(-1)" aria-label="Sebelumnya">
+        <i class="bi bi-chevron-left"></i>
+      </button>
+
+      {{-- Scroll Container --}}
+      <div class="cs-scroll-wrap">
+        <div class="cs-scroll" id="csScroll">
+          @foreach($bukuSegeraHadir->take(15) as $b)
+          <div class="cs-card">
+            <div class="cs-cover">
+              @if($b->cover)
+                <img src="{{ asset('storage/' . $b->cover) }}" alt="{{ $b->judul }}">
+              @else
+                <div class="cs-cover-fallback">
+                  <i class="bi bi-book-fill" style="font-size:3rem;color:rgba(237,27,59,.22)"></i>
+                </div>
+              @endif
+              <div class="cs-badge">
+                <i class="bi bi-clock-fill" style="font-size:.6rem"></i> SOON
               </div>
-            @endif
-            <div class="cs-badge">
-              <i class="bi bi-clock-fill" style="font-size:.6rem"></i> SOON
             </div>
-          </div>
-          <div class="cs-body">
-            <div class="cs-kat">{{ $b->kategori }}</div>
-            <div class="cs-judul">{{ $b->judul }}</div>
-            <div class="cs-penulis">{{ $b->pengarang }}</div>
-            <div class="cs-date">
+            <div class="cs-launch-date">
               <i class="bi bi-calendar-event-fill"></i>
-              {{ \Carbon\Carbon::parse($b->tanggal_rilis)->isoFormat('D MMM YY') }}
+              Launching {{ \Carbon\Carbon::parse($b->tanggal_rilis)->isoFormat('D MMM YY') }}
             </div>
           </div>
+          @endforeach
         </div>
-        @endforeach
       </div>
+
+      {{-- Panah Kanan --}}
+      <button class="cs-arrow" id="csArrowNext" onclick="csSlide(1)" aria-label="Berikutnya">
+        <i class="bi bi-chevron-right"></i>
+      </button>
     </div>
+
+    {{-- Dots Indicator --}}
+    <div class="cs-dots" id="csDots"></div>
   </div>
 </section>
+
+<script>
+(function(){
+  const scroll = document.getElementById('csScroll');
+  const dotsEl = document.getElementById('csDots');
+  const prevBtn = document.getElementById('csArrowPrev');
+  const nextBtn = document.getElementById('csArrowNext');
+  if(!scroll) return;
+
+  let currentIndex = 0;
+  const cards = [...scroll.querySelectorAll('.cs-card')];
+
+  function getVisibleCount(){
+    return window.innerWidth <= 576 ? 1 : 2;
+  }
+
+  function buildDots(){
+    dotsEl.innerHTML = '';
+    const total = Math.max(1, cards.length);
+    for(let i = 0; i < total; i++){
+      const dot = document.createElement('button');
+      dot.className = 'cs-dot' + (i === currentIndex ? ' active' : '');
+      dot.setAttribute('aria-label', 'Halaman ' + (i+1));
+      dot.addEventListener('click', () => goToIndex(i));
+      dotsEl.appendChild(dot);
+    }
+  }
+
+  function updateArrows(){
+    prevBtn.classList.remove('disabled');
+    nextBtn.classList.remove('disabled');
+  }
+
+  function updateDots(){
+    dotsEl.querySelectorAll('.cs-dot').forEach((d, i) => {
+      d.classList.toggle('active', i === currentIndex);
+    });
+  }
+
+  function updateCards(){
+    const visible = getVisibleCount();
+    cards.forEach((card, index) => {
+      card.className = 'cs-card';
+      let distance = (index - currentIndex + cards.length) % cards.length;
+      if(distance > cards.length / 2) distance -= cards.length;
+      if(distance === 0) card.classList.add('is-active');
+      else if(visible === 2 && distance === 1) card.classList.add('is-active-next');
+      else if(distance === -1) card.classList.add('is-left-front');
+      else if(distance === 1 && visible === 1) card.classList.add('is-right-front');
+      else if(distance === -2) card.classList.add('is-left-back');
+      else if(distance === 2) card.classList.add('is-right-back');
+      else if(distance < 0) card.classList.add('is-left-back');
+      else if(distance > 0) card.classList.add('is-right-back');
+    });
+    updateDots();
+    updateArrows();
+  }
+
+  function goToIndex(index){
+    currentIndex = (index + cards.length) % cards.length;
+    updateCards();
+  }
+
+  window.csSlide = function(dir){
+    goToIndex(currentIndex + dir);
+  };
+
+  // Init
+  buildDots();
+  updateCards();
+  updateArrows();
+
+  // Rebuild on resize
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      currentIndex = 0;
+      buildDots();
+      updateCards();
+      updateArrows();
+    }, 200);
+  });
+
+  let startX = 0;
+  scroll.addEventListener('pointerdown', event => { startX = event.clientX; });
+  scroll.addEventListener('pointerup', event => {
+    const delta = event.clientX - startX;
+    if(Math.abs(delta) > 40) csSlide(delta < 0 ? 1 : -1);
+  });
+})();
+</script>
 @endif
 
 {{-- ══ CTA ══ --}}

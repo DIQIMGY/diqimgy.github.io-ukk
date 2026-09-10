@@ -239,6 +239,65 @@
   
   .welcome-banner-siswa {
     padding: 20px 18px;
+    align-items:flex-start;
+    gap:14px;
+  }
+
+  .welcome-banner-siswa > div:last-child > div {
+    width:48px !important;
+    height:48px !important;
+  }
+
+  .table-responsive {
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+
+  .table-lib-modern {
+    min-width:620px;
+  }
+}
+
+@media (max-width: 576px) {
+  .welcome-banner-siswa {
+    padding:18px 16px;
+    border-radius:14px;
+  }
+
+  .welcome-banner-siswa h1 {
+    font-size:1.2rem !important;
+    max-width:190px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+
+  .welcome-banner-siswa > div:first-child > div {
+    gap:6px !important;
+  }
+
+  .welcome-banner-siswa > div:first-child > div span {
+    padding:4px 8px !important;
+    font-size:.66rem !important;
+  }
+
+  .stat-card-siswa {
+    padding:16px 16px;
+  }
+
+  .action-card-siswa {
+    padding:15px 14px;
+    gap:12px;
+  }
+
+  .action-icon-siswa {
+    width:44px;
+    height:44px;
+    font-size:1.1rem;
+  }
+
+  .profile-card-siswa {
+    padding:18px 16px;
   }
 }
 

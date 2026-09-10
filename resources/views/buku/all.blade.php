@@ -37,24 +37,133 @@ img{display:block}
   padding:36px 32px 60px;
 }
 
-/* Info bar */
+/* Info bar - WOOD BACKGROUND + MULTIPLE SPOTLIGHTS */
 .info-bar{
-  background:#fff;
-  border-radius:10px;
-  padding:16px 24px;
+  background:
+    linear-gradient(180deg,
+      rgba(139,90,43,.15) 0%,
+      rgba(74,44,14,.25) 100%
+    ),
+    url('/image/wood-bg.jpg') center/cover no-repeat;
+  background-color:#8b5a2b;
+  border-radius:12px;
+  padding:20px 28px;
   margin-bottom:32px;
   display:flex;align-items:center;justify-content:space-between;
-  box-shadow:0 2px 12px rgba(0,0,0,.08);
-  border:1.5px solid #e5e7eb;
+  box-shadow:
+    0 4px 16px rgba(0,0,0,.2),
+    inset 0 1px 0 rgba(255,255,255,.15);
+  border:1.5px solid rgba(139,90,43,.4);
+  position:relative;
+  overflow:visible;
+  min-height:80px;
 }
+
+/* Container untuk semua lampu - NEMPEL DI NAVBAR */
+.info-bar-lights{
+  position:absolute;
+  top:-18px; /* Lebih dekat ke navbar */
+  left:0;
+  right:0;
+  display:flex;
+  justify-content:space-evenly;
+  pointer-events:none;
+  z-index:1;
+}
+
+/* Satu lampu spotlight */
+.info-light{
+  position:relative;
+  width:40px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+/* Housing lampu - lebih kecil */
+.info-light-fixture{
+  width:16px;
+  height:8px;
+  background:linear-gradient(180deg,#2c2c2c,#1a1a1a);
+  border-radius:8px 8px 0 0;
+  position:relative;
+  box-shadow:0 2px 4px rgba(0,0,0,.3);
+  z-index:2;
+}
+
+/* Bohlam - lebih kecil */
+.info-light-bulb{
+  position:absolute;
+  bottom:-6px;
+  left:50%;
+  transform:translateX(-50%);
+  width:10px;
+  height:10px;
+  background:radial-gradient(circle,#fff9e6 0%,#f4e5b8 50%,#d4c19a 100%);
+  border-radius:50%;
+  box-shadow:
+    0 0 10px rgba(255,243,176,1),
+    0 0 22px rgba(255,243,176,.85),
+    0 0 38px rgba(255,226,125,.35),
+    0 2px 3px rgba(0,0,0,.2);
+  z-index:3;
+}
+
+/* Cahaya segitiga PENDEK - cuma nyinarin navbar aja */
+.info-light-beam{
+  position:absolute;
+  top:10px;
+  left:50%;
+  transform:translateX(-50%);
+  width:150px;
+  height:100px;
+  background:
+    radial-gradient(ellipse at 50% 6%,rgba(255,249,205,.72) 0%,rgba(255,243,176,.32) 25%,transparent 72%),
+    linear-gradient(180deg,rgba(255,248,196,.18),rgba(255,243,176,.08) 72%,transparent);
+  pointer-events:none;
+  z-index:1;
+  mix-blend-mode:screen;
+  opacity:.64;
+  filter:blur(8px);
+  mask-image:linear-gradient(180deg,transparent,#000 18%,#000 72%,transparent);
+  -webkit-mask-image:linear-gradient(180deg,transparent,#000 18%,#000 72%,transparent);
+}
+.info-light::after{
+  content:'';
+  position:absolute;
+  top:25px;
+  left:50%;
+  width:82px;
+  height:48px;
+  transform:translateX(-50%);
+  background:radial-gradient(ellipse,rgba(255,231,147,.2),transparent 70%);
+  filter:blur(8px);
+  pointer-events:none;
+}
+
 .info-title{
   font-family:'Playfair Display',serif;
-  font-size:1.2rem;font-weight:700;color:var(--navy);
+  font-size:1.3rem;font-weight:800;
+  color:#fff;
+  text-shadow:0 2px 8px rgba(0,0,0,.4);
+  position:relative;
+  z-index:2;
 }
-.info-title span{color:var(--red)}
+.info-title span{
+  color:#ffd700;
+  text-shadow:0 0 12px rgba(255,215,0,.6);
+}
 .info-count{
-  font-size:.8rem;color:var(--tx3);font-weight:600;
-  background:#f0f0f0;padding:4px 12px;border-radius:99px;
+  font-size:.82rem;
+  color:rgba(255,255,255,.85);
+  font-weight:700;
+  background:rgba(0,0,0,.25);
+  backdrop-filter:blur(8px);
+  padding:6px 14px;
+  border-radius:99px;
+  border:1px solid rgba(255,255,255,.2);
+  position:relative;
+  z-index:2;
 }
 
 /* ══════════════════════════════
@@ -82,20 +191,90 @@ img{display:block}
     url('/image/bg-rak.png') center/cover no-repeat;
   background-color:#4a4a52;
   border-radius:8px 8px 0 0;
+  position:relative;
+}
+
+/* ══════════════════════════════
+   LAMPU SPOTLIGHT
+══════════════════════════════ */
+/* Container lampu - per buku tapi absolut ke parent rak */
+.shelf-book-wrapper{
+  position:relative;
+  flex:0 0 auto;
+}
+
+.shelf-book-light{
+  position:absolute;
+  top:-30px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:1;
+}
+
+/* Housing lampu */
+.light-fixture{
+  width:16px;
+  height:8px;
+  background:linear-gradient(180deg,#2c2c2c,#1a1a1a);
+  border-radius:8px 8px 0 0;
+  position:relative;
+  box-shadow:0 2px 4px rgba(0,0,0,.3);
+}
+
+/* Bohlam */
+.light-bulb{
+  position:absolute;
+  bottom:-6px;
+  left:50%;
+  transform:translateX(-50%);
+  width:10px;
+  height:10px;
+  background:radial-gradient(circle,#fff9e6 0%,#f4e5b8 50%,#d4c19a 100%);
+  border-radius:50%;
+  box-shadow:
+    0 0 10px rgba(255,243,176,1),
+    0 0 22px rgba(255,243,176,.85),
+    0 0 38px rgba(255,226,125,.35),
+    0 2px 3px rgba(0,0,0,.2);
+}
+
+/* Cahaya spotlight SEGITIGA - kayak lampu asli NYINARIN BUKU */
+.light-beam{
+  position:absolute;
+  top:18px;
+  left:50%;
+  transform:translateX(-50%);
+  width:118px;
+  height:178px;
+  background:
+    radial-gradient(ellipse at 50% 10%,rgba(255,250,211,.82),rgba(255,243,176,.34) 34%,transparent 74%),
+    linear-gradient(180deg,rgba(255,248,196,.24),rgba(255,243,176,.16) 55%,transparent);
+  pointer-events:none;
+  z-index:4;
+  mix-blend-mode:screen;
+  opacity:.52;
+  filter:blur(5px);
+  mask-image:linear-gradient(180deg,transparent,#000 12%,#000 84%,transparent);
+  -webkit-mask-image:linear-gradient(180deg,transparent,#000 12%,#000 84%,transparent);
 }
 
 /* Satu buku */
 .shelf-book{
   position:relative;
-  flex:0 0 auto;
   cursor:pointer;
   transform-origin:bottom center;
   transition:
     transform .4s cubic-bezier(.34,1.56,.64,1),
     filter .3s ease;
   filter:drop-shadow(2px 4px 10px rgba(0,0,0,.6));
+  z-index:2; /* Di atas cahaya */
 }
 .shelf-book:hover{
+  transform:translateY(-32px) scale(1.08);
+  z-index:50;
+  filter:drop-shadow(0 24px 40px rgba(0,0,0,.75));
+}
+.shelf-book.active{
   transform:translateY(-32px) scale(1.08);
   z-index:50;
   filter:drop-shadow(0 24px 40px rgba(0,0,0,.75));
@@ -114,6 +293,12 @@ img{display:block}
   background:linear-gradient(180deg,rgba(255,255,255,.25),transparent);
   z-index:3;pointer-events:none;
 }
+.shelf-book::after{
+  height:100%;
+  background:radial-gradient(ellipse at 50% 0%,rgba(255,250,211,.28),rgba(255,246,190,.08) 34%,transparent 72%);
+  mix-blend-mode:screen;
+  border-radius:inherit;
+}
 
 .shelf-book-img{
   display:block;
@@ -128,7 +313,7 @@ img{display:block}
 .shelf-book-ph i{font-size:1.6rem;color:rgba(255,255,255,.45)}
 .shelf-book-ph span{font-size:.52rem;font-weight:700;color:rgba(255,255,255,.75);line-height:1.3}
 
-/* Popup info saat hover */
+/* Popup info saat hover - DESKTOP ONLY */
 .book-popup{
   display:none;
   position:absolute;
@@ -154,6 +339,96 @@ img{display:block}
   border-top:8px solid #fff;
 }
 .shelf-book:hover .book-popup{display:block}
+
+/* ══════════════════════════════
+   MOBILE MODAL (FIXED CENTER)
+══════════════════════════════ */
+.mobile-modal-overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  z-index:9999;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+.mobile-modal-overlay.open{
+  display:flex;
+}
+.mobile-modal{
+  background:#fff;
+  border-radius:16px;
+  padding:20px;
+  width:100%;
+  max-width:320px;
+  box-shadow:0 24px 60px rgba(0,0,0,.4);
+  animation:modalIn .25s cubic-bezier(.34,1.56,.64,1);
+  position:relative;
+}
+@keyframes modalIn{
+  from{opacity:0;transform:scale(.85) translateY(20px)}
+  to{opacity:1;transform:scale(1) translateY(0)}
+}
+.mobile-modal-close{
+  position:absolute;top:12px;right:12px;
+  width:28px;height:28px;border-radius:50%;
+  background:#f1f5f9;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;color:#374151;
+  line-height:1;
+}
+.mobile-modal-cover{
+  width:80px;height:110px;
+  object-fit:cover;object-position:center top;
+  border-radius:4px 8px 8px 4px;
+  margin-bottom:12px;
+  box-shadow:2px 4px 12px rgba(0,0,0,.25);
+}
+.mobile-modal-cover-ph{
+  width:80px;height:110px;border-radius:4px 8px 8px 4px;
+  background:linear-gradient(135deg,#14284B,#ED1B3B);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:12px;
+}
+.mobile-modal-cover-ph i{font-size:2rem;color:rgba(255,255,255,.6)}
+.mobile-modal-title{
+  font-size:1rem;font-weight:700;color:#111;
+  line-height:1.3;margin-bottom:4px;
+}
+.mobile-modal-author{
+  font-size:.8rem;color:#6B7280;margin-bottom:4px;
+}
+.mobile-modal-cat{
+  font-size:.75rem;color:#9CA3AF;margin-bottom:10px;
+}
+.mobile-modal-stok{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:.75rem;font-weight:700;padding:4px 12px;
+  border-radius:99px;margin-bottom:14px;
+}
+.mobile-modal-btn{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  background:#ED1B3B;color:#fff;font-size:.85rem;font-weight:700;
+  padding:10px 16px;border-radius:8px;width:100%;
+  text-decoration:none;transition:background .15s;
+}
+.mobile-modal-btn:hover{background:#C41630;color:#fff}
+.mobile-modal-btn-dis{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  background:#f1f5f9;color:#9ca3af;font-size:.85rem;font-weight:600;
+  padding:10px 16px;border-radius:8px;width:100%;cursor:not-allowed;
+}
+
+/* Di desktop: sembunyikan modal */
+@media(min-width:769px){
+  .mobile-modal-overlay{display:none !important}
+}
+/* Di mobile: nonaktifkan hover popup */
+@media(max-width:768px){
+  .shelf-book:hover .book-popup{display:none !important}
+  .book-popup{display:none !important}
+}
 .popup-title{font-size:.84rem;font-weight:700;color:#1a1a1a;line-height:1.3;margin-bottom:4px}
 .popup-author{font-size:.72rem;color:var(--tx3);margin-bottom:8px}
 .popup-cat{font-size:.68rem;color:var(--tx4);margin-bottom:10px}
@@ -299,12 +574,92 @@ img{display:block}
 }
 @media(max-width:768px){
   .main{padding:28px 20px 50px}
-  .info-bar{flex-direction:column;align-items:flex-start;gap:10px}
+  .info-bar{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:12px;
+    padding:18px 20px;
+  }
+  
+  /* Lampu lebih kecil & lebih deket di mobile */
+  .info-bar-lights{
+    top:-14px;
+  }
+  
+  .info-light{
+    width:30px;
+  }
+  
+  .info-light-fixture{
+    width:14px;
+    height:7px;
+  }
+  
+  .info-light-bulb{
+    width:9px;
+    height:9px;
+    bottom:-5px;
+  }
+  
+  .info-light-beam{
+    width:80px; /* Lebih sempit */
+    height:70px; /* Lebih pendek */
+    top:12px;
+  }
+  
+  .info-title{
+    font-size:1.1rem;
+  }
+  
+  .info-count{
+    font-size:.75rem;
+    padding:5px 12px;
+  }
+  
   .shelf-books{min-height:150px;padding:0 12px 0}
+  
+  /* Hover jangan terlalu tinggi di tablet */
+  .shelf-book:hover, .shelf-book.active{
+    transform:translateY(-20px) scale(1.04) !important;
+  }
+  
+  /* Popup lebih kecil */
+  .book-popup{
+    width:170px;
+    padding:12px 13px;
+  }
 }
 @media(max-width:480px){
-  .shelf-books{min-height:130px;gap:8px;overflow-x:auto;padding:0 10px 0}
-  .book-popup{width:160px}
+  body{overflow-x:hidden}
+  .main{padding:24px 12px 52px}
+  .info-bar{margin-bottom:24px;border-radius:10px;padding:16px}
+  .shelf-books{min-height:140px;gap:12px;overflow-x:auto;padding:12px 12px 0;justify-content:flex-start;scroll-snap-type:x proximity}
+  .shelf-book-wrapper{width:72px;scroll-snap-align:start}
+  .shelf-book-img,.shelf-book-ph{width:72px !important;height:114px !important}
+  .shelf-book-light{top:-24px}
+  .light-beam{width:72px;height:114px}
+  
+  /* Di HP: buku JANGAN naik - tetap di posisi */
+  .shelf-book:hover, .shelf-book.active{
+    transform:translateY(0px) scale(1.0) !important;
+    z-index:100;
+  }
+  
+  /* Popup tetap DI ATAS tapi jarak lebih dekat */
+  .book-popup{
+    width:160px;
+    bottom:calc(100% + 8px); /* Dekat ke buku */
+    top:auto;
+    padding:10px 12px;
+  }
+  
+  /* Arrow normal (di bawah popup) */
+  .book-popup::after{
+    bottom:-7px;
+    top:auto;
+    border-top:7px solid #fff;
+    border-bottom:none;
+  }
 }
 </style>
 </head>
@@ -313,8 +668,20 @@ img{display:block}
 {{-- ══ MAIN ══ --}}
 <div class="main">
 
-  {{-- Info bar --}}
+  {{-- Info bar with spotlights --}}
   <div class="info-bar">
+    {{-- 3 Lampu Spotlight di Tengah --}}
+    <div class="info-bar-lights">
+      @for($i = 0; $i < 3; $i++)
+      <div class="info-light">
+        <div class="info-light-fixture">
+          <div class="info-light-bulb"></div>
+        </div>
+        <div class="info-light-beam"></div>
+      </div>
+      @endfor
+    </div>
+    
     <h2 class="info-title">Koleksi <span>Lengkap</span></h2>
     <span class="info-count">
       Kategori {{ $pagination->current_page }} dari {{ $pagination->total }} · 
@@ -324,8 +691,8 @@ img{display:block}
 
   {{-- Bookshelf per Kategori (1 kategori per halaman) --}}
   @php
-    $heights = [175, 188, 162, 182, 168, 178, 192, 158, 185, 170, 165, 180, 155, 175, 188, 172];
-    $widths  = [110, 118, 100, 114, 106, 112, 120, 98,  116, 108, 104, 113, 96,  110, 118, 108];
+    $heights = [180, 180, 180, 180, 180, 180]; // UKURAN SAMA SEMUA
+    $widths  = [115, 115, 115, 115, 115, 115]; // UKURAN SAMA SEMUA
   @endphp
 
   @foreach($kategoriPaginated as $katIdx => $kategori)
@@ -355,9 +722,25 @@ img{display:block}
           $bh = $heights[$globalIdx % count($heights)];
           $bw = $widths[$globalIdx % count($widths)];
         @endphp
-        <div class="shelf-book">
+        <div class="shelf-book-wrapper">
           
-          {{-- Cover buku --}}
+          {{-- Lampu spotlight - cahaya nempel di background --}}
+          <div class="shelf-book-light">
+            <div class="light-fixture">
+              <div class="light-bulb"></div>
+            </div>
+            <div class="light-beam"></div>
+          </div>
+          
+          {{-- Buku di atas cahaya --}}
+          <div class="shelf-book"
+            data-judul="{{ $buku->judul }}"
+            data-pengarang="{{ $buku->pengarang }}"
+            data-kategori="{{ $buku->kategori }}"
+            data-stok="{{ $buku->stok }}"
+            data-cover="{{ $buku->cover ? (Str::startsWith($buku->cover,'http') ? $buku->cover : Storage::url($buku->cover)) : '' }}"
+            data-link="{{ $buku->stok > 0 ? route('register') : '' }}"
+          >
           @if($buku->cover)
             @if(Str::startsWith($buku->cover, 'http'))
               <img class="shelf-book-img"
@@ -409,6 +792,7 @@ img{display:block}
             @endif
           </div>
 
+        </div>
         </div>
         @endforeach
       </div>
@@ -463,6 +847,100 @@ img{display:block}
     © {{ date('Y') }} Perpustakaan Sekolah Digital · Semua hak dilindungi
   </div>
 </div>
+
+{{-- ══ MOBILE MODAL ══ --}}
+<div id="mobileModalOverlay" class="mobile-modal-overlay">
+  <div id="mobileModal" class="mobile-modal">
+    <button id="modalClose" class="mobile-modal-close">✕</button>
+    <div class="m-cover"></div>
+    <div class="m-title mobile-modal-title"></div>
+    <div class="m-author mobile-modal-author"></div>
+    <div class="m-cat mobile-modal-cat"></div>
+    <div class="m-stok mobile-modal-stok"></div>
+    <div class="m-btn"></div>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════
+// POPUP (desktop hover) + MOBILE MODAL
+// ════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', function() {
+  const isMobile = () => window.innerWidth <= 768;
+
+  // ── DESKTOP: popup hover sudah via CSS ──
+  // ── MOBILE: fixed modal ──
+  const overlay = document.getElementById('mobileModalOverlay');
+  const modal   = document.getElementById('mobileModal');
+
+  function openModal(book) {
+    const judul     = book.dataset.judul     || '-';
+    const pengarang = book.dataset.pengarang || '-';
+    const kategori  = book.dataset.kategori  || '';
+    const stok      = parseInt(book.dataset.stok) || 0;
+    const cover     = book.dataset.cover     || '';
+    const link      = book.dataset.link      || '';
+
+    // Cover
+    const coverEl = modal.querySelector('.m-cover');
+    if(cover){
+      coverEl.innerHTML = `<img class="mobile-modal-cover" src="${cover}" alt="${judul}">`;
+    } else {
+      coverEl.innerHTML = `<div class="mobile-modal-cover-ph"><i class="bi bi-book-fill"></i></div>`;
+    }
+
+    modal.querySelector('.m-title').textContent  = judul;
+    modal.querySelector('.m-author').textContent = pengarang;
+    modal.querySelector('.m-cat').textContent    = kategori;
+
+    const stokEl = modal.querySelector('.m-stok');
+    if(stok > 0){
+      stokEl.className = 'mobile-modal-stok stok-ada';
+      stokEl.innerHTML = `<i class="bi bi-check-circle-fill" style="font-size:.65rem"></i> ${stok} tersedia`;
+    } else {
+      stokEl.className = 'mobile-modal-stok stok-habis';
+      stokEl.innerHTML = `<i class="bi bi-x-circle-fill" style="font-size:.65rem"></i> Stok Habis`;
+    }
+
+    const btnEl = modal.querySelector('.m-btn');
+    if(stok > 0 && link){
+      btnEl.innerHTML = `<a href="${link}" class="mobile-modal-btn"><i class="bi bi-book"></i> Pinjam Sekarang</a>`;
+    } else {
+      btnEl.innerHTML = `<span class="mobile-modal-btn-dis"><i class="bi bi-clock"></i> Tidak Tersedia</span>`;
+    }
+
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // Tap buku di mobile
+  document.querySelectorAll('.shelf-book').forEach(book => {
+    book.addEventListener('click', function(e) {
+      if(!isMobile()) return; // desktop: biarkan CSS hover
+      if(e.target.closest('a')) return;
+      e.preventDefault();
+      e.stopPropagation();
+      openModal(this);
+    });
+  });
+
+  // Tutup saat klik overlay
+  overlay.addEventListener('click', function(e) {
+    if(e.target === overlay) closeModal();
+  });
+
+  // Tutup saat klik tombol X
+  document.getElementById('modalClose').addEventListener('click', closeModal);
+
+  // Tutup dengan Escape
+  document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
+});
+</script>
 
 </body>
 </html>

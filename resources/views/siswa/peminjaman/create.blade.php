@@ -137,18 +137,74 @@
     url('/image/wood-bg.jpg') center/cover no-repeat;
   background-color:#8b5a2b;
   border-radius:8px 8px 0 0;
+  position:relative;
+}
+
+/* ══════════════════════════════
+   LAMPU SPOTLIGHT
+══════════════════════════════ */
+.shelf-book-wrapper{
+  position:relative;
+  flex:0 0 auto;
+}
+
+.shelf-book-light{
+  position:absolute;
+  top:-30px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:1;
+}
+.light-fixture{
+  width:16px;
+  height:8px;
+  background:linear-gradient(180deg,#2c2c2c,#1a1a1a);
+  border-radius:8px 8px 0 0;
+  position:relative;
+  box-shadow:0 2px 4px rgba(0,0,0,.3);
+}
+.light-bulb{
+  position:absolute;
+  bottom:-6px;
+  left:50%;
+  transform:translateX(-50%);
+  width:10px;
+  height:10px;
+  background:radial-gradient(circle,#fff9e6 0%,#f4e5b8 50%,#d4c19a 100%);
+  border-radius:50%;
+  box-shadow:
+    0 0 10px rgba(255,243,176,1),
+    0 0 22px rgba(255,243,176,.85),
+    0 0 38px rgba(255,226,125,.35),
+    0 2px 3px rgba(0,0,0,.2);
+}
+.light-beam{
+  position:absolute;
+  top:18px;
+  left:50%;
+  transform:translateX(-50%);
+  width:118px;
+  height:178px;
+  background:radial-gradient(ellipse at 50% 10%,rgba(255,250,211,.82),rgba(255,243,176,.34) 34%,transparent 74%),linear-gradient(180deg,rgba(255,248,196,.24),rgba(255,243,176,.16) 55%,transparent);
+  pointer-events:none;
+  z-index:4;
+  mix-blend-mode:screen;
+  opacity:.52;
+  filter:blur(5px);
+  mask-image:linear-gradient(180deg,transparent,#000 12%,#000 84%,transparent);
+  -webkit-mask-image:linear-gradient(180deg,transparent,#000 12%,#000 84%,transparent);
 }
 
 /* Satu buku */
 .shelf-book{
   position:relative;
-  flex:0 0 auto;
   cursor:pointer;
   transform-origin:bottom center;
   transition:
     transform .4s cubic-bezier(.34,1.56,.64,1),
     filter .3s ease;
   filter:drop-shadow(2px 4px 10px rgba(0,0,0,.6));
+  z-index:2;
 }
 .shelf-book:hover{
   transform:translateY(-32px) scale(1.08);
@@ -166,6 +222,12 @@
   content:'';position:absolute;top:0;left:0;right:0;height:5px;
   background:linear-gradient(180deg,rgba(255,255,255,.25),transparent);
   z-index:3;pointer-events:none;
+}
+.shelf-book::after{
+  height:100%;
+  background:radial-gradient(ellipse at 50% 0%,rgba(255,250,211,.28),rgba(255,246,190,.08) 34%,transparent 72%);
+  mix-blend-mode:screen;
+  border-radius:inherit;
 }
 
 .shelf-book-img{
@@ -206,6 +268,73 @@
   border-top:8px solid #fff;
 }
 .shelf-book.active .book-popup{display:block}
+
+/* ══ MOBILE MODAL ══ */
+.mobile-modal-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.6);z-index:9999;
+  align-items:center;justify-content:center;padding:20px;
+}
+.mobile-modal-overlay.open{display:flex}
+.mobile-modal{
+  background:#fff;border-radius:16px;padding:20px;
+  width:100%;max-width:320px;
+  box-shadow:0 24px 60px rgba(0,0,0,.4);
+  animation:modalIn .25s cubic-bezier(.34,1.56,.64,1);
+  position:relative;
+}
+@keyframes modalIn{
+  from{opacity:0;transform:scale(.85) translateY(20px)}
+  to{opacity:1;transform:scale(1) translateY(0)}
+}
+.mobile-modal-close{
+  position:absolute;top:12px;right:12px;
+  width:28px;height:28px;border-radius:50%;
+  background:#f1f5f9;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;color:#374151;
+}
+.m-cover img{
+  width:70px;height:100px;object-fit:cover;
+  border-radius:3px 6px 6px 3px;margin-bottom:10px;
+  box-shadow:2px 4px 10px rgba(0,0,0,.25);
+}
+.m-cover-ph{
+  width:70px;height:100px;border-radius:3px 6px 6px 3px;
+  background:linear-gradient(135deg,#14284B,#ED1B3B);
+  display:flex;align-items:center;justify-content:center;margin-bottom:10px;
+}
+.m-cover-ph i{font-size:1.8rem;color:rgba(255,255,255,.6)}
+.m-cat-badge{
+  display:inline-block;padding:2px 8px;border-radius:5px;
+  font-size:.62rem;font-weight:800;
+  background:rgba(237,27,59,.1);color:#ED1B3B;
+  margin-bottom:6px;text-transform:uppercase;
+}
+.m-title{font-size:.95rem;font-weight:700;color:#111;line-height:1.3;margin-bottom:4px}
+.m-author{font-size:.78rem;color:#6B7280;margin-bottom:8px}
+.m-stok{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:.72rem;font-weight:700;padding:4px 10px;
+  border-radius:99px;margin-bottom:12px;
+}
+.m-pinjam-form{border-top:1px solid #f0f0f0;padding-top:12px}
+.m-btn-pinjam{
+  width:100%;display:flex;align-items:center;justify-content:center;gap:5px;
+  font-size:.85rem;font-weight:700;padding:10px;border-radius:8px;border:none;
+  background:linear-gradient(135deg,#ED1B3B,#C41630);color:#fff;cursor:pointer;
+}
+.m-btn-disabled{
+  width:100%;display:flex;align-items:center;justify-content:center;gap:5px;
+  font-size:.85rem;font-weight:600;padding:10px;border-radius:8px;
+  background:#f1f5f9;color:#9ca3af;cursor:not-allowed;
+}
+
+@media(min-width:769px){.mobile-modal-overlay{display:none !important}}
+@media(max-width:768px){
+  .shelf-book.active .book-popup{display:none !important}
+  .book-popup{display:none !important}
+}
 .popup-cat{
   display:inline-block;
   padding:3px 8px;border-radius:5px;
@@ -322,47 +451,128 @@
 @media(max-width:768px){
   .search-bar-modern{padding:16px}
   .shelf-books{min-height:150px;padding:0 12px 0}
+  
+  /* Hover jangan terlalu tinggi */
+  .shelf-book:hover, .shelf-book.active{
+    transform:translateY(-20px) scale(1.04) !important;
+  }
+  
   .book-popup{width:170px}
 }
 @media(max-width:576px){
+  body{overflow-x:hidden}
+  .main{padding:24px 12px 52px}
+  .search-bar-modern{padding:12px;border-radius:10px}
   .catalog-pagination{justify-content:flex-start}
-  .shelf-books{min-height:130px;gap:8px;overflow-x:auto;padding:0 10px 0}
-  .book-popup{width:160px}
+  .shelf-books{min-height:140px;gap:12px;overflow-x:auto;padding:12px 12px 0;justify-content:flex-start;scroll-snap-type:x proximity}
+  .shelf-book-wrapper{width:72px;scroll-snap-align:start}
+  .shelf-book-img,.shelf-book-ph{width:72px !important;height:114px !important}
+  .shelf-book-light{top:-24px}
+  .light-beam{width:72px;height:114px}
+  
+  /* Di HP: buku JANGAN naik - tetap di posisi */
+  .shelf-book:hover, .shelf-book.active{
+    transform:translateY(0px) scale(1.0) !important;
+    z-index:100;
+  }
+  
+  /* Popup tetap DI ATAS tapi jarak lebih dekat */
+  .book-popup{
+    width:160px;
+    bottom:calc(100% + 8px);
+    top:auto;
+    padding:10px 12px;
+  }
+  
+  /* Arrow normal */
+  .book-popup::after{
+    bottom:-7px;
+    top:auto;
+    border-top:7px solid #fff;
+    border-bottom:none;
+  }
 }
 </style>
 
 <script>
-// Toggle popup dengan klik
+// Toggle popup dengan klik (desktop) + mobile modal
 document.addEventListener('DOMContentLoaded', function() {
-  const shelfBooks = document.querySelectorAll('.shelf-book');
-  
-  shelfBooks.forEach(book => {
+  const isMobile = () => window.innerWidth <= 768;
+  const overlay  = document.getElementById('mobileModalOverlay');
+  const modal    = document.getElementById('mobileModal');
+
+  // ── DESKTOP: klik toggle popup ──
+  document.querySelectorAll('.shelf-book').forEach(book => {
     book.addEventListener('click', function(e) {
-      // Jangan toggle jika klik tombol submit
-      if (e.target.closest('button')) return;
-      
-      const wasActive = this.classList.contains('active');
-      
-      // Tutup semua popup lain
-      document.querySelectorAll('.shelf-book.active').forEach(b => {
-        b.classList.remove('active');
-      });
-      
-      // Toggle popup ini
-      if (!wasActive) {
-        this.classList.add('active');
+      if(e.target.closest('button')) return;
+      if(isMobile()){
+        e.preventDefault(); e.stopPropagation();
+        openModal(this); return;
       }
-      
+      const wasActive = this.classList.contains('active');
+      document.querySelectorAll('.shelf-book.active').forEach(b => b.classList.remove('active'));
+      if(!wasActive) this.classList.add('active');
       e.stopPropagation();
     });
   });
-  
-  // Tutup popup saat klik di luar
-  document.addEventListener('click', function() {
-    document.querySelectorAll('.shelf-book.active').forEach(b => {
-      b.classList.remove('active');
-    });
+
+  document.addEventListener('click', function(){
+    document.querySelectorAll('.shelf-book.active').forEach(b => b.classList.remove('active'));
   });
+
+  // ── MOBILE MODAL ──
+  function openModal(book){
+    const judul    = book.dataset.judul    || '-';
+    const pengarang= book.dataset.pengarang|| '-';
+    const kategori = book.dataset.kategori || '';
+    const stok     = parseInt(book.dataset.stok)||0;
+    const cover    = book.dataset.cover    || '';
+    const bukuId   = book.dataset.bukuId   || '';
+
+    const coverEl = modal.querySelector('.m-cover');
+    coverEl.innerHTML = cover
+      ? `<img src="${cover}" alt="${judul}">`
+      : `<div class="m-cover-ph"><i class="bi bi-book-fill"></i></div>`;
+
+    modal.querySelector('.m-cat-badge').textContent  = kategori;
+    modal.querySelector('.m-title').textContent      = judul;
+    modal.querySelector('.m-author').textContent     = pengarang;
+
+    const stokEl = modal.querySelector('.m-stok');
+    stokEl.className = stok>0 ? 'm-stok stok-ada' : 'm-stok stok-habis';
+    stokEl.innerHTML = stok>0
+      ? `<i class="bi bi-check-circle-fill" style="font-size:.65rem"></i> ${stok} tersedia`
+      : `<i class="bi bi-x-circle-fill" style="font-size:.65rem"></i> Habis`;
+
+    const pinjamEl = modal.querySelector('.m-pinjam-form');
+    if(stok > 0){
+      pinjamEl.innerHTML = `
+        <form method="POST" action="{{ route('siswa.peminjaman.store') }}"
+              onsubmit="return confirm('Pinjam buku ini?\\nBatas pengembalian 7 hari.')">
+          <input type="hidden" name="_token" value="{{ csrf_token() }}">
+          <input type="hidden" name="buku_id" value="${bukuId}">
+          <button type="submit" class="m-btn-pinjam">
+            <i class="bi bi-book"></i> Pinjam Sekarang
+          </button>
+        </form>`;
+    } else {
+      pinjamEl.innerHTML = `<button class="m-btn-disabled" disabled><i class="bi bi-clock"></i> Tidak Tersedia</button>`;
+    }
+
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal(){
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  if(overlay){
+    overlay.addEventListener('click', e => { if(e.target===overlay) closeModal(); });
+    document.getElementById('modalClose').addEventListener('click', closeModal);
+    document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
+  }
 });
 </script>
 
@@ -405,8 +615,8 @@ document.addEventListener('DOMContentLoaded', function() {
   @php
     $booksPerShelf = 6;
     $shelves = $buku->chunk($booksPerShelf);
-    $heights = [175, 188, 162, 182, 168, 178, 192, 158, 185, 170, 165, 180, 155, 175, 188, 172];
-    $widths  = [110, 118, 100, 114, 106, 112, 120, 98,  116, 108, 104, 113, 96,  110, 118, 108];
+    $heights = [180, 180, 180, 180, 180, 180, 180, 180, 180, 180, 180, 180, 180, 180, 180, 180]; // SEMUA SAMA
+    $widths  = [115, 115, 115, 115, 115, 115, 115, 115, 115, 115, 115, 115, 115, 115, 115, 115]; // SEMUA SAMA
   @endphp
 
   <div class="shelf-container">
@@ -419,9 +629,25 @@ document.addEventListener('DOMContentLoaded', function() {
           $bh = $heights[$globalIdx % count($heights)];
           $bw = $widths[$globalIdx % count($widths)];
         @endphp
-        <div class="shelf-book">
+        <div class="shelf-book-wrapper">
           
-          {{-- Cover --}}
+          {{-- Lampu spotlight --}}
+          <div class="shelf-book-light">
+            <div class="light-fixture">
+              <div class="light-bulb"></div>
+            </div>
+            <div class="light-beam"></div>
+          </div>
+          
+          {{-- Buku --}}
+          <div class="shelf-book"
+            data-judul="{{ $b->judul }}"
+            data-pengarang="{{ $b->pengarang }}"
+            data-kategori="{{ $b->kategori }}"
+            data-stok="{{ $b->stok }}"
+            data-cover="{{ $b->cover ? Storage::url($b->cover) : '' }}"
+            data-buku-id="{{ $b->id }}"
+          >
           @if($b->cover)
             <img class="shelf-book-img"
                  src="{{ Storage::url($b->cover) }}"
@@ -472,6 +698,7 @@ document.addEventListener('DOMContentLoaded', function() {
           </div>
 
         </div>
+        </div>
         @endforeach
       </div>
       <div class="shelf-plank"></div>
@@ -486,4 +713,18 @@ document.addEventListener('DOMContentLoaded', function() {
   @endif
   @endif
 </div>
+
+{{-- ══ MOBILE MODAL (PINJAM) ══ --}}
+<div id="mobileModalOverlay" class="mobile-modal-overlay">
+  <div id="mobileModal" class="mobile-modal">
+    <button id="modalClose" class="mobile-modal-close">✕</button>
+    <div class="m-cover"></div>
+    <span class="m-cat-badge"></span>
+    <div class="m-title"></div>
+    <div class="m-author"></div>
+    <div class="m-stok"></div>
+    <div class="m-pinjam-form"></div>
+  </div>
+</div>
+
 @endsection

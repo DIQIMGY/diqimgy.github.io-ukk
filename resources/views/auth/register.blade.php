@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('title','Daftar Anggota — Perpustakaan Sekolah Digital')
 @section('content')
+
 <div class="reg-bg">
   <div class="reg-card">
     <div style="text-align:center;margin-bottom:26px">

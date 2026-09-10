@@ -54,6 +54,53 @@
 .transaction-card-returned {
   border-left: 4px solid #10b981;
 }
+
+/* Refined operations workspace */
+.transaction-header{
+  padding:22px 24px;
+  border:1px solid var(--border);
+  border-radius:16px;
+  background:linear-gradient(135deg,var(--surface),var(--surface-2));
+  box-shadow:var(--sh-sm);
+}
+.transaction-header h1{font-size:1.35rem !important;letter-spacing:-.025em}
+.transaction-filter-bar{
+  background:var(--surface);border-color:var(--border);box-shadow:var(--sh-xs);
+  padding:12px;border-radius:12px;
+}
+.transaction-filter-bar input,.transaction-filter-bar select{
+  background:var(--surface);color:var(--tx-1);border-color:var(--border) !important;
+}
+.transaction-card{
+  background:var(--surface);border-color:var(--border);border-radius:13px;
+  box-shadow:var(--sh-xs);padding:18px 20px;
+}
+.transaction-card:hover{box-shadow:var(--sh-md);border-color:rgba(237,27,59,.32)}
+.transaction-card > div > div:first-child{min-width:0}
+.transaction-card [style*="background:#fafbfc"]{background:var(--surface-2) !important;border:1px solid var(--border)}
+
+@media(max-width:768px){
+  .transaction-header{padding:18px 16px;border-radius:13px;align-items:stretch}
+  .transaction-header > a{width:100%;justify-content:center;padding:10px 16px !important}
+  .transaction-filter-bar form{display:grid !important;grid-template-columns:1fr 1fr;gap:8px !important}
+  .transaction-filter-bar form > div{grid-column:1/-1;min-width:0 !important}
+  .transaction-filter-bar select,.transaction-filter-bar button,.transaction-filter-bar a{width:100%;min-width:0 !important;justify-content:center}
+  .transaction-card{padding:15px 14px;border-left-width:3px}
+  .transaction-card > div{gap:14px !important}
+  .transaction-card > div > div:first-child{width:100%;min-width:0}
+  .transaction-card > div > div:last-child{width:100%;min-width:0 !important;display:grid !important;grid-template-columns:1fr 1fr;gap:8px !important}
+  .transaction-card > div > div:last-child > div:first-child{grid-column:1/-1}
+  .transaction-card > div > div:last-child > div:nth-child(2){grid-column:1/-1}
+  .transaction-card > div > div:last-child > div:last-child{grid-column:1/-1}
+  .transaction-card [style*="grid-template-columns:repeat(auto-fit"]{grid-template-columns:1fr 1fr !important}
+}
+@media(max-width:480px){
+  .transaction-filter-bar form{grid-template-columns:1fr}
+  .transaction-filter-bar form > div{grid-column:auto}
+  .transaction-card > div > div:first-child > div:first-child{align-items:flex-start !important}
+  .transaction-card > div > div:first-child > div:first-child h3{font-size:.88rem !important}
+  .transaction-card [style*="grid-template-columns:repeat(auto-fit"]{grid-template-columns:1fr !important}
+}
 </style>
 
 {{-- Page Header --}}

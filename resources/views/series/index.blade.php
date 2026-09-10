@@ -21,6 +21,7 @@
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx1);-webkit-font-smoothing:antialiased}
+html,body{width:100%;max-width:100%;overflow-x:hidden}
 a{text-decoration:none;color:inherit}
 img{display:block}
 
@@ -65,7 +66,7 @@ img{display:block}
   display:flex;
   align-items:flex-end;
   justify-content:center;
-  gap:0px; /* buku rapat seperti referensi */
+  gap:8px;
   position:relative;z-index:2;
 }
 
@@ -74,8 +75,8 @@ img{display:block}
   position:relative;
   flex-shrink:0;
   /* Ukuran portrait nyata seperti buku fisik */
-  width:82px;
-  height:130px;
+  width:88px !important;
+  height:150px !important;
   border-radius:1px 4px 4px 1px;
   overflow:hidden;
   cursor:pointer;
@@ -309,8 +310,48 @@ img{display:block}
 
 @media(max-width:600px){
   .hero{min-height:220px}
-  .shelf-book{width:58px;height:94px}
-  .main{padding:28px 16px 60px}
+  .hero-nav{top:12px;left:14px}
+  .hero-back{font-size:.68rem;padding:6px 11px}
+  .shelf-area{
+    justify-content:flex-start;
+    overflow-x:auto;
+    overflow-y:hidden;
+    padding:52px 14px 0;
+    scrollbar-width:none;
+  }
+  .shelf-area::-webkit-scrollbar{display:none}
+  .shelf-row{justify-content:flex-start;gap:8px;min-width:max-content}
+  .shelf-book{width:62px !important;height:102px !important}
+  .shelf-plank{height:18px}
+  .main{padding:28px 14px 56px}
+  .sec-head{margin-bottom:24px}
+  .sec-head h2{font-size:1.3rem}
+  .sec-head p{font-size:.74rem}
+  .series-grid{gap:12px}
+  .sc-cover-stack{height:178px;margin-bottom:10px}
+  .sc-cover-main{width:112px;height:160px}
+  .sc-stacked{gap:4px}
+  .sc-stacked-book{width:62px;height:92px;transform:scale(.82)}
+  .sc-badge{right:5px;bottom:6px;font-size:.58rem;padding:3px 7px}
+  .sc-new{top:5px;right:5px;font-size:.5rem;padding:3px 6px}
+  .sc-body{padding:0 3px 10px}
+  .sc-name{font-size:.76rem;line-height:1.25}
+  .sc-author{font-size:.62rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .pagi{gap:4px;margin-top:4px}
+  .pagi a,.pagi span{min-width:32px;height:32px;padding:0 7px;font-size:.72rem}
+}
+@media(min-width:601px) and (max-width:900px){
+  .shelf-area{padding-left:18px;padding-right:18px;overflow-x:auto;scrollbar-width:none}
+  .shelf-area::-webkit-scrollbar{display:none}
+  .shelf-row{justify-content:flex-start;gap:7px;min-width:max-content}
+  .shelf-book{width:70px !important;height:120px !important}
+}
+@media(max-width:380px){
+  .series-grid{gap:9px}
+  .sc-cover-main{width:104px;height:148px}
+  .sc-cover-stack{height:166px}
+  .sc-stacked-book{width:57px;height:84px}
+  .sc-name{font-size:.72rem}
 }
 </style>
 </head>

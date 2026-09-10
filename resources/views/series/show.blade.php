@@ -79,17 +79,101 @@ img{display:block}
   padding-bottom:10px;
 }
 
-/* Cover Besar */
-.hero-book{
-  flex:0 0 auto;width:168px;
-  filter:drop-shadow(0 20px 36px rgba(0,0,0,.5));
+/* Cover Besar dengan Lampu */
+.hero-book-wrapper{
+  flex:0 0 auto;
   position:relative;
 }
+
+.hero-book{
+  width:168px;
+  filter:drop-shadow(0 20px 36px rgba(0,0,0,.5));
+  position:relative;
+  z-index:2;
+}
+
+/* Lampu spotlight di atas cover */
+.hero-book-light{
+  position:absolute;
+  top:-35px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:4;
+  pointer-events:none;
+}
+
+.hero-light-fixture{
+  width:40px; /* LEBIH LEBAR LAGI */
+  height:14px;
+  background:linear-gradient(180deg,#2c2c2c,#1a1a1a);
+  border-radius:20px 20px 0 0;
+  position:relative;
+  box-shadow:0 2px 4px rgba(0,0,0,.3);
+  z-index:3;
+}
+
+.hero-light-bulb{
+  position:absolute;
+  bottom:-9px;
+  left:50%;
+  transform:translateX(-50%);
+  width:20px; /* LEBIH BESAR */
+  height:20px;
+  background:radial-gradient(circle,#fff9e6 0%,#f4e5b8 50%,#d4c19a 100%);
+  border-radius:50%;
+  box-shadow:
+    0 0 15px rgba(255,243,176,.9),
+    0 0 30px rgba(255,243,176,.6),
+    0 2px 3px rgba(0,0,0,.2);
+}
+
+.hero-light-beam{
+  position:absolute;
+  top:22px;
+  left:50%;
+  transform:translateX(-50%);
+  width:168px;
+  height:258px;
+  background:
+    radial-gradient(ellipse at 50% 10%,rgba(255,250,211,.72) 0%,rgba(255,243,176,.3) 30%,transparent 72%),
+    linear-gradient(180deg,rgba(255,248,196,.2) 0%,rgba(255,243,176,.14) 50%,transparent 100%);
+  pointer-events:none;
+  z-index:4;
+  mix-blend-mode:screen;
+  opacity:.34;
+  filter:blur(6px);
+  mask-image:linear-gradient(180deg,transparent 0%,#000 10%,#000 86%,transparent 100%);
+  -webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 10%,#000 86%,transparent 100%);
+  animation:heroLightPulse 4s ease-in-out infinite;
+}
+.hero-light-beam::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:radial-gradient(ellipse at 50% 58%,rgba(255,247,190,.24),transparent 63%);
+}
+@keyframes heroLightPulse{
+  0%,100%{opacity:.5}
+  50%{opacity:.68}
+}
+
 .hero-book img{
   width:168px;height:240px;
   object-fit:cover;
   border-radius:3px 10px 10px 3px;
   box-shadow:6px 0 18px rgba(0,0,0,.35),inset -4px 0 8px rgba(0,0,0,.25);
+}
+.hero-book::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:
+    radial-gradient(ellipse at 50% 0%,rgba(255,250,211,.42) 0%,rgba(255,246,190,.18) 30%,transparent 72%),
+    linear-gradient(105deg,transparent 20%,rgba(255,247,199,.13) 48%,transparent 76%);
+  mix-blend-mode:screen;
+  pointer-events:none;
+  z-index:4;
 }
 .hero-book-ph{
   width:168px;height:240px;
@@ -227,6 +311,67 @@ img{display:block}
   pointer-events:none;
 }
 
+/* ══════════════════════════════
+   LAMPU SPOTLIGHT
+══════════════════════════════ */
+.shelf-book-wrapper{
+  position:relative;
+  flex:0 0 auto;
+}
+
+.shelf-book-light{
+  position:absolute;
+  top:-30px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:1;
+}
+
+/* Housing lampu */
+.light-fixture{
+  width:16px;
+  height:8px;
+  background:linear-gradient(180deg,#2c2c2c,#1a1a1a);
+  border-radius:8px 8px 0 0;
+  position:relative;
+  box-shadow:0 2px 4px rgba(0,0,0,.3);
+}
+
+/* Bohlam */
+.light-bulb{
+  position:absolute;
+  bottom:-6px;
+  left:50%;
+  transform:translateX(-50%);
+  width:10px;
+  height:10px;
+  background:radial-gradient(circle,#fff9e6 0%,#f4e5b8 50%,#d4c19a 100%);
+  border-radius:50%;
+  box-shadow:
+    0 0 10px rgba(255,243,176,1),
+    0 0 22px rgba(255,243,176,.85),
+    0 0 38px rgba(255,226,125,.35),
+    0 2px 3px rgba(0,0,0,.2);
+}
+
+/* Cahaya spotlight SEGITIGA */
+.light-beam{
+  position:absolute;
+  top:18px;
+  left:50%;
+  transform:translateX(-50%);
+  width:118px;
+  height:178px;
+  background:radial-gradient(ellipse at 50% 10%,rgba(255,250,211,.82),rgba(255,243,176,.34) 34%,transparent 74%),linear-gradient(180deg,rgba(255,248,196,.24),rgba(255,243,176,.16) 55%,transparent);
+  pointer-events:none;
+  z-index:4;
+  mix-blend-mode:screen;
+  opacity:.52;
+  filter:blur(5px);
+  mask-image:linear-gradient(180deg,transparent,#000 12%,#000 84%,transparent);
+  -webkit-mask-image:linear-gradient(180deg,transparent,#000 12%,#000 84%,transparent);
+}
+
 /* ══ SATU BUKU ══ */
 .shelf-book{
   position:relative;
@@ -238,10 +383,16 @@ img{display:block}
     transform .45s cubic-bezier(.34,1.56,.64,1),
     filter .35s ease;
   filter:drop-shadow(2px 4px 8px rgba(0,0,0,.5));
+  z-index:2; /* Di atas cahaya */
 }
 
 /* Hover: naik dengan spring bounce yang bagus */
 .shelf-book:hover{
+  transform:translateY(-36px) scale(1.1) !important;
+  z-index:50;
+  filter:drop-shadow(0 24px 36px rgba(0,0,0,.65));
+}
+.shelf-book.active{
   transform:translateY(-36px) scale(1.1) !important;
   z-index:50;
   filter:drop-shadow(0 24px 36px rgba(0,0,0,.65));
@@ -259,6 +410,12 @@ img{display:block}
   content:'';position:absolute;top:0;left:0;right:0;height:4px;
   background:linear-gradient(180deg,rgba(255,255,255,.3),transparent);
   z-index:3;pointer-events:none;
+}
+.shelf-book::after{
+  height:100%;
+  background:radial-gradient(ellipse at 50% 0%,rgba(255,250,211,.28),rgba(255,246,190,.08) 34%,transparent 72%);
+  mix-blend-mode:screen;
+  border-radius:inherit;
 }
 
 .shelf-book-img{
@@ -281,7 +438,7 @@ img{display:block}
   padding:2px 5px;border-radius:3px;pointer-events:none;
 }
 
-/* ══ POPUP ══ */
+/* ══ POPUP (desktop hover only) ══ */
 .book-popup{
   display:none;
   position:absolute;
@@ -307,6 +464,67 @@ img{display:block}
   border-top:7px solid #fff;
 }
 .shelf-book:hover .book-popup{display:block}
+
+/* ══ MOBILE MODAL ══ */
+.mobile-modal-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.6);z-index:9999;
+  align-items:center;justify-content:center;padding:20px;
+}
+.mobile-modal-overlay.open{display:flex}
+.mobile-modal{
+  background:#fff;border-radius:16px;padding:20px;
+  width:100%;max-width:320px;
+  box-shadow:0 24px 60px rgba(0,0,0,.4);
+  animation:modalIn .25s cubic-bezier(.34,1.56,.64,1);
+  position:relative;
+}
+@keyframes modalIn{
+  from{opacity:0;transform:scale(.85) translateY(20px)}
+  to{opacity:1;transform:scale(1) translateY(0)}
+}
+.mobile-modal-close{
+  position:absolute;top:12px;right:12px;
+  width:28px;height:28px;border-radius:50%;
+  background:#f1f5f9;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;color:#374151;
+}
+.m-cover img{
+  width:70px;height:100px;object-fit:cover;
+  border-radius:3px 6px 6px 3px;margin-bottom:10px;
+  box-shadow:2px 4px 10px rgba(0,0,0,.25);
+}
+.m-cover-ph{
+  width:70px;height:100px;border-radius:3px 6px 6px 3px;
+  background:linear-gradient(135deg,#14284B,#ED1B3B);
+  display:flex;align-items:center;justify-content:center;margin-bottom:10px;
+}
+.m-cover-ph i{font-size:1.8rem;color:rgba(255,255,255,.6)}
+.m-urutan{font-size:.62rem;font-weight:800;color:#ED1B3B;margin-bottom:4px;letter-spacing:.05em}
+.m-title{font-size:.95rem;font-weight:700;color:#111;line-height:1.3;margin-bottom:4px}
+.m-author{font-size:.78rem;color:#6B7280;margin-bottom:8px}
+.m-stok{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:.72rem;font-weight:700;padding:4px 10px;
+  border-radius:99px;margin-bottom:12px;
+}
+.m-btn-pinjam{
+  display:flex;align-items:center;justify-content:center;gap:5px;
+  background:#ED1B3B;color:#fff;font-size:.85rem;font-weight:700;
+  padding:10px;border-radius:8px;width:100%;text-decoration:none;
+}
+.m-btn-dis{
+  display:flex;align-items:center;justify-content:center;gap:5px;
+  background:#f1f5f9;color:#9ca3af;font-size:.85rem;font-weight:600;
+  padding:10px;border-radius:8px;width:100%;cursor:not-allowed;
+}
+
+@media(min-width:769px){.mobile-modal-overlay{display:none !important}}
+@media(max-width:768px){
+  .shelf-book:hover .book-popup{display:none !important}
+  .book-popup{display:none !important}
+}
 .popup-num{font-size:.6rem;font-weight:800;color:var(--red);margin-bottom:4px;letter-spacing:.05em}
 .popup-title{font-size:.8rem;font-weight:700;color:#1a1a1a;line-height:1.3;margin-bottom:3px}
 .popup-author{font-size:.69rem;color:var(--tx3);margin-bottom:9px}
@@ -379,16 +597,77 @@ img{display:block}
   .hero-inner{flex-direction:column;gap:20px;align-items:flex-start;padding-bottom:28px}
   .hero-book{width:120px}
   .hero-book img,.hero-book-ph{width:120px;height:172px}
+  
+  /* Lampu lebih kecil di mobile tapi tetap proporsional */
+  .hero-book-light{
+    top:-28px;
+  }
+  
+  .hero-light-fixture{
+    width:30px;
+    height:12px;
+  }
+  
+  .hero-light-bulb{
+    width:16px;
+    height:16px;
+    bottom:-8px;
+  }
+  
+  .hero-light-beam{
+    width:120px; /* Cahaya mengikuti lebar cover mobile */
+    height:190px;
+    top:20px;
+  }
+  
   .main{padding:28px 20px 60px}
   .bookshelf-section{border-radius:8px}
   .shelf-books{min-height:130px;gap:16px;padding:20px 14px 0}
   .shelf-row{padding:0 12px}
+  
+  /* Hover jangan terlalu tinggi */
+  .shelf-book:hover, .shelf-book.active{
+    transform:translateY(-20px) scale(1.05) !important;
+  }
 }
 @media(max-width:480px){
+  body{overflow-x:hidden}
+  .hero-top{justify-content:center;padding-bottom:4px}
+  .hero-inner{align-items:center;gap:18px;padding-bottom:24px}
+  .hero-book-wrapper{margin-top:8px}
   .nav-crumb{display:none}
   .other-grid{grid-template-columns:repeat(2,1fr)}
-  .shelf-books{gap:12px;overflow-x:auto;padding:16px 10px 0}
-  .shelf-row{padding:0 8px}
+  .main{padding:24px 12px 56px}
+  .sec-head{align-items:flex-start;gap:8px;margin-bottom:20px}
+  .shelf-books{min-height:140px;gap:12px;overflow-x:auto;padding:12px 12px 0}
+  .shelf-row{padding:0;margin-bottom:10px}
+  .shelf-books{justify-content:flex-start;scroll-snap-type:x proximity}
+  .shelf-book-wrapper{width:72px;scroll-snap-align:start}
+  .shelf-book-img,.shelf-book-ph{width:72px !important;height:114px !important}
+  .shelf-book-light{top:-24px}
+  .light-beam{width:72px;height:114px}
+  .light-beam{width:78px;height:126px}
+  .hero-info{width:100%}
+  .hero-eyebrow,.hero-author{justify-content:center}
+  .hero-desc{max-width:330px;margin-left:auto;margin-right:auto;text-align:center}
+  .hero-chips{justify-content:center}
+  .hero-title{font-size:2rem}
+  .hero-desc{font-size:.78rem;line-height:1.55}
+  .hero-chips{gap:6px}
+  .chip{font-size:.65rem;padding:5px 9px}
+  
+  /* Di HP: buku JANGAN naik */
+  .shelf-book:hover, .shelf-book.active{
+    transform:translateY(0px) scale(1.0) !important;
+    z-index:100;
+  }
+  
+  /* Popup tetap di atas, dekat buku */
+  .book-popup{
+    width:160px;
+    bottom:calc(100% + 8px);
+    padding:10px 12px;
+  }
 }
 </style>
 </head>
@@ -406,21 +685,32 @@ img{display:block}
   </div>
   
   <div class="hero-inner">
-    {{-- Cover buku pertama --}}
+    {{-- Cover buku pertama dengan lampu spotlight --}}
     @php $firstBook = $series->buku->first(); @endphp
-    <div class="hero-book">
-      @if($firstBook && $firstBook->cover)
-        @if(Str::startsWith($firstBook->cover, 'http'))
-          <img src="{{ $firstBook->cover }}" alt="{{ $series->nama_series }}">
-        @else
-          <img src="{{ Storage::url($firstBook->cover) }}" alt="{{ $series->nama_series }}">
-        @endif
-      @else
-        <div class="hero-book-ph g0">
-          <i class="bi bi-book-fill"></i>
-          <span>{{ $series->nama_series }}</span>
+    <div class="hero-book-wrapper">
+      {{-- Lampu spotlight --}}
+      <div class="hero-book-light">
+        <div class="hero-light-fixture">
+          <div class="hero-light-bulb"></div>
         </div>
-      @endif
+        <div class="hero-light-beam"></div>
+      </div>
+      
+      {{-- Cover buku --}}
+      <div class="hero-book">
+        @if($firstBook && $firstBook->cover)
+          @if(Str::startsWith($firstBook->cover, 'http'))
+            <img src="{{ $firstBook->cover }}" alt="{{ $series->nama_series }}">
+          @else
+            <img src="{{ Storage::url($firstBook->cover) }}" alt="{{ $series->nama_series }}">
+          @endif
+        @else
+          <div class="hero-book-ph g0">
+            <i class="bi bi-book-fill"></i>
+            <span>{{ $series->nama_series }}</span>
+          </div>
+        @endif
+      </div>
     </div>
 
     {{-- Info --}}
@@ -454,8 +744,8 @@ img{display:block}
     $bukuAll = $series->buku;
     $perRow  = 4; // 4 buku per rak seperti referensi
     $rows    = $bukuAll->chunk($perRow);
-    $heights = [168, 182, 158, 175, 165, 172, 185, 162, 178, 168, 160, 180, 155, 175, 170];
-    $widths  = [106, 116, 98,  110, 104, 108, 118, 102, 112, 106, 100, 114, 96,  110, 106];
+    $heights = [180, 180, 180, 180, 180, 180, 180, 180, 180, 180, 180, 180, 180, 180, 180]; // SEMUA SAMA
+    $widths  = [115, 115, 115, 115, 115, 115, 115, 115, 115, 115, 115, 115, 115, 115, 115]; // SEMUA SAMA
   @endphp
 
   <div class="bookshelf-section">
@@ -469,7 +759,25 @@ img{display:block}
           $bh  = $heights[$idx % count($heights)];
           $bw  = $widths[$idx  % count($widths)];
         @endphp
-        <div class="shelf-book">
+        
+        {{-- Wrapper: lampu + buku --}}
+        <div class="shelf-book-wrapper">
+          {{-- Lampu spotlight --}}
+          <div class="shelf-book-light">
+            <div class="light-fixture"></div>
+            <div class="light-bulb"></div>
+            <div class="light-beam"></div>
+          </div>
+          
+          {{-- Buku --}}
+          <div class="shelf-book"
+            data-judul="{{ $book->judul }}"
+            data-pengarang="{{ $book->pengarang }}"
+            data-urutan="{{ $pv->urutan_baca }}"
+            data-stok="{{ $book->stok }}"
+            data-cover="{{ $book->cover ? (Str::startsWith($book->cover,'http') ? $book->cover : Storage::url($book->cover)) : '' }}"
+            data-link="{{ $book->stok > 0 ? route('register') : '' }}"
+          >
 
           {{-- Cover --}}
           @if($book->cover)
@@ -526,7 +834,8 @@ img{display:block}
             @endif
           </div>
 
-        </div>
+        </div> {{-- end .shelf-book --}}
+        </div> {{-- end .shelf-book-wrapper --}}
         @endforeach
       </div>
       {{-- Papan rak kayu --}}
@@ -588,6 +897,79 @@ img{display:block}
 </div>
 
 <div class="foot">© {{ date('Y') }} Perpustakaan Sekolah Digital · Semua hak dilindungi</div>
+
+{{-- ══ MOBILE MODAL ══ --}}
+<div id="mobileModalOverlay" class="mobile-modal-overlay">
+  <div id="mobileModal" class="mobile-modal">
+    <button id="modalClose" class="mobile-modal-close">✕</button>
+    <div class="m-cover"></div>
+    <div class="m-urutan"></div>
+    <div class="m-title"></div>
+    <div class="m-author"></div>
+    <div class="m-stok"></div>
+    <div class="m-action"></div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  const isMobile = () => window.innerWidth <= 768;
+  const overlay  = document.getElementById('mobileModalOverlay');
+  const modal    = document.getElementById('mobileModal');
+
+  document.querySelectorAll('.shelf-book').forEach(book => {
+    book.addEventListener('click', function(e){
+      if(!isMobile()) return;
+      if(e.target.closest('a')) return;
+      e.preventDefault(); e.stopPropagation();
+      openModal(this);
+    });
+  });
+
+  function openModal(book){
+    const judul    = book.dataset.judul    || '-';
+    const pengarang= book.dataset.pengarang|| '-';
+    const urutan   = book.dataset.urutan   || '1';
+    const stok     = parseInt(book.dataset.stok)||0;
+    const cover    = book.dataset.cover    || '';
+    const link     = book.dataset.link     || '';
+
+    const coverEl = modal.querySelector('.m-cover');
+    coverEl.innerHTML = cover
+      ? `<img src="${cover}" alt="${judul}">`
+      : `<div class="m-cover-ph"><i class="bi bi-book-fill"></i></div>`;
+
+    modal.querySelector('.m-urutan').textContent  = `Buku #${urutan}`;
+    modal.querySelector('.m-title').textContent   = judul;
+    modal.querySelector('.m-author').textContent  = pengarang;
+
+    const stokEl = modal.querySelector('.m-stok');
+    stokEl.className = stok>0 ? 'm-stok stok-ada' : 'm-stok stok-habis';
+    stokEl.innerHTML = stok>0
+      ? `<i class="bi bi-check-circle-fill" style="font-size:.65rem"></i> ${stok} tersedia`
+      : `<i class="bi bi-x-circle-fill" style="font-size:.65rem"></i> Habis`;
+
+    const actionEl = modal.querySelector('.m-action');
+    if(stok>0 && link){
+      actionEl.innerHTML = `<a href="${link}" class="m-btn-pinjam"><i class="bi bi-book"></i> Pinjam Sekarang</a>`;
+    } else {
+      actionEl.innerHTML = `<span class="m-btn-dis"><i class="bi bi-clock"></i> Tidak Tersedia</span>`;
+    }
+
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal(){
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  overlay.addEventListener('click', e => { if(e.target===overlay) closeModal(); });
+  document.getElementById('modalClose').addEventListener('click', closeModal);
+  document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
+});
+</script>
 
 </body>
 </html>

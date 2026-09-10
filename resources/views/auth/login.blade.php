@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('title','Login — Perpustakaan Sekolah Digital')
 @section('content')
+
 <div class="auth-bg">
   <div class="auth-card">
     {{-- Tombol kembali ke landing --}}
