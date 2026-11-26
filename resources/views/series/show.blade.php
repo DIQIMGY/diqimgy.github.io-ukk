@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link rel="stylesheet" href="{{ asset('css/bookshelf-real.css') }}?v={{ filemtime(public_path('css/bookshelf-real.css')) }}">
 <style>
 /* ══════════════════════════════
    BASE
@@ -752,6 +753,7 @@ img{display:block}
     @foreach($rows as $rowIdx => $rowBooks)
     <div class="shelf-row">
       <div class="shelf-books">
+        @include('partials.shelf-decor')
         @foreach($rowBooks as $i => $book)
         @php
           $pv  = $book->pivot;
@@ -764,6 +766,7 @@ img{display:block}
         <div class="shelf-book-wrapper">
           {{-- Lampu spotlight --}}
           <div class="shelf-book-light">
+            @include('partials.shelf-light-cord')
             <div class="light-fixture"></div>
             <div class="light-bulb"></div>
             <div class="light-beam"></div>
@@ -801,6 +804,7 @@ img{display:block}
               <span>{{ Str::limit($book->judul, 18) }}</span>
             </div>
           @endif
+          @include('partials.shelf-stock-tag', ['stok' => $book->stok])
 
           {{-- Badge penutup --}}
           @if($pv->is_penutup)
@@ -839,7 +843,9 @@ img{display:block}
         @endforeach
       </div>
       {{-- Papan rak kayu --}}
-      <div class="shelf-plank"></div>
+      <div class="shelf-plank">
+        @include('partials.shelf-plank-extras')
+      </div>
     </div>
     @endforeach
   </div>
@@ -969,6 +975,65 @@ document.addEventListener('DOMContentLoaded', function(){
   document.getElementById('modalClose').addEventListener('click', closeModal);
   document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
 });
+</script>
+
+<!-- 🎨 Series page button animations -->
+<style>
+.popup-btn{
+  position:relative;overflow:hidden;
+  transition:all .25s cubic-bezier(.34,1.56,.64,1) !important;
+}
+.popup-btn:hover{
+  transform:translateY(-2px) scale(1.05) !important;
+  box-shadow:0 8px 22px rgba(237,27,59,.4) !important;
+}
+.popup-btn::before{
+  content:'';position:absolute;top:0;left:-110%;width:55%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.28),transparent);
+  transform:skewX(-20deg);pointer-events:none;
+}
+.popup-btn:hover::before{animation:srShimmer .5s ease forwards;}
+@keyframes srShimmer{0%{left:-110%}100%{left:120%}}
+.popup-btn i{display:inline-block;}
+.popup-btn:hover i{animation:srBookBounce .5s ease;}
+@keyframes srBookBounce{
+  0%{transform:translateY(0) rotate(0) scale(1)}
+  25%{transform:translateY(-6px) rotate(-8deg) scale(1.2)}
+  50%{transform:translateY(-3px) rotate(4deg) scale(1.1)}
+  75%{transform:translateY(-5px) rotate(-5deg) scale(1.15)}
+  100%{transform:translateY(0) rotate(0) scale(1)}
+}
+.m-btn-pinjam{
+  position:relative;overflow:hidden;
+  animation:srPinjamGlow 2.4s ease-in-out infinite;
+  transition:all .25s cubic-bezier(.34,1.56,.64,1) !important;
+}
+@keyframes srPinjamGlow{
+  0%,100%{box-shadow:0 4px 14px rgba(237,27,59,.28)}
+  50%{box-shadow:0 8px 24px rgba(237,27,59,.52),0 0 0 4px rgba(237,27,59,.1)}
+}
+.m-btn-pinjam:hover{
+  animation:none;transform:translateY(-3px) scale(1.04) !important;
+  box-shadow:0 10px 28px rgba(237,27,59,.48) !important;
+}
+.m-btn-pinjam i{display:inline-block;}
+.m-btn-pinjam:hover i{animation:srBookBounce .5s ease;}
+.sr-ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,.4);transform:scale(0);animation:srRipple .4s linear;pointer-events:none;}
+@keyframes srRipple{to{transform:scale(4);opacity:0}}
+</style>
+<script>
+(function(){
+  document.addEventListener('click',function(e){
+    const btn=e.target.closest('.popup-btn,.m-btn-pinjam');
+    if(!btn) return;
+    const r=document.createElement('span');r.className='sr-ripple';
+    const rect=btn.getBoundingClientRect(),size=Math.max(rect.width,rect.height)*1.8;
+    r.style.cssText=`width:${size}px;height:${size}px;left:${e.clientX-rect.left-size/2}px;top:${e.clientY-rect.top-size/2}px`;
+    if(getComputedStyle(btn).position==='static')btn.style.position='relative';
+    btn.style.overflow='hidden';btn.appendChild(r);
+    r.addEventListener('animationend',()=>r.remove());
+  });
+})();
 </script>
 
 </body>

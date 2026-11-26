@@ -122,181 +122,210 @@ a{text-decoration:none;color:inherit}
 .app-wrap{display:flex;min-height:100vh}
 
 /* ══════════════════════════════════════════════════════════
-   MODERN NAVBAR & SIDEBAR - Premium Crimson Theme
+   MODERN NAVBAR & SIDEBAR - Premium Redesign
 ══════════════════════════════════════════════════════════ */
 
 /* ── SIDEBAR ── */
 .sidebar{
   position:fixed;top:0;left:0;
   width:var(--sb-w);height:100vh;
-  background:linear-gradient(180deg, #0B1730 0%, #14284B 100%);
+  background:linear-gradient(165deg, #0f1f3d 0%, #1a2c52 50%, #0d1830 100%);
   display:flex;flex-direction:column;
   z-index:1050;
   transition:transform .3s var(--ease);
   overflow:hidden;
-  box-shadow:2px 0 24px rgba(0,0,0,.15);
+  border-right:1px solid rgba(255,255,255,.05);
 }
 
-/* Decorative modern pattern */
+/* Modern blur backdrop effect */
 .sidebar::before{
-  content:'';position:absolute;
-  width:400px;height:400px;border-radius:50%;
-  background:radial-gradient(circle,rgba(237,27,59,.08) 0%,transparent 70%);
-  top:-120px;right:-120px;pointer-events:none;
-  animation:pulse 15s ease-in-out infinite;
+  content:'';position:absolute;inset:0;
+  background:url('data:image/svg+xml,<svg width="400" height="400" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="a" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%23ED1B3B" stop-opacity=".03"/><stop offset="100%" stop-color="%236B9ED9" stop-opacity=".02"/></linearGradient></defs><circle cx="200" cy="200" r="200" fill="url(%23a)"/></svg>');
+  background-size:cover;
+  opacity:.5;
+  animation:floatBg 30s ease-in-out infinite;
+  pointer-events:none;
 }
-.sidebar::after{
-  content:'';position:absolute;
-  width:250px;height:250px;border-radius:50%;
-  background:radial-gradient(circle,rgba(96,165,250,.06) 0%,transparent 70%);
-  bottom:-80px;left:-80px;pointer-events:none;
-  animation:pulse 20s ease-in-out infinite reverse;
+
+@keyframes floatBg {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-20px) scale(1.05); }
 }
 
 @keyframes pulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.1); opacity: 0.8; }
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.1); opacity: 1; }
 }
 
-/* Brand - Modern Style */
+/* Brand - Clean Minimal */
 .sb-brand{
-  padding:20px 18px;
-  display:flex;align-items:center;gap:14px;
-  border-bottom:1px solid rgba(255,255,255,.08);
+  padding:24px 20px 20px;
+  display:flex;align-items:center;gap:12px;
   flex-shrink:0;position:relative;z-index:1;
-  background:rgba(0,0,0,.15);
+  border-bottom:1px solid rgba(255,255,255,.06);
 }
 
 .sb-logo{
-  width:48px;height:48px;border-radius:14px;
+  width:44px;height:44px;border-radius:12px;
   background:#fff;
   display:flex;align-items:center;justify-content:center;
-  font-size:1.3rem;color:#fff;flex-shrink:0;
-  box-shadow:0 6px 20px rgba(0,0,0,.15);
-  position:relative;
+  flex-shrink:0;
+  box-shadow:0 8px 24px rgba(0,0,0,.2), 0 2px 8px rgba(0,0,0,.15);
   overflow:hidden;
 }
 
-.sb-logo img{
-  filter:drop-shadow(0 2px 4px rgba(0,0,0,.1));
-}
 .sb-brand-txt strong{
-  display:block;color:#fff;font-size:.9rem;
-  font-weight:900;line-height:1.2;
-  letter-spacing:-.02em;
+  display:block;color:#fff;font-size:.88rem;
+  font-weight:900;line-height:1.25;
+  letter-spacing:-.03em;
 }
 
 .sb-brand-txt span{
-  color:rgba(255,255,255,.4);
+  color:rgba(255,255,255,.35);
   font-size:.68rem;
   font-weight:600;
-  letter-spacing:.03em;
+  letter-spacing:.02em;
 }
 
-/* User chip - Modern Glassmorphism */
+/* User Profile Card - Premium Glass Effect */
 .sb-user{
-  margin:14px 14px 8px;
-  padding:12px 14px;
-  background:rgba(255,255,255,.08);
-  backdrop-filter:blur(20px);
-  -webkit-backdrop-filter:blur(20px);
-  border:1px solid rgba(255,255,255,.12);
-  border-radius:14px;
+  margin:16px 14px 12px;
+  padding:16px;
+  background:linear-gradient(135deg, rgba(255,255,255,.12) 0%, rgba(255,255,255,.06) 100%);
+  backdrop-filter:blur(40px) saturate(180%);
+  -webkit-backdrop-filter:blur(40px) saturate(180%);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:16px;
   display:flex;align-items:center;gap:12px;
   flex-shrink:0;position:relative;z-index:1;
-  box-shadow:0 4px 16px rgba(0,0,0,.15),
-              inset 0 1px 0 rgba(255,255,255,.1);
-  transition:all .3s;
+  box-shadow:0 8px 32px rgba(0,0,0,.18),
+              0 2px 8px rgba(0,0,0,.1),
+              inset 0 1px 0 rgba(255,255,255,.15);
+  transition:all .35s cubic-bezier(.4,0,.2,1);
+  overflow:hidden;
+}
+
+.sb-user::before{
+  content:'';position:absolute;top:0;left:0;right:0;
+  height:1px;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.2), transparent);
 }
 
 .sb-user:hover {
-  background:rgba(255,255,255,.12);
-  border-color:rgba(237,27,59,.3);
+  background:linear-gradient(135deg, rgba(237,27,59,.15) 0%, rgba(255,255,255,.08) 100%);
+  border-color:rgba(237,27,59,.25);
+  transform:translateY(-2px);
+  box-shadow:0 12px 40px rgba(237,27,59,.25),
+              0 4px 12px rgba(0,0,0,.15);
 }
 
 .sb-avatar{
-  width:40px;height:40px;border-radius:50%;
-  background:linear-gradient(135deg,var(--crimson),var(--crimson-dark));
+  width:48px;height:48px;border-radius:50%;
+  background:linear-gradient(135deg,#ED1B3B 0%, #C41630 100%);
   display:flex;align-items:center;justify-content:center;
-  font-size:.85rem;font-weight:900;color:#fff;flex-shrink:0;
-  box-shadow:0 4px 12px rgba(237,27,59,.5),
-              inset 0 -2px 8px rgba(0,0,0,.2);
-  border:2px solid rgba(255,255,255,.15);
+  font-size:.95rem;font-weight:900;color:#fff;flex-shrink:0;
+  box-shadow:0 6px 20px rgba(237,27,59,.4),
+              0 2px 8px rgba(0,0,0,.2),
+              inset 0 -3px 10px rgba(0,0,0,.25);
+  border:3px solid rgba(255,255,255,.2);
+  position:relative;
+}
+
+.sb-avatar::after{
+  content:'';
+  position:absolute;inset:4px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.15);
 }
 
 .sb-uname{
   color:#fff;
-  font-size:.84rem;
-  font-weight:700;
-  line-height:1.2;
+  font-size:.88rem;
+  font-weight:800;
+  line-height:1.3;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
+  text-shadow:0 1px 2px rgba(0,0,0,.2);
 }
 
 .sb-badge{
   font-size:.64rem;
   font-weight:800;
-  padding:3px 10px;
-  border-radius:6px;
-  display:inline-block;
+  padding:4px 10px;
+  border-radius:8px;
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
   margin-top:4px;
-  letter-spacing:.04em;
+  letter-spacing:.03em;
   text-transform:uppercase;
+  box-shadow:0 2px 8px rgba(0,0,0,.15);
 }
 
 .sb-badge-admin{
-  background:rgba(239,68,68,.2);
-  color:#fca5a5;
-  box-shadow:0 0 12px rgba(239,68,68,.2);
+  background:linear-gradient(135deg, rgba(239,68,68,.25), rgba(220,38,38,.2));
+  color:#fecaca;
+  border:1px solid rgba(239,68,68,.3);
 }
 
 .sb-badge-siswa{
-  background:rgba(59,130,246,.2);
-  color:#93c5fd;
-  box-shadow:0 0 12px rgba(59,130,246,.2);
+  background:linear-gradient(135deg, rgba(59,130,246,.25), rgba(37,99,235,.2));
+  color:#bfdbfe;
+  border:1px solid rgba(59,130,246,.3);
 }
 
 /* Nav - Modern Style */
 .sb-nav{
   flex:1;
   overflow-y:auto;
-  padding:8px 0 12px;
+  padding:12px 0 20px;
   position:relative;
   z-index:1;
 }
 
-.sb-nav::-webkit-scrollbar{width:3px}
+.sb-nav::-webkit-scrollbar{width:4px}
 .sb-nav::-webkit-scrollbar-track{background:transparent}
-.sb-nav::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:99px}
+.sb-nav::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:99px}
+.sb-nav::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.2)}
 
 .sb-section{
   font-size:.62rem;
   font-weight:900;
   text-transform:uppercase;
   letter-spacing:.15em;
-  color:rgba(255,255,255,.25);
-  padding:20px 18px 8px;
+  color:rgba(255,255,255,.28);
+  padding:24px 20px 10px;
+  position:relative;
+}
+
+.sb-section::before{
+  content:'';
+  position:absolute;
+  bottom:0;left:20px;right:20px;
+  height:1px;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.08), transparent);
 }
 
 .sb-item{
   display:flex;
   align-items:center;
   gap:12px;
-  margin:3px 12px;
-  padding:11px 14px;
+  margin:4px 14px;
+  padding:12px 16px;
   border-radius:12px;
-  color:rgba(255,255,255,.6);
+  color:rgba(255,255,255,.65);
   font-size:.85rem;
   font-weight:600;
-  transition:all .2s cubic-bezier(.4,0,.2,1);
+  transition:all .25s cubic-bezier(.4,0,.2,1);
   border:none;
-  background:none;
-  width:calc(100% - 24px);
+  background:transparent;
+  width:calc(100% - 28px);
   text-align:left;
   cursor:pointer;
   white-space:nowrap;
   position:relative;
+  overflow:hidden;
 }
 
 .sb-item::before {
@@ -307,84 +336,121 @@ a{text-decoration:none;color:inherit}
   transform: translateY(-50%);
   width: 3px;
   height: 0;
-  background: var(--crimson);
+  background: linear-gradient(180deg, var(--crimson), var(--crimson-dark));
   border-radius: 0 99px 99px 0;
-  transition: height .2s;
+  box-shadow: 0 0 12px rgba(237,27,59,.6);
+  transition: height .3s cubic-bezier(.4,0,.2,1);
 }
 
 .sb-item:hover{
   background:rgba(255,255,255,.08);
   color:rgba(255,255,255,.95);
-  transform: translateX(4px);
+  transform: translateX(2px);
 }
 
 .sb-item:hover::before {
-  height: 60%;
+  height: 50%;
 }
 
 .sb-item.active{
-  background:linear-gradient(90deg,rgba(237,27,59,.15),rgba(237,27,59,.05));
+  background:linear-gradient(90deg,rgba(237,27,59,.2) 0%,rgba(237,27,59,.08) 50%,transparent 100%);
   color:#fff;
   font-weight:700;
-  box-shadow:0 4px 16px rgba(237,27,59,.2);
+  border:1px solid rgba(237,27,59,.2);
+  box-shadow:0 4px 20px rgba(237,27,59,.15),
+              inset 0 1px 0 rgba(255,255,255,.08);
 }
 
 .sb-item.active::before {
-  height: 70%;
+  height: 80%;
 }
 
 .sb-icon{
-  width:36px;
-  height:36px;
-  border-radius:10px;
-  background:rgba(255,255,255,.08);
+  width:38px;
+  height:38px;
+  border-radius:11px;
+  background:rgba(255,255,255,.06);
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:.95rem;
+  font-size:1rem;
   flex-shrink:0;
-  transition:all .2s;
+  transition:all .25s cubic-bezier(.4,0,.2,1);
+  border:1px solid rgba(255,255,255,.08);
 }
 
 .sb-item.active .sb-icon{
-  background:linear-gradient(135deg,var(--crimson),var(--crimson-dark));
-  box-shadow:0 4px 14px rgba(237,27,59,.6),
-              inset 0 1px 0 rgba(255,255,255,.2);
+  background:linear-gradient(135deg,#ED1B3B 0%, #C41630 100%);
+  box-shadow:0 6px 20px rgba(237,27,59,.5),
+              0 2px 8px rgba(0,0,0,.2),
+              inset 0 1px 2px rgba(255,255,255,.25);
   color:#fff;
-  transform:scale(1.05);
+  transform:scale(1.08);
+  border-color:transparent;
 }
 
 .sb-item:hover .sb-icon{
-  background:rgba(255,255,255,.15);
+  background:rgba(255,255,255,.12);
+  border-color:rgba(255,255,255,.15);
   transform:scale(1.05);
+}
+
+.sb-item-label{
+  flex:1;
+  letter-spacing:-.01em;
 }
 
 /* Sidebar footer - Modern */
 .sb-footer{
-  padding:12px;
-  border-top:1px solid rgba(255,255,255,.08);
+  padding:16px 14px;
+  border-top:1px solid rgba(255,255,255,.06);
   flex-shrink:0;
   position:relative;
   z-index:1;
-  background:rgba(0,0,0,.15);
+  background:rgba(0,0,0,.2);
+  backdrop-filter:blur(20px);
+}
+
+.sb-footer button{
+  width:100%;
+  padding:12px 16px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:12px;
+  color:rgba(255,255,255,.7);
+  font-size:.82rem;
+  font-weight:700;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  transition:all .25s;
+}
+
+.sb-footer button:hover{
+  background:rgba(239,68,68,.15);
+  border-color:rgba(239,68,68,.3);
+  color:#fca5a5;
+  transform:translateY(-2px);
+  box-shadow:0 6px 20px rgba(239,68,68,.25);
 }
 
 /* Refined library sidebar */
 .sidebar{
   width:276px;
-  background:linear-gradient(180deg,rgba(11,23,48,.98),rgba(9,20,40,.99));
+  background:linear-gradient(165deg,#0d1830 0%,#1a2c52 40%,#0f1f3d 100%);
   border-right:1px solid rgba(255,255,255,.08);
-  box-shadow:10px 0 34px rgba(6,16,31,.14);
+  box-shadow:4px 0 32px rgba(0,0,0,.2);
 }
 .sidebar::before{
-  width:280px;height:280px;top:-150px;right:-130px;
-  background:radial-gradient(circle,rgba(237,27,59,.1),transparent 68%);
-  animation:none;
+  width:320px;height:320px;top:-180px;right:-150px;
+  background:radial-gradient(circle,rgba(237,27,59,.12),transparent 68%);
+  animation:pulse 20s ease-in-out infinite;
 }
 .sidebar::after{
-  width:220px;height:220px;bottom:-140px;left:-120px;
-  background:radial-gradient(circle,rgba(96,165,250,.07),transparent 68%);
-  animation:none;
+  width:240px;height:240px;bottom:-150px;left:-130px;
+  background:radial-gradient(circle,rgba(96,165,250,.08),transparent 68%);
+  animation:pulse 25s ease-in-out infinite reverse;
 }
 .sb-brand{
   min-height:82px;padding:17px 18px;gap:12px;
@@ -401,9 +467,15 @@ a{text-decoration:none;color:inherit}
   font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;
 }
 .sb-user{
-  margin:16px 14px 12px;padding:11px 12px;
-  background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.1);
-  border-radius:12px;box-shadow:none;
+  margin:16px 14px 12px;padding:16px;
+  background:linear-gradient(135deg, rgba(255,255,255,.12) 0%, rgba(255,255,255,.06) 100%);
+  backdrop-filter:blur(40px) saturate(180%);
+  -webkit-backdrop-filter:blur(40px) saturate(180%);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:14px;box-shadow:0 8px 32px rgba(0,0,0,.18),
+              0 2px 8px rgba(0,0,0,.1),
+              inset 0 1px 0 rgba(255,255,255,.15);
+}
 }
 .sb-user:hover{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.16);}
 .sb-avatar{width:38px;height:38px;box-shadow:0 4px 12px rgba(237,27,59,.28);}
@@ -419,12 +491,20 @@ a{text-decoration:none;color:inherit}
 .sb-item.active{background:linear-gradient(90deg,rgba(237,27,59,.2),rgba(237,27,59,.07));color:#fff;box-shadow:inset 0 0 0 1px rgba(237,27,59,.12),0 6px 18px rgba(6,16,31,.16);}
 .sb-item.active::before{height:62%;}
 .sb-icon{width:34px;height:34px;border-radius:9px;background:rgba(255,255,255,.055);color:rgba(255,255,255,.65);font-size:.88rem;}
-.sb-item.active .sb-icon{background:linear-gradient(145deg,var(--crimson),var(--crimson-dark));box-shadow:0 5px 14px rgba(237,27,59,.34);}
-.sb-item:hover .sb-icon{background:rgba(255,255,255,.12);}
-.sb-footer{padding:13px 12px 15px;border-top-color:rgba(255,255,255,.09);background:rgba(0,0,0,.12);}
-.sb-footer form .sb-item{margin:0;width:100%;color:rgba(255,255,255,.5) !important;}
-.sb-footer form .sb-item:hover{color:#fecaca !important;background:rgba(220,38,38,.09);}
-.sb-footer form .sb-icon{background:rgba(220,38,38,.1) !important;color:#fca5a5;}
+.sb-item.active .sb-icon{
+  background:linear-gradient(135deg,#ED1B3B 0%, #C41630 100%);
+  box-shadow:0 6px 20px rgba(237,27,59,.5),
+              0 2px 8px rgba(0,0,0,.2),
+              inset 0 1px 2px rgba(255,255,255,.25);
+  color:#fff;
+  transform:scale(1.08);
+  border-color:transparent;
+}
+.sb-item:hover .sb-icon{
+  background:rgba(255,255,255,.12);
+  border-color:rgba(255,255,255,.15);
+  transform:scale(1.05);
+}
 
 /* ── MAIN ── */
 .app-main{
@@ -1218,6 +1298,342 @@ html.theme-dark .auth-card,html.theme-dark .reg-card{background:rgba(23,32,51,.9
   .topbar{height:56px}
   .topbar-title{font-size:.86rem}
 }
+
+/* ═══════════════════════════════════════════════════
+   🎨 GLOBAL BUTTON MAGIC ANIMATIONS
+   ── Applies to all action buttons sitewide ──
+═══════════════════════════════════════════════════ */
+
+/* ── Base: semua tombol action punya ripple ── */
+.btn,[class*="-act"],[class*="-btn"],[class*="btn-"]{
+  position:relative;overflow:hidden;
+}
+/* Ripple effect on click */
+.btn-ripple{
+  position:absolute;border-radius:50%;
+  background:rgba(255,255,255,.35);
+  transform:scale(0);
+  animation:rippleAnim .5s linear;
+  pointer-events:none;
+}
+@keyframes rippleAnim{
+  to{transform:scale(4);opacity:0}
+}
+
+/* ── DELETE / HAPUS buttons: icon flies into trash ── */
+@keyframes trashLid{
+  0%{transform:rotate(0) translateY(0)}
+  30%{transform:rotate(-25deg) translateY(-3px)}
+  60%{transform:rotate(15deg) translateY(-1px)}
+  100%{transform:rotate(0) translateY(0)}
+}
+@keyframes trashShake{
+  0%,100%{transform:translateX(0) scale(1)}
+  15%{transform:translateX(-3px) scale(1.08)}
+  30%{transform:translateX(3px) scale(1.05)}
+  45%{transform:translateX(-2px) scale(1.03)}
+  60%{transform:translateX(2px) scale(1.02)}
+  75%{transform:translateX(-1px) scale(1.01)}
+}
+@keyframes flyIntoTrash{
+  0%{transform:translateY(0) scale(1);opacity:1}
+  40%{transform:translateY(-8px) scale(.7);opacity:.6}
+  100%{transform:translateY(4px) scale(.3);opacity:0}
+}
+
+/* Trigger via JS class .btn-deleting */
+.btn-del-anim.btn-deleting i,
+.ag-act.del.btn-deleting i,
+.tx-act.del.btn-deleting i,
+.popup-btn-delete.btn-deleting i,
+.m-btn-delete.btn-deleting i,
+[class*="del"].btn-deleting i,
+[class*="hapus"].btn-deleting i{
+  animation:trashShake .45s ease both;
+}
+
+/* ── VIEW / LIHAT buttons: eye blinks ── */
+@keyframes eyeBlink{
+  0%,90%,100%{transform:scaleY(1)}
+  93%{transform:scaleY(.08)}
+  96%{transform:scaleY(1)}
+}
+@keyframes eyePulse{
+  0%{transform:scale(1)}
+  40%{transform:scale(1.3)}
+  70%{transform:scale(0.9)}
+  100%{transform:scale(1)}
+}
+.ag-act.view:hover i,
+.tx-act.view:hover i,
+.popup-btn-view:hover i,
+.m-btn-view:hover i,
+.bv:hover i,
+[class*="view"]:hover i.bi-eye,
+[class*="view"]:hover i.bi-eye-fill,
+[class*="lihat"]:hover i{
+  animation:eyeBlink .7s ease infinite;
+  display:inline-block;
+}
+
+/* ── EDIT / PENCIL buttons: pencil writes ── */
+@keyframes pencilWrite{
+  0%{transform:rotate(0deg) translate(0,0)}
+  20%{transform:rotate(-18deg) translate(-2px,1px)}
+  40%{transform:rotate(-18deg) translate(2px,-1px)}
+  60%{transform:rotate(-18deg) translate(-1px,1px)}
+  80%{transform:rotate(-5deg) translate(0,0)}
+  100%{transform:rotate(0deg) translate(0,0)}
+}
+.ag-act.edit:hover i,
+.tx-act.edit:hover i,
+.popup-btn-edit:hover i,
+.m-btn-edit:hover i,
+.be:hover i,
+[class*="edit"]:hover i.bi-pencil,
+[class*="edit"]:hover i.bi-pencil-fill{
+  animation:pencilWrite .5s ease;
+  display:inline-block;
+  transform-origin:bottom center;
+}
+
+/* ── BACK / KEMBALI buttons: arrow slides left ── */
+@keyframes arrowLeft{
+  0%{transform:translateX(0)}
+  35%{transform:translateX(-5px)}
+  65%{transform:translateX(-2px)}
+  100%{transform:translateX(0)}
+}
+[class*="back"]:hover i,
+[class*="kembali"]:hover i,
+.btn-ghost:hover i.bi-arrow-left,
+.btn-ghost:hover i.bi-chevron-left,
+[class*="back-btn"]:hover i{
+  animation:arrowLeft .4s ease;
+  display:inline-block;
+}
+
+/* ── SAVE / SUBMIT buttons: checkmark bounce ── */
+@keyframes checkBounce{
+  0%{transform:scale(1) rotate(0deg)}
+  30%{transform:scale(1.4) rotate(-10deg)}
+  55%{transform:scale(.85) rotate(5deg)}
+  75%{transform:scale(1.1) rotate(-3deg)}
+  100%{transform:scale(1) rotate(0deg)}
+}
+@keyframes submitPulse{
+  0%{box-shadow:0 0 0 0 rgba(237,27,59,.4)}
+  70%{box-shadow:0 0 0 10px rgba(237,27,59,0)}
+  100%{box-shadow:0 0 0 0 rgba(237,27,59,0)}
+}
+[class*="submit"]:hover,
+[class*="simpan"]:hover,
+[class*="save"]:hover{
+  animation:submitPulse .6s ease;
+}
+[class*="submit"]:hover i,
+[class*="simpan"]:hover i,
+[class*="save"]:hover i{
+  animation:checkBounce .45s ease;
+  display:inline-block;
+}
+
+/* ── RETURN / KEMBALIKAN buttons: arrow spins ── */
+@keyframes arrowSpin{
+  0%{transform:rotate(0deg) scale(1)}
+  50%{transform:rotate(180deg) scale(1.2)}
+  100%{transform:rotate(360deg) scale(1)}
+}
+.tx-act.back:hover i,
+[class*="return"]:hover i,
+[class*="kembali"]:hover i.bi-box-arrow-in-left,
+[class*="kembalikan"]:hover i{
+  animation:arrowSpin .5s ease;
+  display:inline-block;
+}
+
+/* ── TAMBAH / ADD buttons: plus rotates ── */
+@keyframes plusSpin{
+  0%{transform:rotate(0deg) scale(1)}
+  50%{transform:rotate(90deg) scale(1.25)}
+  100%{transform:rotate(0deg) scale(1)}
+}
+[class*="tambah"]:hover i,
+[class*="add"]:hover i.bi-plus,
+[class*="add"]:hover i.bi-plus-lg,
+[class*="add"]:hover i.bi-plus-circle,
+[class*="-btn"]:hover i.bi-plus-lg,
+[class*="-btn"]:hover i.bi-plus-circle-fill{
+  animation:plusSpin .4s ease;
+  display:inline-block;
+}
+
+/* ── PINJAM / BORROW buttons: book open ── */
+@keyframes bookBounce{
+  0%{transform:translateY(0) scale(1)}
+  30%{transform:translateY(-5px) scale(1.15)}
+  55%{transform:translateY(-2px) scale(1.05)}
+  75%{transform:translateY(-4px) scale(1.1)}
+  100%{transform:translateY(0) scale(1)}
+}
+[class*="pinjam"]:hover i,
+[class*="borrow"]:hover i,
+.btn-bk:hover i{
+  animation:bookBounce .5s ease;
+  display:inline-block;
+}
+
+/* ── LUNAS / PAY buttons: coin flip ── */
+@keyframes coinFlip{
+  0%{transform:rotateY(0deg) scale(1)}
+  40%{transform:rotateY(90deg) scale(1.1)}
+  100%{transform:rotateY(0deg) scale(1)}
+}
+[class*="lunas"]:hover i,
+[class*="fine"]:hover i,
+[class*="denda"]:hover i,
+[class*="pay"]:hover i{
+  animation:coinFlip .5s ease;
+  display:inline-block;
+}
+
+/* ── SEARCH / FILTER buttons: magnifier bounces ── */
+@keyframes searchBounce{
+  0%{transform:scale(1) rotate(0)}
+  30%{transform:scale(1.2) rotate(-15deg)}
+  60%{transform:scale(.9) rotate(10deg)}
+  100%{transform:scale(1) rotate(0)}
+}
+[class*="submit"]:hover i.bi-search,
+[class*="filter"]:hover i.bi-search,
+[class*="cari"]:hover i.bi-search,
+button[type="submit"]:hover i.bi-search,
+button[type="submit"]:hover i.bi-funnel,
+button[type="submit"]:hover i.bi-funnel-fill{
+  animation:searchBounce .45s ease;
+  display:inline-block;
+}
+
+/* ── UPLOAD buttons: arrow floats up ── */
+@keyframes uploadFloat{
+  0%{transform:translateY(0) scale(1)}
+  40%{transform:translateY(-6px) scale(1.1)}
+  70%{transform:translateY(-3px) scale(1.05)}
+  100%{transform:translateY(0) scale(1)}
+}
+[class*="upload"]:hover i,
+button[type="submit"]:hover i.bi-upload,
+button[type="submit"]:hover i.bi-cloud-upload,
+button[type="submit"]:hover i.bi-cloud-arrow-up{
+  animation:uploadFloat .5s ease;
+  display:inline-block;
+}
+
+/* ── REFRESH / RESET buttons: circle spin ── */
+@keyframes resetSpin{
+  0%{transform:rotate(0deg)}
+  100%{transform:rotate(-360deg)}
+}
+[class*="reset"]:hover i,
+[class*="ghost"]:hover i.bi-arrow-counterclockwise,
+[class*="ghost"]:hover i.bi-x-circle,
+a[class*="ghost"]:hover i{
+  animation:resetSpin .45s ease;
+  display:inline-block;
+}
+
+/* ── LOGIN / DAFTAR buttons: shine sweep ── */
+@keyframes shineSweep{
+  0%{left:-120%;opacity:.55}
+  50%{opacity:.7}
+  100%{left:120%;opacity:0}
+}
+.btn-navy::after,
+.btn-primary::after,
+.btn-hp-primary::after,
+.btn-lnav-gold::after,
+.btn-lnav-solid::after{
+  content:'';
+  position:absolute;top:0;left:-120%;
+  width:60%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.25),transparent);
+  transform:skewX(-20deg);
+  pointer-events:none;
+}
+.btn-navy:hover::after,
+.btn-primary:hover::after,
+.btn-hp-primary:hover::after,
+.btn-lnav-gold:hover::after,
+.btn-lnav-solid:hover::after{
+  animation:shineSweep .55s ease forwards;
+}
+
+/* ── ADD MEMBER / TAMBAH ANGGOTA hero buttons: glow pulse ── */
+@keyframes heroBtnGlow{
+  0%,100%{box-shadow:0 4px 14px rgba(237,27,59,.3)}
+  50%{box-shadow:0 8px 28px rgba(237,27,59,.55),0 0 0 6px rgba(237,27,59,.08)}
+}
+.ag-btn,.tx-btn,.la-btn-primary,.btn-submit-modern,
+[class*="hero-btn"],[class*="cta-btn"]{
+  animation:heroBtnGlow 2.8s ease-in-out infinite;
+}
+.ag-btn:hover,.tx-btn:hover,.la-btn-primary:hover,.btn-submit-modern:hover{
+  animation:none;
+  transform:translateY(-3px) scale(1.03);
+}
+
+/* ── Tambah Anggota / Tambah Transaksi icon spin on hover ── */
+.ag-btn i,.tx-btn i{
+  transition:transform .35s cubic-bezier(.34,1.56,.64,1);
+  display:inline-block;
+}
+.ag-btn:hover i,.tx-btn:hover i{
+  transform:rotate(135deg) scale(1.2);
+}
+
+/* ── Scale pop on all action btn click ── */
+.btn-click-pop{
+  animation:clickPop .2s ease;
+}
+@keyframes clickPop{
+  0%{transform:scale(1)}
+  50%{transform:scale(.88)}
+  100%{transform:scale(1)}
+}
+
+/* ── Delete confirm visual feedback ── */
+.btn-del-shake{
+  animation:deleteShake .3s ease;
+}
+@keyframes deleteShake{
+  0%,100%{transform:translateX(0)}
+  20%{transform:translateX(-5px) rotate(-1deg)}
+  40%{transform:translateX(5px) rotate(1deg)}
+  60%{transform:translateX(-4px)}
+  80%{transform:translateX(4px)}
+}
+
+/* ── Floating tooltip on hover ── */
+.magic-tooltip{
+  position:absolute;
+  bottom:calc(100% + 6px);
+  left:50%;transform:translateX(-50%);
+  background:rgba(15,23,42,.88);
+  color:#fff;font-size:.68rem;font-weight:700;
+  padding:4px 9px;border-radius:6px;
+  white-space:nowrap;pointer-events:none;
+  opacity:0;
+  transition:opacity .18s,transform .18s;
+  transform:translateX(-50%) translateY(4px);
+  z-index:9999;
+  letter-spacing:.02em;
+}
+.magic-tooltip::after{
+  content:'';position:absolute;top:100%;left:50%;
+  transform:translateX(-50%);
+  border:4px solid transparent;
+  border-top-color:rgba(15,23,42,.88);
+}
 </style>
 @stack('styles')
 </head>
@@ -1231,24 +1647,34 @@ html.theme-dark .auth-card,html.theme-dark .reg-card{background:rgba(23,32,51,.9
     <div class="sb-brand">
       <div class="sb-logo"><img src="/image/logo.png" alt="Logo" style="width:100%;height:100%;object-fit:contain;"></div>
       <div class="sb-brand-txt">
-        <strong>Perpustakaan<br>Sekolah Digital</strong>
-        <span>Library Management System</span>
+        <strong>ESKALIBRARY</strong>
+        <span>Read More, Explore More.</span>
       </div>
     </div>
 
     <div class="sb-user">
       @php
-        $userAnggota = auth()->user()->isAdmin() ? null : auth()->user()->anggota;
+        $currentUser = auth()->user();
+        $fotoUrl = null;
+        
+        if ($currentUser->isAdmin()) {
+          // Admin: ambil foto dari tabel users
+          $fotoUrl = $currentUser->foto ? Storage::url($currentUser->foto) : null;
+        } else {
+          // Siswa: ambil foto dari tabel anggota
+          $userAnggota = $currentUser->anggota;
+          $fotoUrl = ($userAnggota && $userAnggota->foto) ? Storage::url($userAnggota->foto) : null;
+        }
       @endphp
-      @if($userAnggota && $userAnggota->foto)
-        <img src="{{ Storage::url($userAnggota->foto) }}" alt="{{ auth()->user()->name }}" class="sb-avatar" style="object-fit: cover;">
+      @if($fotoUrl)
+        <img src="{{ $fotoUrl }}" alt="{{ $currentUser->name }}" class="sb-avatar" style="object-fit: cover;">
       @else
-        <div class="sb-avatar">{{ strtoupper(substr(auth()->user()->name,0,1)) }}</div>
+        <div class="sb-avatar">{{ strtoupper(substr($currentUser->name,0,1)) }}</div>
       @endif
       <div style="min-width:0;flex:1">
-        <div class="sb-uname">{{ Str::limit(auth()->user()->name,20) }}</div>
-        <span class="sb-badge {{ auth()->user()->isAdmin()?'sb-badge-admin':'sb-badge-siswa' }}">
-          {{ auth()->user()->isAdmin() ? '⚡ Administrator' : '📚 Siswa' }}
+        <div class="sb-uname">{{ Str::limit($currentUser->name,20) }}</div>
+        <span class="sb-badge {{ $currentUser->isAdmin()?'sb-badge-admin':'sb-badge-siswa' }}">
+          {{ $currentUser->isAdmin() ? '⚡ Administrator' : '📚 Siswa' }}
         </span>
       </div>
     </div>
@@ -1269,9 +1695,38 @@ html.theme-dark .auth-card,html.theme-dark .reg-card{background:rgba(23,32,51,.9
         <a href="{{ route('admin.series.index') }}" data-label="Koleksi Series" class="sb-item {{ request()->routeIs('admin.series.*')?'active':'' }}">
           <span class="sb-icon"><i class="bi bi-collection-fill"></i></span><span class="sb-item-label">Koleksi Series</span>
         </a>
+        <a href="{{ route('admin.landing-ads.index') }}" data-label="Visual Ads" class="sb-item {{ request()->routeIs('admin.landing-ads.*')?'active':'' }}">
+          <span class="sb-icon"><i class="bi bi-images"></i></span><span class="sb-item-label">Visual Ads</span>
+        </a>
         <div class="sb-section">Transaksi</div>
-        <a href="{{ route('admin.transaksi.index') }}" data-label="Peminjaman" class="sb-item {{ request()->routeIs('admin.transaksi.*')?'active':'' }}">
-          <span class="sb-icon"><i class="bi bi-arrow-left-right"></i></span><span class="sb-item-label">Peminjaman</span>
+        <a href="{{ route('admin.transaksi.index') }}" data-label="Riwayat Transaksi" class="sb-item {{ request()->routeIs('admin.transaksi.index') ? 'active' : '' }}">
+          <span class="sb-icon"><i class="bi bi-clock-history"></i></span><span class="sb-item-label">Riwayat Transaksi</span>
+        </a>
+        <a href="{{ route('admin.transaksi.index', ['status' => 'pending_kembali']) }}" data-label="Pengembalian" class="sb-item {{ request()->routeIs('admin.transaksi.index') && request('status') === 'pending_kembali' ? 'active' : '' }}">
+          <span class="sb-icon"><i class="bi bi-box-arrow-in-left"></i></span>
+          <span class="sb-item-label">Pengembalian</span>
+          @if($adminPendingReturnCount > 0)
+            <span style="margin-left:auto;padding:2px 8px;border-radius:99px;background:#ef4444;color:#fff;font-size:.68rem;font-weight:900;line-height:1.6">{{ $adminPendingReturnCount }}</span>
+          @endif
+        </a>
+        <a href="{{ route('admin.transaksi.index', ['denda' => 'belum_lunas']) }}" data-label="Pembayaran Denda" class="sb-item {{ request()->routeIs('admin.transaksi.index') && request('denda') === 'belum_lunas' ? 'active' : '' }}">
+          <span class="sb-icon"><i class="bi bi-cash-coin"></i></span>
+          <span class="sb-item-label">Pembayaran Denda</span>
+          @if($adminUnpaidFineCount > 0)
+            <span style="margin-left:auto;padding:2px 8px;border-radius:99px;background:#f59e0b;color:#fff;font-size:.68rem;font-weight:900;line-height:1.6">{{ $adminUnpaidFineCount }}</span>
+          @endif
+        </a>
+        <div class="sb-section">Konten</div>
+        <a href="{{ route('admin.ulasan.index') }}" data-label="Ulasan Buku" class="sb-item {{ request()->routeIs('admin.ulasan.*')?'active':'' }}">
+          <span class="sb-icon"><i class="bi bi-star-fill"></i></span><span class="sb-item-label">Ulasan Buku</span>
+        </a>
+        <div class="sb-section">Sistem</div>
+        <a href="{{ route('admin.anggota.pending') }}" data-label="Persetujuan Siswa" class="sb-item {{ request()->routeIs('admin.anggota.pending') ? 'active' : '' }}">
+          <span class="sb-icon"><i class="bi bi-person-check-fill"></i></span>
+          <span class="sb-item-label">Persetujuan Siswa</span>
+          @if($adminPendingSiswaCount > 0)
+            <span style="margin-left:auto;padding:2px 8px;border-radius:99px;background:#8b5cf6;color:#fff;font-size:.68rem;font-weight:900;line-height:1.6">{{ $adminPendingSiswaCount }}</span>
+          @endif
         </a>
       @else
         <div class="sb-section">Menu Utama</div>
@@ -1288,15 +1743,19 @@ html.theme-dark .auth-card,html.theme-dark .reg-card{background:rgba(23,32,51,.9
         <a href="{{ route('siswa.pengembalian.index') }}" data-label="Pengembalian" class="sb-item {{ request()->routeIs('siswa.pengembalian.*')?'active':'' }}">
           <span class="sb-icon"><i class="bi bi-box-arrow-in-left"></i></span><span class="sb-item-label">Pengembalian</span>
         </a>
+        <div class="sb-section">Akun</div>
+        <a href="{{ route('siswa.profil.index') }}" data-label="Profil Saya" class="sb-item {{ request()->routeIs('siswa.profil.*')?'active':'' }}">
+          <span class="sb-icon"><i class="bi bi-person-circle"></i></span><span class="sb-item-label">Profil Saya</span>
+        </a>
       @endif
     </div>
 
     <div class="sb-footer">
       <form method="POST" action="{{ route('logout') }}">
         @csrf
-        <button type="submit" data-label="Keluar" class="sb-item" style="color:rgba(252,165,165,.75)">
-          <span class="sb-icon" style="background:rgba(220,38,38,.12)"><i class="bi bi-box-arrow-right"></i></span>
-          <span class="sb-item-label">Keluar</span>
+        <button type="submit" data-label="Keluar">
+          <i class="bi bi-box-arrow-right"></i>
+          <span>Keluar</span>
         </button>
       </form>
     </div>
@@ -1322,14 +1781,24 @@ html.theme-dark .auth-card,html.theme-dark .reg-card{background:rgba(23,32,51,.9
         </span>
         <div class="topbar-chip">
           @php
-            $userAnggota = auth()->user()->isAdmin() ? null : auth()->user()->anggota;
+            $currentUser = auth()->user();
+            $fotoUrl = null;
+            
+            if ($currentUser->isAdmin()) {
+              // Admin: ambil foto dari tabel users
+              $fotoUrl = $currentUser->foto ? Storage::url($currentUser->foto) : null;
+            } else {
+              // Siswa: ambil foto dari tabel anggota
+              $userAnggota = $currentUser->anggota;
+              $fotoUrl = ($userAnggota && $userAnggota->foto) ? Storage::url($userAnggota->foto) : null;
+            }
           @endphp
-          @if($userAnggota && $userAnggota->foto)
-            <img src="{{ Storage::url($userAnggota->foto) }}" alt="{{ auth()->user()->name }}" class="topbar-chip-ava" style="object-fit: cover;">
+          @if($fotoUrl)
+            <img src="{{ $fotoUrl }}" alt="{{ $currentUser->name }}" class="topbar-chip-ava" style="object-fit: cover;">
           @else
-            <div class="topbar-chip-ava">{{ strtoupper(substr(auth()->user()->name,0,1)) }}</div>
+            <div class="topbar-chip-ava">{{ strtoupper(substr($currentUser->name,0,1)) }}</div>
           @endif
-          <span class="topbar-chip-name">{{ Str::limit(auth()->user()->name,16) }}</span>
+          <span class="topbar-chip-name">{{ Str::limit($currentUser->name,16) }}</span>
         </div>
       </div>
     </header>
@@ -1409,6 +1878,109 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSB()})
 @endauth
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+/* ═══════════════════════════════════════════════════
+   🎨 GLOBAL BUTTON MAGIC — Interactive Animations
+═══════════════════════════════════════════════════ */
+(function(){
+  /* ── 1. Ripple on click for ALL clickable buttons ── */
+  document.addEventListener('click', function(e){
+    const btn = e.target.closest(
+      'button,a.btn,[class*="-btn"],[class*="btn-"],[class*="-act"],[class*="-submit"]'
+    );
+    if(!btn || btn.closest('.sb-item, nav, .topbar')) return;
+
+    const r  = document.createElement('span');
+    r.className = 'btn-ripple';
+    const rect  = btn.getBoundingClientRect();
+    const size  = Math.max(rect.width, rect.height) * 1.8;
+    r.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX-rect.left-size/2}px;top:${e.clientY-rect.top-size/2}px`;
+    // ensure parent can clip
+    if(getComputedStyle(btn).position === 'static') btn.style.position = 'relative';
+    btn.style.overflow = 'hidden';
+    btn.appendChild(r);
+    r.addEventListener('animationend', ()=> r.remove());
+
+    /* click-pop feedback */
+    btn.classList.add('btn-click-pop');
+    btn.addEventListener('animationend', ()=> btn.classList.remove('btn-click-pop'), {once:true});
+  });
+
+  /* ── 2. Delete button: trash shake + confirm shake ── */
+  document.addEventListener('DOMContentLoaded', function(){
+
+    /* Magic tooltips for icon-only buttons */
+    const tooltipMap = {
+      'bi-eye': 'Lihat Detail',
+      'bi-eye-fill': 'Lihat Detail',
+      'bi-pencil': 'Edit',
+      'bi-pencil-fill': 'Edit',
+      'bi-trash': 'Hapus',
+      'bi-trash-fill': 'Hapus',
+      'bi-box-arrow-in-left': 'Kembalikan',
+      'bi-check-circle-fill': 'Tandai Lunas',
+      'bi-arrow-left': 'Kembali',
+      'bi-chevron-left': 'Kembali',
+      'bi-plus-lg': 'Tambah Baru',
+      'bi-person-plus-fill': 'Tambah Anggota',
+      'bi-funnel-fill': 'Filter',
+    };
+
+    document.querySelectorAll(
+      '.ag-act,.tx-act,.btn-ico,.bv,.be,.bd,.br,button.tx-fine-btn'
+    ).forEach(function(btn){
+      if(btn.closest('nav, .sb-item, .topbar')) return;
+
+      const ic = btn.querySelector('i[class*="bi-"]');
+      if(!ic) return;
+      const cls = Array.from(ic.classList).find(c => tooltipMap[c]);
+      if(!cls) return;
+
+      // inject tooltip
+      const tip = document.createElement('span');
+      tip.className = 'magic-tooltip';
+      tip.textContent = tooltipMap[cls];
+      if(getComputedStyle(btn).position === 'static') btn.style.position = 'relative';
+      btn.appendChild(tip);
+
+      btn.addEventListener('mouseenter', function(){
+        tip.style.opacity = '1';
+        tip.style.transform = 'translateX(-50%) translateY(0)';
+      });
+      btn.addEventListener('mouseleave', function(){
+        tip.style.opacity = '0';
+        tip.style.transform = 'translateX(-50%) translateY(4px)';
+      });
+    });
+
+    /* Delete buttons: animate trash lid on hover + shake on click */
+    document.querySelectorAll(
+      '.ag-act.del,.tx-act.del,.popup-btn-delete,.m-btn-delete,.bd,[class*="del"][class*="btn"],[class*="btn"][class*="del"]'
+    ).forEach(function(btn){
+      if(btn.closest('nav, .sb-item, .topbar')) return;
+
+      btn.addEventListener('click', function(e){
+        this.classList.add('btn-del-shake');
+        this.addEventListener('animationend', ()=> this.classList.remove('btn-del-shake'), {once:true});
+      });
+    });
+
+    /* Submit / Save buttons: pulse on click */
+    document.querySelectorAll(
+      '[class*="submit"],[class*="simpan"],[class*="save"],[class*="send"],.btn-submit-modern'
+    ).forEach(function(btn){
+      if(btn.closest('nav, .sb-item, .topbar')) return;
+      btn.addEventListener('click', function(){
+        this.style.animation = 'none';
+        void this.offsetWidth;
+        this.style.animation = 'submitPulse .6s ease';
+        setTimeout(()=> this.style.animation = '', 650);
+      });
+    });
+
+  });
+})();
+</script>
 @stack('scripts')
 </body>
 </html>

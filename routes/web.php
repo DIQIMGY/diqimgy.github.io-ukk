@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 // ── Landing Page ──────────────────────────────────────────────────────────────
 Route::get('/', [LandingController::class, 'index'])->name('landing');
 Route::get('/buku', [LandingController::class, 'allBooks'])->name('buku.all');
+Route::get('/ulasan', [LandingController::class, 'allUlasan'])->name('ulasan.all');
 
 // ── Series ────────────────────────────────────────────────────────────────────
 Route::get('/series', [SeriesController::class, 'index'])->name('series.index');
@@ -41,6 +42,16 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::get('/anggota/{anggotum}/edit',   [Admin\AnggotaController::class, 'edit'])->name('anggota.edit');
     Route::put('/anggota/{anggotum}',   [Admin\AnggotaController::class, 'update'])->name('anggota.update');
     Route::delete('/anggota/{anggotum}',[Admin\AnggotaController::class, 'destroy'])->name('anggota.destroy');
+    
+    // Admin Management
+    Route::get('/admin/{user}/edit',    [Admin\AnggotaController::class, 'editAdmin'])->name('admin.edit');
+    Route::put('/admin/{user}',         [Admin\AnggotaController::class, 'updateAdmin'])->name('admin.update');
+    Route::delete('/admin/{user}',      [Admin\AnggotaController::class, 'destroyAdmin'])->name('admin.destroy');
+
+    // Persetujuan Siswa
+    Route::get('/anggota-pending',               [Admin\AnggotaController::class, 'pendingSiswa'])->name('anggota.pending');
+    Route::post('/anggota/{anggotum}/approve',   [Admin\AnggotaController::class, 'approveSiswa'])->name('anggota.approve');
+    Route::post('/anggota/{anggotum}/reject',    [Admin\AnggotaController::class, 'rejectSiswa'])->name('anggota.reject');
 
     // Transaksi
     Route::get('/transaksi',                        [Admin\TransaksiController::class, 'index'])->name('transaksi.index');
@@ -49,7 +60,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::get('/transaksi/{transaksi}',            [Admin\TransaksiController::class, 'show'])->name('transaksi.show');
     Route::get('/transaksi/{transaksi}/edit',       [Admin\TransaksiController::class, 'edit'])->name('transaksi.edit');
     Route::put('/transaksi/{transaksi}',            [Admin\TransaksiController::class, 'update'])->name('transaksi.update');
-    Route::post('/transaksi/{transaksi}/kembali',   [Admin\TransaksiController::class, 'pengembalian'])->name('transaksi.kembali');
+    Route::post('/transaksi/{transaksi}/kembali',         [Admin\TransaksiController::class, 'pengembalian'])->name('transaksi.kembali');
+    Route::post('/transaksi/{transaksi}/approve',         [Admin\TransaksiController::class, 'approve'])->name('transaksi.approve');
+    Route::post('/transaksi/{transaksi}/reject',          [Admin\TransaksiController::class, 'reject'])->name('transaksi.reject');
+    Route::post('/transaksi/{transaksi}/approve-kembali', [Admin\TransaksiController::class, 'approveKembali'])->name('transaksi.approve-kembali');
+    Route::post('/transaksi/{transaksi}/reject-kembali',  [Admin\TransaksiController::class, 'rejectKembali'])->name('transaksi.reject-kembali');
+    Route::post('/transaksi/{transaksi}/denda/lunas',     [Admin\TransaksiController::class, 'tandaiDendaDibayar'])->name('transaksi.denda.lunas');
     Route::delete('/transaksi/{transaksi}',         [Admin\TransaksiController::class, 'destroy'])->name('transaksi.destroy');
 
     // Series
@@ -63,6 +79,18 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::delete('/series/{series}/buku/{buku}',                [Admin\SeriesController::class, 'hapusBuku'])->name('series.buku.hapus');
     Route::post('/series/{series}/urutan',                       [Admin\SeriesController::class, 'updateUrutan'])->name('series.urutan');
     Route::post('/series/{series}/buku/{buku}/penutup',          [Admin\SeriesController::class, 'togglePenutup'])->name('series.buku.penutup');
+
+    // Visual Ads landing page
+    Route::get('/landing-ads',                         [Admin\LandingAdController::class, 'index'])->name('landing-ads.index');
+    Route::post('/landing-ads',                        [Admin\LandingAdController::class, 'store'])->name('landing-ads.store');
+    Route::post('/landing-ads/reorder',                [Admin\LandingAdController::class, 'reorder'])->name('landing-ads.reorder');
+    Route::post('/landing-ads/{landingAd}/toggle',     [Admin\LandingAdController::class, 'toggle'])->name('landing-ads.toggle');
+    Route::post('/landing-ads/{landingAd}/update',     [Admin\LandingAdController::class, 'update'])->name('landing-ads.update');
+    Route::delete('/landing-ads/{landingAd}',           [Admin\LandingAdController::class, 'destroy'])->name('landing-ads.destroy');
+
+    // Ulasan
+    Route::get('/ulasan', [Admin\UlasanController::class, 'index'])->name('ulasan.index');
+    Route::delete('/ulasan/{ulasan}', [Admin\UlasanController::class, 'destroy'])->name('ulasan.destroy');
 });
 
 // ── Siswa ─────────────────────────────────────────────────────────────────────
@@ -71,13 +99,24 @@ Route::prefix('siswa')->name('siswa.')->middleware(['auth', 'siswa'])->group(fun
     Route::get('/dashboard', [Siswa\DashboardController::class, 'index'])->name('dashboard');
 
     // Peminjaman
-    Route::get('/peminjaman',                  [Siswa\PeminjamanController::class, 'index'])->name('peminjaman.index');
-    Route::get('/peminjaman/pinjam',           [Siswa\PeminjamanController::class, 'create'])->name('peminjaman.create');
-    Route::post('/peminjaman',                 [Siswa\PeminjamanController::class, 'store'])->name('peminjaman.store');
-    Route::get('/peminjaman/{peminjaman}',     [Siswa\PeminjamanController::class, 'show'])->name('peminjaman.show');
+    Route::get('/peminjaman',                              [Siswa\PeminjamanController::class, 'index'])->name('peminjaman.index');
+    Route::get('/peminjaman/pinjam',                       [Siswa\PeminjamanController::class, 'create'])->name('peminjaman.create');
+    Route::get('/peminjaman/pinjam/{buku}',                [Siswa\PeminjamanController::class, 'detail'])->name('peminjaman.detail');
+    Route::post('/peminjaman',                             [Siswa\PeminjamanController::class, 'store'])->name('peminjaman.store');
+    Route::get('/peminjaman/{peminjaman}',                 [Siswa\PeminjamanController::class, 'show'])->name('peminjaman.show');
 
     // Pengembalian
     Route::get('/pengembalian',                          [Siswa\PengembalianController::class, 'index'])->name('pengembalian.index');
     Route::get('/pengembalian/{peminjaman}/konfirmasi',  [Siswa\PengembalianController::class, 'konfirmasi'])->name('pengembalian.konfirmasi');
     Route::post('/pengembalian/{peminjaman}/proses',     [Siswa\PengembalianController::class, 'proses'])->name('pengembalian.proses');
+
+    // Profil Siswa (Kelola Anggota Mandiri)
+    Route::get('/profil',                [Siswa\ProfilController::class, 'index'])->name('profil.index');
+    Route::put('/profil',                [Siswa\ProfilController::class, 'update'])->name('profil.update');
+    Route::put('/profil/password',       [Siswa\ProfilController::class, 'updatePassword'])->name('profil.password');
+
+    // Ulasan / Rating
+    Route::get('/ulasan/{peminjaman}',        [Siswa\UlasanController::class, 'create'])->name('ulasan.create');
+    Route::post('/ulasan/{peminjaman}',       [Siswa\UlasanController::class, 'store'])->name('ulasan.store');
+    Route::post('/ulasan/{peminjaman}/skip',  [Siswa\UlasanController::class, 'skip'])->name('ulasan.skip');
 });

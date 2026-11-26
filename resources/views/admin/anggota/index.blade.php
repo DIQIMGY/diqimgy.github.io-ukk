@@ -406,6 +406,14 @@
   .search-filter-bar form{grid-template-columns:1fr}
   .search-input-wrapper{grid-column:auto}
 }
+
+/* Tab hover effects */
+.tab-link:hover {
+  color: var(--navy) !important;
+}
+.tab-link.tab-active {
+  pointer-events: none;
+}
 </style>
 
 {{-- ══════════════════════════════════════════════════════════
@@ -420,13 +428,181 @@
 </div>
 
 {{-- ══════════════════════════════════════════════════════════
+     TABS NAVIGATION
+══════════════════════════════════════════════════════════ --}}
+<div style="margin-bottom:20px">
+  <div style="display:flex;gap:8px;border-bottom:2px solid var(--border);padding-bottom:0">
+    <a href="{{ route('admin.anggota.index', ['tab' => 'siswa']) }}" 
+       class="tab-link {{ $tab === 'siswa' ? 'tab-active' : '' }}"
+       style="padding:12px 20px;font-weight:700;font-size:.85rem;text-decoration:none;border-bottom:3px solid {{ $tab === 'siswa' ? 'var(--crimson)' : 'transparent' }};color:{{ $tab === 'siswa' ? 'var(--crimson)' : 'var(--tx3)' }};transition:all .2s;display:inline-flex;align-items:center;gap:8px;margin-bottom:-2px">
+      <i class="bi bi-mortarboard-fill"></i> Siswa
+    </a>
+    <a href="{{ route('admin.anggota.index', ['tab' => 'admin']) }}" 
+       class="tab-link {{ $tab === 'admin' ? 'tab-active' : '' }}"
+       style="padding:12px 20px;font-weight:700;font-size:.85rem;text-decoration:none;border-bottom:3px solid {{ $tab === 'admin' ? 'var(--navy)' : 'transparent' }};color:{{ $tab === 'admin' ? 'var(--navy)' : 'var(--tx3)' }};transition:all .2s;display:inline-flex;align-items:center;gap:8px;margin-bottom:-2px">
+      <i class="bi bi-shield-fill-check"></i> Admin
+    </a>
+  </div>
+</div>
+
+@if($tab === 'admin')
+{{-- ══════════════════════════════════════════════════════════
+     TAB ADMIN
+══════════════════════════════════════════════════════════ --}}
+
+{{-- ══════════════════════════════════════════════════════════
      TOOLBAR
 ══════════════════════════════════════════════════════════ --}}
 <div class="toolbar-new">
-  <div style="display:flex;align-items:center;gap:10px">
+  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+    <span style="font-size:.84rem;color:var(--tx-3);font-weight:600">
+      <i class="bi bi-list-ul"></i> Menampilkan {{ $admins->count() }} dari {{ $admins->total() }} admin
+    </span>
+  </div>
+</div>
+
+{{-- ══════════════════════════════════════════════════════════
+     SEARCH BAR
+══════════════════════════════════════════════════════════ --}}
+<div class="search-filter-bar">
+  <form method="GET" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+    <input type="hidden" name="tab" value="admin">
+    <div class="search-input-wrapper">
+      <i class="bi bi-search search-icon-left"></i>
+      <input type="text" name="search" placeholder="Cari nama atau email..." value="{{ request('search') }}" class="search-input-new">
+    </div>
+    
+    <button type="submit" class="btn btn-primary btn-sm">
+      <i class="bi bi-funnel-fill"></i> Filter
+    </button>
+    
+    @if(request('search'))
+    <a href="{{ route('admin.anggota.index', ['tab' => 'admin']) }}" class="btn btn-ghost btn-sm">
+      <i class="bi bi-x-circle-fill"></i> Reset
+    </a>
+    @endif
+  </form>
+</div>
+
+{{-- ══════════════════════════════════════════════════════════
+     STATS OVERVIEW
+══════════════════════════════════════════════════════════ --}}
+<div style="background:#fff;border-radius:14px;padding:20px;border:1px solid #f0f0f0;box-shadow:0 2px 8px rgba(0,0,0,.04);margin-bottom:24px">
+  <div style="display:flex;align-items:center;gap:14px">
+    <div style="width:48px;height:48px;border-radius:12px;background:rgba(20,40,75,.1);color:var(--navy);display:flex;align-items:center;justify-content:center;font-size:1.2rem">
+      <i class="bi bi-shield-fill-check"></i>
+    </div>
+    <div>
+      <div style="font-size:.72rem;color:var(--tx-3);font-weight:700;text-transform:uppercase;letter-spacing:.04em">Total Admin</div>
+      <div style="font-size:1.6rem;font-weight:900;color:var(--navy-800);line-height:1;letter-spacing:-.02em">{{ $totalAdmin }}</div>
+    </div>
+  </div>
+</div>
+
+{{-- ══════════════════════════════════════════════════════════
+     CONTENT — Admin Cards or Empty State
+══════════════════════════════════════════════════════════ --}}
+@if($admins->isEmpty())
+  {{-- Empty State --}}
+  <div class="empty-state-new">
+    <i class="bi bi-shield-x empty-icon-new"></i>
+    <h3 class="empty-title-new">Tidak ada admin ditemukan</h3>
+    <p class="empty-desc-new">
+      @if(request('search'))
+        Tidak ada hasil yang cocok dengan pencarian Anda. Coba kata kunci lain.
+      @else
+        Belum ada admin terdaftar.
+      @endif
+    </p>
+  </div>
+@else
+  {{-- Admin Cards Grid --}}
+  <div class="member-card-grid-new">
+    @foreach($admins as $admin)
+    <div class="member-card-new" style="border-color:rgba(20,40,75,.2)">
+      {{-- Avatar --}}
+      @if($admin->foto)
+        <img src="{{ Storage::url($admin->foto) }}" alt="{{ $admin->name }}" class="member-avatar-new" style="width:56px;height:56px;object-fit:cover;background:linear-gradient(135deg,var(--navy),var(--navy-dark));box-shadow:0 5px 16px rgba(20,40,75,.35)">
+      @else
+        <div class="member-avatar-new" style="background:linear-gradient(135deg,var(--navy),var(--navy-dark));box-shadow:0 5px 16px rgba(20,40,75,.35)">
+          {{ strtoupper(substr($admin->name,0,1)) }}
+        </div>
+      @endif
+      
+      {{-- Info --}}
+      <div class="member-info-new">
+        <h3 class="member-name-new">{{ $admin->name }}</h3>
+        <span class="member-status-badge" style="background:rgba(20,40,75,.12);color:var(--navy)">
+          <i class="bi bi-shield-fill-check" style="font-size:.7rem"></i>
+          Administrator
+        </span>
+      </div>
+      
+      {{-- Details --}}
+      <div class="member-details-new">
+        <div class="detail-row-new">
+          <span class="detail-label-new">
+            <i class="bi bi-envelope"></i> Email
+          </span>
+          <span class="detail-value-new" style="font-size:.72rem">{{ Str::limit($admin->email,20) }}</span>
+        </div>
+        <div class="detail-row-new">
+          <span class="detail-label-new">
+            <i class="bi bi-calendar"></i> Terdaftar
+          </span>
+          <span class="detail-value-new" style="font-size:.72rem">{{ $admin->created_at->format('d M Y') }}</span>
+        </div>
+      </div>
+      
+      {{-- Actions --}}
+      <div class="member-actions-new">
+        <a href="{{ route('admin.admin.edit', $admin) }}" class="action-btn-new action-edit" style="flex:1" title="Edit">
+          <i class="bi bi-pencil-fill"></i>
+        </a>
+        @if($admin->id !== auth()->id())
+        <form method="POST" action="{{ route('admin.admin.destroy', $admin) }}" onsubmit="return confirm('Hapus admin {{ $admin->name }}? Tindakan ini tidak dapat dibatalkan.')" style="flex:1">
+          @csrf @method('DELETE')
+          <button type="submit" class="action-btn-new action-delete" style="width:100%" title="Hapus">
+            <i class="bi bi-trash-fill"></i>
+          </button>
+        </form>
+        @else
+        <button type="button" class="action-btn-new action-delete" style="flex:1;opacity:.5;cursor:not-allowed" title="Tidak dapat menghapus diri sendiri" disabled>
+          <i class="bi bi-trash-fill"></i>
+        </button>
+        @endif
+      </div>
+    </div>
+    @endforeach
+  </div>
+
+  {{-- Pagination --}}
+  @if($admins->hasPages())
+  <div style="display:flex;justify-content:center;margin-top:28px">
+    {{ $admins->appends(['tab' => 'admin'])->links() }}
+  </div>
+  @endif
+@endif
+
+@else
+{{-- ══════════════════════════════════════════════════════════
+     TAB SISWA (DEFAULT)
+══════════════════════════════════════════════════════════ --}}
+
+{{-- ══════════════════════════════════════════════════════════
+     TOOLBAR
+══════════════════════════════════════════════════════════ --}}
+<div class="toolbar-new">
+  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
     <span style="font-size:.84rem;color:var(--tx-3);font-weight:600">
       <i class="bi bi-list-ul"></i> Menampilkan {{ $anggota->count() }} dari {{ $anggota->total() }} anggota
     </span>
+    @php $pendingSiswaCount = \App\Models\Anggota::where('status','pending')->count(); @endphp
+    @if($pendingSiswaCount > 0)
+    <a href="{{ route('admin.anggota.pending') }}" style="display:inline-flex;align-items:center;gap:5px;background:rgba(139,92,246,.1);color:#7c3aed;border:1px solid rgba(139,92,246,.2);padding:4px 12px;border-radius:20px;font-size:.76rem;font-weight:700;text-decoration:none">
+      <i class="bi bi-hourglass-split"></i> {{ $pendingSiswaCount }} menunggu persetujuan
+    </a>
+    @endif
   </div>
   <a href="{{ route('admin.anggota.create') }}" class="btn btn-primary" style="display:inline-flex;align-items:center;gap:8px">
     <i class="bi bi-person-plus-fill"></i> Tambah Anggota
@@ -579,9 +755,11 @@
   {{-- Pagination --}}
   @if($anggota->hasPages())
   <div style="display:flex;justify-content:center;margin-top:28px">
-    {{ $anggota->links() }}
+    {{ $anggota->appends(['tab' => 'siswa'])->links() }}
   </div>
   @endif
 @endif
+
+@endif {{-- End Tab Conditional --}}
 
 @endsection

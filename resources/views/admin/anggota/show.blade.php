@@ -323,10 +323,14 @@
         <h2 class="member-name-modern">{{ $anggota->nama }}</h2>
         <p class="member-class-modern">{{ $anggota->kelas }}</p>
 
-        <div class="status-badge-modern {{ $anggota->status === 'aktif' ? 'active' : 'inactive' }}">
+        <div class="status-badge-modern {{ $anggota->status === 'aktif' ? 'active' : ($anggota->status === 'pending' ? '' : 'inactive') }}"
+          @if($anggota->status === 'pending') style="background:linear-gradient(135deg,#f59e0b,#d97706);color:white;box-shadow:0 4px 12px rgba(245,158,11,0.3)" @endif>
           @if($anggota->status === 'aktif')
             <i class="bi bi-check-circle-fill"></i>
             <span>Status Aktif</span>
+          @elseif($anggota->status === 'pending')
+            <i class="bi bi-hourglass-split"></i>
+            <span>Menunggu Persetujuan</span>
           @else
             <i class="bi bi-x-circle-fill"></i>
             <span>Status Non-aktif</span>
@@ -393,11 +397,11 @@
             <div class="transaction-dates">
               <div class="date-item">
                 <i class="bi bi-calendar-check text-muted"></i> Tanggal Pinjam
-                <strong>{{ $p->tanggal_pinjam->format('d M Y') }}</strong>
+                <strong>{{ $p->tanggal_pinjam ? $p->tanggal_pinjam->format('d M Y') : 'Menunggu persetujuan' }}</strong>
               </div>
               <div class="date-item">
                 <i class="bi bi-calendar-x text-muted"></i> Batas Kembali
-                <strong>{{ $p->tanggal_kembali_rencana->format('d M Y') }}</strong>
+                <strong>{{ $p->tanggal_kembali_rencana ? $p->tanggal_kembali_rencana->format('d M Y') : '-' }}</strong>
               </div>
             </div>
 

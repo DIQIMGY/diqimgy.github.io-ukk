@@ -6,7 +6,7 @@
 <title>Perpustakaan Sekolah Digital</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;1,700;1,800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;1,700;1,800&family=Bebas+Neue&family=Special+Elite&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <style data-v="<?php echo time(); ?>">
@@ -34,6 +34,23 @@
   --r2:8px;
   --sh:0 2px 8px rgba(237,27,59,.08),0 8px 24px rgba(237,27,59,.06);
   --sh2:0 12px 40px rgba(237,27,59,.15);
+}
+/* ══ HALF-STAR RATING UTILITY ══
+   Usage: <div class="sr" data-r="3.7"></div>
+   Renders filled, half-filled, empty stars via CSS clip-path.
+*/
+.sr{display:inline-flex;align-items:center;gap:1px;line-height:1;position:relative}
+.sr-wrap{display:inline-flex;align-items:center;gap:2px}
+.sr-num{font-size:.68rem;font-weight:700;color:var(--tx3);margin-left:3px;letter-spacing:-.01em}
+.sr-count{font-size:.62rem;color:var(--tx4)}
+/* Individual star cell */
+.sr-star{position:relative;display:inline-block;font-size:inherit;line-height:1}
+.sr-star-empty{color:#e5e7eb}
+.sr-star-fill{
+  position:absolute;top:0;left:0;
+  color:#f59e0b;
+  overflow:hidden;
+  white-space:nowrap;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;width:100%;max-width:100%;overflow-x:clip}
@@ -338,6 +355,10 @@ a{text-decoration:none;color:inherit}
 .hero-h1 em{
   font-style:italic;color:var(--crimson);
 }
+.hero-word-slot{display:inline-block;min-width:10ch;white-space:nowrap}
+.hero-word-slot em::after{content:'';display:inline-block;height:.82em;margin-left:3px;border-right:2px solid currentColor;vertical-align:-.06em;animation:heroCaret .9s steps(2,start) infinite}
+@keyframes heroCaret{to{visibility:hidden}}
+@media(prefers-reduced-motion:reduce){.hero-word-slot em::after{animation:none}}
 
 .hero-desc{
   font-size:.94rem;color:var(--tx3);
@@ -461,14 +482,31 @@ a{text-decoration:none;color:inherit}
 .lsec-sub{font-size:.82rem;color:var(--tx3);margin-top:5px;font-weight:500}
 .lsec-badge{
   display:inline-flex;align-items:center;gap:6px;
-  background:var(--bg-pink);border:1px solid #FECACA;
-  color:var(--crimson);font-size:.7rem;font-weight:800;
-  padding:3px 10px;border-radius:99px;margin-bottom:8px;
-  text-transform:uppercase;letter-spacing:.06em;
+  background:linear-gradient(145deg,#ED1B3B,#C41630);
+  border:1px solid rgba(244,185,66,.45);
+  color:#fff;font-size:.7rem;font-weight:800;
+  padding:5px 12px;border-radius:6px;margin-bottom:8px;
+  text-transform:uppercase;letter-spacing:.08em;
+  box-shadow:0 2px 8px rgba(196,22,48,.3),inset 0 1px 0 rgba(255,255,255,.2);
 }
-.lsec-badge.gold{background:#FEF3C7;border-color:#FCD34D;color:var(--gold-dark)}
-.lsec-badge.blue{background:#DBEAFE;border-color:#BFDBFE;color:var(--navy)}
-.lsec-badge.green{background:#f0fdf4;border-color:#bbf7d0;color:#15803d}
+.lsec-badge.gold{
+  background:linear-gradient(145deg,#F4B942,#C9921A);
+  border-color:rgba(255,255,255,.35);
+  color:#1a1205;
+  box-shadow:0 2px 8px rgba(201,146,26,.35),inset 0 1px 0 rgba(255,255,255,.35);
+}
+.lsec-badge.blue{
+  background:linear-gradient(145deg,#1e3a5f,#0B1730);
+  border-color:rgba(244,185,66,.45);
+  color:#fff;
+  box-shadow:0 2px 8px rgba(11,23,48,.35),inset 0 1px 0 rgba(255,255,255,.15);
+}
+.lsec-badge.green{
+  background:linear-gradient(145deg,#16a34a,#15803d);
+  border-color:rgba(167,243,208,.4);
+  color:#fff;
+  box-shadow:0 2px 8px rgba(22,163,74,.3),inset 0 1px 0 rgba(255,255,255,.2);
+}
 .see-all{
   display:inline-flex;align-items:center;gap:7px;
   font-size:.82rem;font-weight:700;color:var(--navy);
@@ -508,10 +546,242 @@ a{text-decoration:none;color:inherit}
 .g5{background:linear-gradient(150deg,#0c4a6e,#0284c7)}
 .g6{background:linear-gradient(150deg,#1f2937,#4b5563)}
 .g7{background:linear-gradient(150deg,#134e4a,#0d9488)}
-.bk-badge{position:absolute;top:7px;right:7px;z-index:4;font-size:.61rem;font-weight:700;padding:2px 8px;border-radius:6px;backdrop-filter:blur(8px)}
-.b-ada{background:rgba(22,163,74,.85);color:#fff}
-.b-habis{background:rgba(220,38,38,.85);color:#fff}
-.bk-rank{position:absolute;top:7px;left:10px;z-index:4;font-size:.72rem;font-weight:900;color:var(--gold);text-shadow:0 1px 4px rgba(0,0,0,.5)}
+/* ══ STAMP / LABEL — plaque logam, kontras tinggi, mudah dibaca ══ */
+.cover-stamp{
+  position:absolute;z-index:6;
+  display:inline-flex;flex-direction:row;align-items:center;justify-content:center;gap:6px;
+  text-align:center;text-transform:uppercase;line-height:1;
+  letter-spacing:.16em;pointer-events:none;isolation:isolate;
+  -webkit-user-select:none;user-select:none;
+  font-family:'Bebas Neue',sans-serif;font-weight:400;
+  color:#fff;
+  padding:8px 12px;
+  border-radius:3px;
+  background:linear-gradient(180deg,#24385c 0%,#0B1730 100%);
+  border:1.5px solid #F4B942;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.25) inset,
+    0 -2px 0 rgba(0,0,0,.35) inset,
+    0 4px 0 #8B6914,
+    0 8px 18px rgba(0,0,0,.45);
+  text-shadow:0 1px 0 rgba(0,0,0,.55);
+}
+.cover-stamp i{line-height:1;font-size:.78rem;color:#F4B942;filter:drop-shadow(0 1px 1px rgba(0,0,0,.45))}
+.cover-stamp span{position:relative;z-index:1;font-size:.7rem;letter-spacing:.18em;color:#fff}
+
+/* POPULER ranking — plakat emas */
+.bk-rank{
+  top:8px;left:8px;width:auto;height:auto;
+  flex-direction:column;gap:3px;
+  padding:9px 13px 8px;
+  border-radius:3px;
+  transform:none;
+  font-size:.55rem;letter-spacing:.14em;
+  color:#fff;
+  background:linear-gradient(180deg,#ED1B3B,#8E1024);
+  border:1.5px solid #F4B942;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.3) inset,
+    0 4px 0 #6b0c1a,
+    0 8px 16px rgba(0,0,0,.4);
+}
+.bk-rank span{
+  font-family:'Bebas Neue',sans-serif;font-size:.58rem;
+  letter-spacing:.2em;color:#FFE8A3;opacity:1;
+}
+.bk-rank strong{
+  font-family:'Bebas Neue',sans-serif;font-size:1.2rem;font-weight:400;
+  letter-spacing:.06em;line-height:1;margin-top:1px;
+  color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.5);
+}
+.bk-rank::before{
+  content:'';position:absolute;inset:3px;
+  border:1px solid rgba(244,185,66,.4);border-radius:1px;pointer-events:none;
+}
+
+.bk:nth-child(2) .bk-rank{
+  color:#fff;
+  background:linear-gradient(180deg,#1e3a5f,#0B1730);
+  border:1.5px solid #F4B942;
+  transform:none;top:8px;left:8px;
+  box-shadow:0 1px 0 rgba(255,255,255,.2) inset,0 4px 0 #061018,0 8px 16px rgba(0,0,0,.4);
+}
+.bk:nth-child(2) .bk-rank strong{font-size:1.15rem;color:#F4B942}
+
+.bk:nth-child(3) .bk-rank{
+  color:#1a1205;
+  background:linear-gradient(180deg,#F8D56B,#C9921A);
+  border:1.5px solid #fff8dc;
+  transform:none;top:8px;left:8px;
+  box-shadow:0 1px 0 rgba(255,255,255,.55) inset,0 4px 0 #8B6914,0 8px 16px rgba(0,0,0,.35);
+  text-shadow:none;
+}
+.bk:nth-child(3) .bk-rank span{color:#5c4308}
+.bk:nth-child(3) .bk-rank strong{font-size:1.15rem;color:#1a1205;text-shadow:none}
+
+/* STOK hijau / HABIS crimson — tidak diputar */
+.bk-badge{
+  right:8px;bottom:8px;
+  min-width:0;max-width:none;min-height:0;
+  padding:7px 11px;
+  font-size:.68rem;letter-spacing:.16em;
+  border-radius:3px;
+  transform:none !important;
+  flex-direction:row;
+}
+.bk-badge::before{display:none}
+.b-ada{
+  color:#fff;
+  background:linear-gradient(180deg,#10b981,#047857);
+  border:1.5px solid #a7f3d0;
+  box-shadow:0 1px 0 rgba(255,255,255,.35) inset,0 4px 0 #065f46,0 8px 14px rgba(0,0,0,.35);
+}
+.b-habis{
+  color:#fff;
+  background:linear-gradient(180deg,#ff2d4f,#9F1239);
+  border:1.5px solid #fecaca;
+  box-shadow:0 1px 0 rgba(255,255,255,.28) inset,0 4px 0 #6b0c1a,0 8px 14px rgba(0,0,0,.4);
+  transform:none !important;
+}
+.b-habis::after{display:none}
+.bk:nth-child(even) .bk-badge,
+.bk:nth-child(3n) .bk-badge{transform:none !important;border-radius:3px}
+
+/* BARU MASUK — pita kecil kiri atas, kemiringan ringan agar tetap terbaca */
+.cover-stamp-new{
+  top:10px;left:8px;width:auto;min-height:0;padding:7px 11px;
+  font-size:.66rem;letter-spacing:.16em;
+  color:#fff;
+  background:linear-gradient(180deg,#14b8a6,#0f766e);
+  border:1.5px solid #99f6e4;
+  box-shadow:0 1px 0 rgba(255,255,255,.3) inset,0 4px 0 #115e59,0 8px 14px rgba(0,0,0,.35);
+  transform:none;
+  flex-direction:row;
+  text-shadow:0 1px 0 rgba(0,0,0,.45);
+}
+.cover-stamp-new::before,
+.cover-stamp-new::after{display:none}
+.row > :nth-child(even) .cover-stamp-new{background:linear-gradient(180deg,#1e3a5f,#0B1730);border-color:#F4B942}
+.row > :nth-child(3n) .cover-stamp-new{
+  background:linear-gradient(180deg,#ED1B3B,#A01228);
+  border-color:#F4B942;
+  transform:none;
+}
+
+.mini-stock-stamp{
+  right:7px;bottom:7px;
+  min-width:0;max-width:none;min-height:0;padding:6px 10px;
+  font-size:.62rem;letter-spacing:.14em;
+  color:#fff;
+  background:linear-gradient(180deg,#10b981,#047857);
+  border:1.5px solid #a7f3d0;
+  border-radius:3px;
+  transform:none !important;
+  box-shadow:0 1px 0 rgba(255,255,255,.3) inset,0 3px 0 #065f46,0 6px 12px rgba(0,0,0,.3);
+}
+.mini-stock-stamp::before{display:none}
+.mini-stock-stamp.out{
+  color:#fff;
+  background:linear-gradient(180deg,#ff2d4f,#9F1239);
+  border:1.5px solid #fecaca;
+  transform:none !important;border-radius:3px;
+  box-shadow:0 1px 0 rgba(255,255,255,.25) inset,0 3px 0 #6b0c1a,0 6px 12px rgba(0,0,0,.35);
+}
+
+.featured-cover-wrap{position:relative;isolation:isolate;overflow:hidden;flex:none}
+.featured-cover-wrap .featured-main-cover,.featured-cover-wrap .featured-small-cover{display:block}
+
+.featured-cover-stamp{
+  top:14px;right:0;width:auto;height:auto;padding:9px 16px 8px;
+  gap:7px;flex-direction:row;align-items:center;
+  font-size:.7rem;letter-spacing:.16em;line-height:1;color:#1a1205;
+  clip-path:none;filter:none;text-shadow:none;
+  border-radius:4px 0 0 4px;
+  background:linear-gradient(180deg,#F8D56B,#C9921A);
+  border:1.5px solid #fff8dc;
+  border-right:none;
+  transform:none;
+  box-shadow:-4px 4px 14px rgba(0,0,0,.4),0 1px 0 rgba(255,255,255,.5) inset;
+}
+.featured-cover-stamp::before{display:none}
+.featured-cover-stamp i{font-size:.8rem;color:#7c4a00;margin:0;filter:none}
+.featured-cover-stamp span{position:relative;z-index:1;display:inline;white-space:nowrap;font-size:.7rem;letter-spacing:.16em;color:#1a1205}
+.featured-cover-stamp.small{
+  top:10px;right:0;padding:7px 12px;font-size:.58rem;
+  border-radius:4px 0 0 4px;gap:5px;
+}
+.featured-cover-stamp.small i{font-size:.64rem}
+.featured-cover-stamp.small span{font-size:.58rem}
+
+.returned-cover-stamp{
+  top:8px;right:8px;width:auto;height:auto;padding:6px 10px;
+  font-size:.62rem;letter-spacing:.14em;color:#fff;
+  background:linear-gradient(180deg,#10b981,#047857);
+  border:1.5px solid #a7f3d0;
+  border-radius:3px;
+  transform:none;
+  box-shadow:0 3px 0 #065f46,0 6px 12px rgba(0,0,0,.3);
+}
+
+/* HABIS waitlist — plakat, bukan pita miring */
+.waitlist-stock-badge{
+  top:10px;right:8px;width:auto;height:auto;padding:8px 12px;
+  flex-direction:row;gap:6px;
+  font-size:.72rem;letter-spacing:.18em;color:#fff;
+  background:linear-gradient(180deg,#ff2d4f,#9F1239);
+  border:1.5px solid #fecaca;
+  border-radius:3px;
+  transform:none !important;
+  box-shadow:0 1px 0 rgba(255,255,255,.28) inset,0 4px 0 #6b0c1a,0 8px 16px rgba(0,0,0,.45);
+  text-shadow:0 1px 0 rgba(0,0,0,.5);
+}
+.waitlist-stock-badge::before{display:none}
+.waitlist-stock-badge i{font-size:.72rem;position:relative;z-index:1;color:#FFE4E6;filter:none}
+.waitlist-stock-badge span{position:relative;z-index:1;font-size:.72rem;letter-spacing:.18em;color:#fff}
+.waitlist-card:nth-child(even) .waitlist-stock-badge,
+.waitlist-card:nth-child(3n) .waitlist-stock-badge{transform:none !important;top:10px;right:8px}
+
+/* SEGERA / SOON — plakat navy-emas */
+.cs-badge{
+  position:absolute;top:10px;left:8px;
+  width:auto;height:auto;padding:8px 13px;
+  border-radius:3px;
+  font-family:'Bebas Neue',sans-serif;font-size:.7rem;font-weight:400;
+  letter-spacing:.18em;line-height:1;color:#fff;
+  display:flex;flex-direction:row;align-items:center;justify-content:center;gap:7px;
+  background:linear-gradient(180deg,#24385c,#0B1730);
+  border:1.5px solid #F4B942;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.22) inset,
+    0 4px 0 #8B6914,
+    0 8px 16px rgba(0,0,0,.45);
+  transform:none;
+  z-index:6;pointer-events:none;text-transform:uppercase;
+  text-shadow:0 1px 0 rgba(0,0,0,.5);
+}
+.cs-badge::before{
+  content:'';position:absolute;inset:3px;
+  border:1px solid rgba(244,185,66,.35);border-radius:1px;pointer-events:none;
+}
+.cs-badge i{font-size:.8rem!important;position:relative;z-index:1;color:#F4B942;filter:drop-shadow(0 1px 1px rgba(0,0,0,.4))}
+.cs-badge span{position:relative;z-index:1;font-family:'Bebas Neue',sans-serif;font-size:.72rem;letter-spacing:.18em;color:#fff}
+.cs-card:nth-child(even) .cs-badge{
+  transform:none;left:auto;right:8px;top:10px;
+  background:linear-gradient(180deg,#F8D56B,#C9921A);
+  border-color:#fff8dc;
+  color:#1a1205;
+}
+.cs-card:nth-child(even) .cs-badge::before{border-color:rgba(90,50,0,.2)}
+.cs-card:nth-child(even) .cs-badge i{color:#7c4a00}
+.cs-card:nth-child(even) .cs-badge span{color:#1a1205;text-shadow:none}
+.cs-card:nth-child(3n) .cs-badge{
+  transform:none;left:8px;right:auto;
+  background:linear-gradient(180deg,#ED1B3B,#A01228);
+  border-color:#F4B942;
+  color:#fff;
+}
+.cs-card:nth-child(3n) .cs-badge::before{border-color:rgba(244,185,66,.3)}
+.cs-card:nth-child(3n) .cs-badge i{color:#F4B942}
 .bk-body{padding:11px 12px 12px;flex:1;display:flex;flex-direction:column}
 .bk-cat{font-size:.59rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--crimson);margin-bottom:4px}
 .bk-ttl{
@@ -533,7 +803,13 @@ a{text-decoration:none;color:inherit}
   white-space:nowrap;
 }
 .btn-bk:hover{background:var(--crimson-darker);transform:translateY(-1px);color:#fff}
-.btn-bk-dis{background:#f1f5f9;color:var(--tx4);border:none;padding:5px 11px;border-radius:var(--r2);font-size:.73rem;font-weight:600;cursor:not-allowed}
+.btn-bk-dis{
+  background:linear-gradient(145deg,#9F1239,#7F1D1D);
+  color:#fff;border:1px solid rgba(254,202,202,.35);
+  padding:5px 11px;border-radius:var(--r2);
+  font-size:.73rem;font-weight:700;cursor:not-allowed;
+  letter-spacing:.04em;opacity:.92;
+}
 
 /* ══════════════ SECTION DIVIDERS / BG ══════════════ */
 .sec-dark{
@@ -672,6 +948,273 @@ a{text-decoration:none;color:inherit}
 .promo-glow1{position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(237,27,59,.15) 0%,transparent 70%);top:-120px;right:-80px;pointer-events:none}
 .promo-glow2{position:absolute;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(244,185,66,.12) 0%,transparent 70%);bottom:-60px;left:160px;pointer-events:none}
 .promo-inner{padding:44px 44px;position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:28px}
+
+/* ══════════════ VISUAL ADS WALL ══════════════ */
+.visual-ads-section{
+  position:relative;isolation:isolate;
+  padding:36px 0 42px;overflow:hidden;
+  background:url('/image/bgiklan.png') center/cover no-repeat fixed;
+  border-top:1px solid rgba(74,44,14,.28);
+  border-bottom:1px solid rgba(74,44,14,.28);
+}
+.visual-ads-section::before{
+  content:'';position:absolute;inset:0;z-index:0;
+  background:linear-gradient(105deg,
+    rgba(11,23,48,.55) 0%,
+    rgba(20,40,75,.42) 50%,
+    rgba(80,20,10,.5) 100%
+  );
+  backdrop-filter:blur(0.6px) saturate(1.15);
+  -webkit-backdrop-filter:blur(0.6px) saturate(1.15);
+}
+.visual-ads-section::after{
+  content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(244,185,66,.06) 0%,transparent 18%,transparent 82%,rgba(237,27,59,.06) 100%);
+}
+.visual-ads-viewport{
+  position:relative;z-index:1;
+  height:340px;overflow:hidden;
+  perspective:1200px;perspective-origin:50% 46%;
+  mask-image:linear-gradient(90deg,transparent 0%,#000 8%,#000 92%,transparent 100%);
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 8%,#000 92%,transparent 100%);
+}
+.visual-ads-track{
+  display:flex;align-items:center;
+  gap:20px;
+  width:max-content;height:100%;
+  transform-style:preserve-3d;
+  will-change:transform;
+  animation:adsScroll 42s linear infinite;
+}
+.visual-ads-track:hover{ animation-play-state:paused }
+.ads-set{display:flex;align-items:center;gap:20px;flex:none}
+@keyframes adsScroll{
+  0%   { transform: translateX(0) }
+  100% { transform: translateX(var(--ads-shift, -50%)) }
+}
+.visual-ad-panel{
+  /* Default warna fallback sebelum canvas selesai */
+  --c1:17,24,39;   /* RGB dark navy */
+  --c2:244,185,66; /* RGB gold */
+  --c3:255,255,255;/* RGB light */
+  width:176px;height:264px;flex:none;overflow:hidden;
+  background:rgb(var(--c1));
+  border:2px solid rgba(var(--c3),.65);
+  border-radius:6px;
+  /* Shadow pakai warna dominan poster */
+  box-shadow:
+    0 14px 32px rgba(var(--c1),.6),
+    0 0 0 4px rgba(var(--c2),.12);
+  transform-origin:center center;transform-style:preserve-3d;
+  will-change:transform,opacity;backface-visibility:hidden;
+  cursor:pointer;
+  transition:border-color .3s,box-shadow .3s,background .3s;
+  position:relative;
+}
+.visual-ad-panel img{width:100%;height:100%;display:block;object-fit:cover;pointer-events:none}
+/* Hover: border & glow pakai warna dominan poster */
+.visual-ad-panel:hover{
+  border-color:rgba(var(--c2),1);
+  box-shadow:
+    0 0 0 4px rgba(var(--c2),.3),
+    0 22px 48px rgba(var(--c1),.7),
+    0 0 60px rgba(var(--c2),.2);
+}
+/* Thin color bar di bawah card */
+.visual-ad-panel::after{
+  content:'';
+  position:absolute;bottom:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,
+    rgba(var(--c2),0),
+    rgba(var(--c2),.9) 50%,
+    rgba(var(--c2),0));
+  opacity:0;transition:opacity .3s;pointer-events:none;z-index:3;
+}
+.visual-ad-panel:hover::after{opacity:1}
+/* YT indicator badge on card */
+.vap-yt{
+  position:absolute;bottom:8px;left:8px;
+  display:flex;align-items:center;gap:5px;
+  /* Badge warna dari poster */
+  background:rgba(var(--c1),.88);
+  color:rgb(var(--c3));
+  border:1px solid rgba(var(--c2),.4);
+  padding:3px 8px;border-radius:5px;
+  font-size:.6rem;font-weight:800;letter-spacing:.04em;
+  pointer-events:none;backdrop-filter:blur(4px);
+}
+/* Click hint overlay */
+.vap-click{
+  position:absolute;inset:0;
+  background:rgba(var(--c1),0);
+  transition:background .25s;
+  display:flex;align-items:center;justify-content:center;
+  z-index:2;
+}
+.visual-ad-panel:hover .vap-click{
+  background:rgba(var(--c1),.22);
+}
+.vap-click-ico{
+  width:44px;height:44px;border-radius:50%;
+  /* Icon circle pakai accent dari poster */
+  background:rgba(var(--c2),.92);
+  color:rgb(var(--c1));
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;opacity:0;transform:scale(.7);
+  transition:opacity .22s,transform .22s;
+  box-shadow:0 4px 16px rgba(var(--c1),.4);
+}
+.visual-ad-panel:hover .vap-click-ico{opacity:1;transform:scale(1)}
+
+/* ══ AD DETAIL MODAL ══ */
+.adm-bg{
+  position:fixed;inset:0;z-index:2000;
+  background:rgba(4,8,18,.82);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  display:flex;align-items:center;justify-content:center;
+  padding:16px;
+  opacity:0;pointer-events:none;
+  transition:opacity .26s;
+}
+.adm-bg.open{opacity:1;pointer-events:all}
+.adm-box{
+  /* Warna diset oleh JS saat modal dibuka */
+  --modal-c1:15,23,42;
+  --modal-c2:244,185,66;
+  background:linear-gradient(135deg,
+    rgb(var(--modal-c1)) 0%,
+    color-mix(in srgb, rgb(var(--modal-c1)) 85%, rgb(var(--modal-c2))) 100%
+  );
+  border:1px solid rgba(var(--modal-c2),.18);
+  border-radius:20px;
+  width:100%;max-width:820px;
+  max-height:92vh;overflow-y:auto;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  box-shadow:
+    0 40px 100px rgba(var(--modal-c1),.8),
+    0 0 0 1px rgba(var(--modal-c2),.12);
+  transform:translateY(28px) scale(.96);
+  transition:transform .28s cubic-bezier(.34,1.56,.64,1);
+}
+.adm-bg.open .adm-box{transform:none}
+/* Left: big image */
+.adm-img-side{
+  position:relative;overflow:hidden;border-radius:20px 0 0 20px;
+  min-height:420px;background:#050d1a;
+}
+.adm-img-side img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform .4s;
+}
+.adm-bg.open .adm-img-side img{transform:scale(1.03)}
+.adm-img-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(4,8,18,.85) 0%,transparent 55%);
+}
+/* Right: info */
+.adm-info{
+  padding:32px 28px;display:flex;flex-direction:column;gap:0;
+  color:#f8fafc;overflow-y:auto;
+}
+.adm-close{
+  align-self:flex-end;margin-bottom:16px;
+  width:36px;height:36px;border-radius:10px;
+  border:1px solid rgba(var(--modal-c2),.2);background:rgba(var(--modal-c2),.08);
+  display:grid;place-items:center;cursor:pointer;color:rgba(255,255,255,.7);
+  font-size:1rem;transition:all .18s;flex-shrink:0;
+}
+.adm-close:hover{background:rgba(var(--modal-c2),.28);border-color:rgba(var(--modal-c2),.5);color:#fff}
+.adm-tag{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:5px 12px;border-radius:7px;font-size:.68rem;font-weight:800;
+  letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px;align-self:flex-start;
+}
+.adm-tag.yt{background:rgba(255,0,0,.2);color:#ff6b6b;border:1px solid rgba(255,0,0,.25)}
+.adm-tag.ad{background:rgba(244,185,66,.15);color:#f9c85a;border:1px solid rgba(244,185,66,.2)}
+.adm-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.2rem,2.5vw,1.65rem);font-weight:800;
+  line-height:1.2;margin-bottom:14px;letter-spacing:-.02em;color:#fff;
+}
+.adm-divider{height:1px;background:rgba(255,255,255,.08);margin:14px 0}
+.adm-desc{
+  font-size:.88rem;line-height:1.7;color:rgba(255,255,255,.72);
+  flex:1;
+}
+/* YouTube section */
+.adm-yt-section{margin-top:20px}
+.adm-yt-label{
+  font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+  color:rgba(255,255,255,.4);margin-bottom:10px;display:flex;align-items:center;gap:7px;
+}
+.adm-yt-label::before{content:'';flex:1;height:1px;background:rgba(255,255,255,.08)}
+.adm-yt-embed{
+  border-radius:12px;overflow:hidden;
+  aspect-ratio:16/9;background:#000;position:relative;
+}
+.adm-yt-embed iframe{width:100%;height:100%;border:0;display:block}
+/* thumbnail + play before iframe loads */
+.adm-yt-thumb{
+  position:absolute;inset:0;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+}
+.adm-yt-thumb img{width:100%;height:100%;object-fit:cover}
+.adm-yt-play{
+  position:absolute;
+  width:60px;height:60px;border-radius:50%;
+  background:rgba(255,0,0,.9);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;color:#fff;
+  box-shadow:0 6px 24px rgba(255,0,0,.4);
+  transition:transform .2s,box-shadow .2s;
+}
+.adm-yt-thumb:hover .adm-yt-play{transform:scale(1.12);box-shadow:0 8px 30px rgba(255,0,0,.5)}
+.adm-yt-watch{
+  display:inline-flex;align-items:center;gap:7px;margin-top:12px;
+  padding:9px 16px;border-radius:9px;
+  background:rgba(255,0,0,.12);color:#ff6b6b;
+  border:1px solid rgba(255,0,0,.2);
+  font-size:.78rem;font-weight:700;text-decoration:none;
+  transition:all .2s;
+}
+.adm-yt-watch:hover{background:rgba(255,0,0,.2);color:#ff6b6b}
+/* No content fallback */
+.adm-no-content{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;gap:12px;padding:20px 0;color:rgba(255,255,255,.35);
+}
+.adm-no-content i{font-size:2.5rem;opacity:.3}
+
+@media(max-width:640px){
+  .adm-box{grid-template-columns:1fr;max-height:88vh}
+  .adm-img-side{min-height:220px;border-radius:20px 20px 0 0}
+  .adm-info{padding:22px 20px}
+  .adm-title{font-size:1.2rem}
+}
+
+@media(max-width:991px){
+  .visual-ads-section{padding:30px 0 34px}
+  .visual-ads-viewport{height:310px}
+  .visual-ads-track,.ads-set{gap:16px}
+  .visual-ad-panel{width:156px;height:234px}
+}
+@media(max-width:767px){
+  .visual-ads-section{padding:24px 0 28px}
+  .visual-ads-viewport{height:280px;perspective:1000px}
+  .visual-ads-track,.ads-set{gap:13px}
+  .visual-ad-panel{width:144px;height:216px}
+}
+@media(max-width:575px){
+  .visual-ads-section{padding:20px 0 24px}
+  .visual-ads-viewport{height:264px;perspective:880px}
+  .visual-ads-track,.ads-set{gap:11px}
+  .visual-ad-panel{width:132px;height:198px}
+}
+@media(prefers-reduced-motion:reduce){
+  .visual-ads-track{animation:none!important;transform:none!important}
+  .visual-ad-panel{transform:none!important;opacity:1!important}
+}
 
 /* ══════════════ CATEGORIES ══════════════ */
 .cat-grid{display:flex;gap:10px;flex-wrap:wrap}
@@ -847,14 +1390,16 @@ a{text-decoration:none;color:inherit}
 }
 
 .featured-main-badge{
-  display:inline-flex;align-items:center;gap:3px;
-  background:rgba(237,27,59,.08);
-  color:var(--crimson);
-  font-size:.58rem;font-weight:800;
-  padding:3px 7px;border-radius:99px;
-  margin-bottom:5px;
+  display:inline-flex;align-items:center;gap:4px;
+  background:linear-gradient(145deg,#F4B942,#C9921A);
+  color:#1a1205;
+  font-size:.62rem;font-weight:800;
+  padding:4px 9px;border-radius:5px;
+  margin-bottom:6px;
   text-transform:uppercase;
-  letter-spacing:.02em;
+  letter-spacing:.08em;
+  border:1px solid rgba(255,255,255,.35);
+  box-shadow:0 2px 6px rgba(201,146,26,.35);
 }
 
 .featured-main-title{
@@ -866,6 +1411,7 @@ a{text-decoration:none;color:inherit}
   -webkit-line-clamp:2;
   -webkit-box-orient:vertical;
   overflow:hidden;
+  max-height:calc(1.3em * 2);
 }
 
 .featured-main-author{
@@ -923,10 +1469,10 @@ a{text-decoration:none;color:inherit}
   color:var(--navy);
   line-height:1.25;
   margin-bottom:3px;
-  display:-webkit-box;
-  -webkit-line-clamp:2;
-  -webkit-box-orient:vertical;
+  white-space:nowrap;
   overflow:hidden;
+  text-overflow:ellipsis;
+  display:block;
 }
 
 .featured-small-author{
@@ -1126,9 +1672,10 @@ a{text-decoration:none;color:inherit}
 }
 
 .baru-kembali-badge{
-  background:rgba(34,197,94,.12) !important;
-  border-color:rgba(34,197,94,.25) !important;
-  color:#15803d !important;
+  background:linear-gradient(145deg,#16a34a,#15803d) !important;
+  border-color:rgba(167,243,208,.4) !important;
+  color:#fff !important;
+  box-shadow:0 2px 8px rgba(22,163,74,.3),inset 0 1px 0 rgba(255,255,255,.2) !important;
 }
 
 .baru-kembali-scroll-wrapper{
@@ -1186,25 +1733,42 @@ a{text-decoration:none;color:inherit}
   color:#16a34a;font-size:2rem;
 }
 
-/* Badge kecil */
+/* TERBATAS : plakat amber */
 .baru-kembali-badge-card{
-  position:absolute;top:8px;right:8px;
-  background:#fff;
-  color:#16a34a;font-weight:700;font-size:.65rem;
-  padding:4px 8px;border-radius:6px;
-  display:flex;align-items:center;gap:4px;
-  box-shadow:0 2px 8px rgba(34,197,94,.25);
-  border:1px solid rgba(34,197,94,.2);
-  animation:pulse-green 2s ease-in-out infinite;
+  top:8px;right:8px;width:auto;height:auto;padding:7px 11px;
+  border-radius:3px;
+  color:#fff;
+  background:linear-gradient(180deg,#fb923c,#c2410c);
+  border:1.5px solid #ffedd5;
+  display:flex;flex-direction:row;align-items:center;justify-content:center;gap:6px;
+  box-shadow:0 1px 0 rgba(255,255,255,.3) inset,0 4px 0 #7c2d12,0 8px 14px rgba(0,0,0,.4);
+  transform:none !important;
+  font-family:'Bebas Neue',sans-serif;font-size:.66rem;font-weight:400;
+  line-height:1;letter-spacing:.16em;text-align:center;
+  text-shadow:0 1px 0 rgba(0,0,0,.45);
 }
-.baru-kembali-badge-card::before{
-  content:'';
-  position:absolute;inset:-2px;
-  border-radius:6px;
-  background:radial-gradient(circle, rgba(34,197,94,.3) 0%, transparent 70%);
-  animation:pulse-ring-green 2s ease-in-out infinite;
-  z-index:-1;
+.baru-kembali-badge-card::before{display:none}
+.baru-kembali-badge-card::after{display:none}
+.baru-kembali-badge-card i{
+  position:relative;z-index:1;font-size:.74rem;color:#ffedd5;line-height:1;filter:none;
 }
+.baru-kembali-badge-card span{position:relative;z-index:1;font-family:'Bebas Neue',sans-serif;font-size:.66rem;letter-spacing:.16em;color:#fff}
+.baru-kembali-card:nth-child(even) .baru-kembali-badge-card{
+  transform:none !important;top:8px;right:8px;
+  background:linear-gradient(180deg,#1e3a5f,#0B1730);
+  border:1.5px solid #F4B942;
+  color:#fff;
+}
+.baru-kembali-card:nth-child(even) .baru-kembali-badge-card i{color:#F4B942}
+.baru-kembali-card:nth-child(3n) .baru-kembali-badge-card{
+  transform:none !important;
+  background:linear-gradient(180deg,#ED1B3B,#A01228);
+  border:1.5px solid #F4B942;
+  color:#fff;
+  clip-path:none;
+  border-radius:3px;
+}
+.baru-kembali-card:nth-child(3n) .baru-kembali-badge-card i{color:#F4B942}
 
 @keyframes pulse-green{
   0%,100%{transform:scale(1);box-shadow:0 2px 8px rgba(34,197,94,.25)}
@@ -1325,9 +1889,10 @@ a{text-decoration:none;color:inherit}
 }
 
 .waitlist-badge{
-  background:rgba(234,179,8,.12) !important;
-  border-color:rgba(234,179,8,.25) !important;
-  color:#b45309 !important;
+  background:linear-gradient(145deg,#D97706,#B45309) !important;
+  border-color:rgba(253,230,138,.45) !important;
+  color:#fff !important;
+  box-shadow:0 2px 8px rgba(180,83,9,.35),inset 0 1px 0 rgba(255,255,255,.2) !important;
 }
 
 .waitlist-scroll-wrapper{
@@ -1396,15 +1961,6 @@ a{text-decoration:none;color:inherit}
 }
 
 /* Badge kembali ke cover (position absolute) */
-.waitlist-stock-badge{
-  position:absolute;top:10px;right:10px;
-  background:linear-gradient(135deg, #f97316, #ea580c);
-  color:#fff;font-weight:700;font-size:.68rem;
-  padding:5px 10px;border-radius:8px;
-  display:flex;align-items:center;gap:4px;
-  box-shadow:0 3px 10px rgba(249,115,22,.35);
-  z-index:2;
-}
 
 /* Info DI BAWAH (vertical) */
 .waitlist-info{
@@ -1470,16 +2026,17 @@ a{text-decoration:none;color:inherit}
 .waitlist-btn{
   display:flex;align-items:center;justify-content:center;gap:6px;
   width:100%;
-  background:transparent;
-  border:2px solid #ddd;
-  color:#999;
+  background:linear-gradient(145deg,#9F1239,#7F1D1D);
+  border:1px solid rgba(254,202,202,.35);
+  color:#fff;
   font-weight:700;font-size:.78rem;
-  padding:8px 14px;border-radius:8px;
+  padding:8px 12px;border-radius:8px;
+  cursor:not-allowed;opacity:.9;
+  letter-spacing:.03em;
   text-decoration:none;
-  cursor:not-allowed;
   margin:0;
 }
-.waitlist-btn i{font-size:.9rem}
+.waitlist-btn i{font-size:.9rem;color:#FECACA}
 
 
 /* ══════════════ MINI BOOK LIST (terbaru) ══════════════ */
@@ -1637,6 +2194,43 @@ a{text-decoration:none;color:inherit}
   50% { transform: translateY(-12px); }
 }
 </style>
+@php
+/**
+ * renderStars($rating, $size='sm')
+ * $rating: float 0-5 (e.g. 3.7)
+ * $size: 'xs'|'sm'|'md'
+ * Returns HTML string of half-star display.
+ */
+if (!function_exists('renderStars')) {
+    function renderStars($rating, $size = 'sm') {
+        if ($rating === null) return '';
+        $rating = (float) $rating;
+        $sizes  = ['xs' => '.7rem', 'sm' => '.82rem', 'md' => '1rem'];
+        $fs     = $sizes[$size] ?? '.82rem';
+        $html   = '<span class="sr-wrap" style="display:inline-flex;align-items:center;gap:1px;font-size:' . $fs . '">';
+        for ($i = 1; $i <= 5; $i++) {
+            $diff = $rating - ($i - 1);
+            if ($diff >= 1) {
+                // full star
+                $html .= '<span style="color:#f59e0b">&#9733;</span>';
+            } elseif ($diff >= 0.25) {
+                // half star — overlay clip
+                $pct = min(100, max(0, round($diff * 100)));
+                $html .= '<span style="position:relative;display:inline-block;color:#e5e7eb">'
+                       . '&#9733;'
+                       . '<span style="position:absolute;top:0;left:0;overflow:hidden;width:' . $pct . '%;color:#f59e0b;white-space:nowrap">&#9733;</span>'
+                       . '</span>';
+            } else {
+                // empty star
+                $html .= '<span style="color:#e5e7eb">&#9733;</span>';
+            }
+        }
+        $html .= '<span style="font-size:.65em;color:#9ca3af;margin-left:3px;font-weight:700">' . number_format($rating, 1) . '</span>';
+        $html .= '</span>';
+        return $html;
+    }
+}
+@endphp
 </head>
 <body>
 
@@ -1648,8 +2242,8 @@ a{text-decoration:none;color:inherit}
       <div class="lnav-brand">
         <div class="lnav-logo"><img src="/image/logo.png" alt="Logo" style="width:100%;height:100%;object-fit:contain;"></div>
         <div>
-          <div class="lnav-name">Perpustakaan Sekolah Digital</div>
-          <div class="lnav-sub">Library Management System</div>
+          <div class="lnav-name">ESKALIBRARY</div>
+          <div class="lnav-sub">Read More, Explore More.</div>
         </div>
       </div>
 
@@ -1769,9 +2363,9 @@ a{text-decoration:none;color:inherit}
         </div>
 
         {{-- Judul utama --}}
-        <h1 class="hero-h1">
+        <h1 class="hero-h1" aria-label="Temukan Cerita Favoritmu">
           Temukan Cerita<br>
-          <em>Favoritmu</em>
+          <span class="hero-word-slot" id="heroRotatingWord" aria-hidden="true"><em>Favoritmu</em></span>
         </h1>
 
         {{-- Deskripsi --}}
@@ -1840,21 +2434,12 @@ a{text-decoration:none;color:inherit}
 {{-- ══ REKOMENDASI MINGGU INI ══ --}}
 <section class="featured-book-section">
   @php
-    // Random buku per hari - seed berdasarkan tanggal
-    $today = date('Y-m-d');
-    $seed = crc32($today);
-    
-    // Ambil 5 buku random (1 featured + 4 small) dengan seed hari ini
-    $recommendedBooks = \App\Models\Buku::where('stok', '>', 0)
-      ->inRandomOrder($seed)
-      ->take(5)
-      ->get();
-    
-    $mainBook = $recommendedBooks->first();
-    $smallBooks = $recommendedBooks->skip(1)->take(4);
+    // Data sudah disiapkan controller: $ratingMainBook, $ratingSmallBooks
+    $mainBook   = $ratingMainBook;
+    $smallBooks = $ratingSmallBooks;
   @endphp
   
-  @if($recommendedBooks->count() > 0)
+  @if($ratingMainBook)
   <div class="featured-container">
     {{-- Left: Text Info (Compact) --}}
     <div class="featured-text-side">
@@ -1863,19 +2448,23 @@ a{text-decoration:none;color:inherit}
       </div>
       
       <h2 class="featured-title">
-        Buku Pilihan <span class="highlight">Minggu Ini</span>
+        Buku Pilihan <span class="highlight">Rating Terbaik</span>
       </h2>
       
       <p class="featured-description">
-        Buku yang direkomendasikan untuk kamu minggu ini. Koleksi terbaik pilihan pustakawan untuk menambah wawasan dan pengetahuan.
+        Buku yang paling banyak mendapat rating bintang dari pembaca. Pilihan terbaik yang sudah terbukti!
       </p>
       
       @if($mainBook)
       <div class="featured-book-intro">
-        <div class="featured-book-intro-label">📚 Pilihan Hari Ini</div>
+        <div class="featured-book-intro-label">⭐ Rating Tertinggi</div>
         <div class="featured-book-intro-title">{{ Str::limit($mainBook->judul, 35) }}</div>
         <div class="featured-book-intro-text">
-          Buku pilihan spesial untuk hari ini. Jangan lewatkan!
+          @if($mainBook->ulasan_avg_rating)
+            Rating {{ number_format($mainBook->ulasan_avg_rating, 1) }}/5 dari pembaca. Wajib baca!
+          @else
+            Buku terpopuler pilihan pembaca. Wajib baca!
+          @endif
         </div>
       </div>
       @endif
@@ -1889,17 +2478,20 @@ a{text-decoration:none;color:inherit}
     {{-- Center: Big Featured Book --}}
     @if($mainBook)
     <a href="{{ route('register') }}" class="featured-main-book">
-      @if($mainBook->cover)
-        <img src="{{ Storage::url($mainBook->cover) }}" alt="{{ $mainBook->judul }}" class="featured-main-cover">
-      @else
-        <div class="featured-main-cover" style="display:flex;align-items:center;justify-content:center;color:#94a3b8">
-          <i class="bi bi-book-fill" style="font-size:3rem;opacity:.3"></i>
-        </div>
-      @endif
+      <div class="featured-cover-wrap" style="width:100%">
+        @if($mainBook->cover)
+          <img src="{{ Storage::url($mainBook->cover) }}" alt="{{ $mainBook->judul }}" class="featured-main-cover">
+        @else
+          <div class="featured-main-cover" style="display:flex;align-items:center;justify-content:center;color:#94a3b8">
+            <i class="bi bi-book-fill" style="font-size:3rem;opacity:.3"></i>
+          </div>
+        @endif
+        <span class="cover-stamp featured-cover-stamp"><i class="bi bi-star-fill"></i><span>PILIHAN</span></span>
+      </div>
       
       <div class="featured-main-info">
         <span class="featured-main-badge">
-          <i class="bi bi-star-fill"></i> Featured
+          <i class="bi bi-star-fill"></i> Rating Terbaik
         </span>
         <h3 class="featured-main-title">{{ $mainBook->judul }}</h3>
         <div class="featured-main-author">
@@ -1907,6 +2499,15 @@ a{text-decoration:none;color:inherit}
           <span>{{ $mainBook->pengarang }}</span>
         </div>
         <span class="featured-main-category">{{ $mainBook->kategori }}</span>
+        @if($mainBook->ulasan_avg_rating)
+        <div style="display:flex;align-items:center;gap:6px;margin-top:8px;padding:6px 8px;background:rgba(245,158,11,.08);border-radius:8px;border:1px solid rgba(245,158,11,.2)">
+          {!! renderStars($mainBook->ulasan_avg_rating, 'sm') !!}
+          @php $jml = \App\Models\Ulasan::where('buku_id',$mainBook->id)->count(); @endphp
+          @if($jml)
+          <span style="font-size:.65rem;color:#9ca3af">({{ $jml }} ulasan)</span>
+          @endif
+        </div>
+        @endif
       </div>
     </a>
     @endif
@@ -1915,13 +2516,16 @@ a{text-decoration:none;color:inherit}
     <div class="featured-small-grid">
       @foreach($smallBooks as $book)
         <a href="{{ route('register') }}" class="featured-small-book">
-          @if($book->cover)
-            <img src="{{ Storage::url($book->cover) }}" alt="{{ $book->judul }}" class="featured-small-cover">
-          @else
-            <div class="featured-small-cover" style="display:flex;align-items:center;justify-content:center;color:#94a3b8">
-              <i class="bi bi-book-fill" style="font-size:1.5rem;opacity:.3"></i>
-            </div>
-          @endif
+          <div class="featured-cover-wrap" style="width:100%">
+            @if($book->cover)
+              <img src="{{ Storage::url($book->cover) }}" alt="{{ $book->judul }}" class="featured-small-cover">
+            @else
+              <div class="featured-small-cover" style="display:flex;align-items:center;justify-content:center;color:#94a3b8">
+                <i class="bi bi-book-fill" style="font-size:1.5rem;opacity:.3"></i>
+              </div>
+            @endif
+            <span class="cover-stamp featured-cover-stamp small"><i class="bi bi-star-fill"></i><span>PILIHAN</span></span>
+          </div>
           
           <div class="featured-small-info">
             <h4 class="featured-small-title">{{ $book->judul }}</h4>
@@ -1930,6 +2534,11 @@ a{text-decoration:none;color:inherit}
               <span>{{ $book->pengarang }}</span>
             </div>
             <span class="featured-small-category">{{ $book->kategori }}</span>
+            @if($book->ulasan_avg_rating)
+            <div style="display:flex;align-items:center;gap:3px;margin-top:5px">
+              {!! renderStars($book->ulasan_avg_rating,'xs') !!}
+            </div>
+            @endif
           </div>
         </a>
       @endforeach
@@ -1937,6 +2546,328 @@ a{text-decoration:none;color:inherit}
   </div>
   @endif
 </section>
+
+{{-- ══ VISUAL ADS WALL ══ --}}
+@if($landingAds->isNotEmpty())
+
+{{-- Prepare ad data as JSON for JS modal --}}
+@php
+$adsJson = $landingAds->map(fn($a) => [
+    'id'          => $a->id,
+    'img'         => Storage::url($a->image_path),
+    'title'       => $a->title,
+    'description' => $a->description,
+    'yt_id'       => $a->youtube_id,
+    'yt_embed'    => $a->youtube_embed,
+    'yt_watch'    => $a->youtube_watch,
+    'yt_thumb'    => $a->youtube_thumbnail,
+])->values();
+@endphp
+
+<section class="visual-ads-section" aria-label="Visual ads">
+  <div class="visual-ads-viewport" id="adsViewport">
+    <div class="visual-ads-track" id="adsTrack">
+      <div class="ads-set" id="adsSet1">
+        @foreach($landingAds as $ad)
+          <div class="visual-ad-panel" data-ad-id="{{ $ad->id }}" onclick="openAdModal({{ $ad->id }})">
+            <img src="{{ Storage::url($ad->image_path) }}" alt="{{ $ad->title ?? 'Iklan' }}" draggable="false" crossorigin="anonymous">
+            @if($ad->youtube_id)
+              <span class="vap-yt"><i class="bi bi-youtube"></i> Video</span>
+            @endif
+            <div class="vap-click"><div class="vap-click-ico"><i class="bi bi-info-circle-fill"></i></div></div>
+          </div>
+        @endforeach
+      </div>
+      <div class="ads-set">
+        @foreach($landingAds as $ad)
+          <div class="visual-ad-panel" data-ad-id="{{ $ad->id }}" onclick="openAdModal({{ $ad->id }})">
+            <img src="{{ Storage::url($ad->image_path) }}" alt="{{ $ad->title ?? 'Iklan' }}" draggable="false" crossorigin="anonymous">
+            @if($ad->youtube_id)
+              <span class="vap-yt"><i class="bi bi-youtube"></i> Video</span>
+            @endif
+            <div class="vap-click"><div class="vap-click-ico"><i class="bi bi-info-circle-fill"></i></div></div>
+          </div>
+        @endforeach
+      </div>
+    </div>
+  </div>
+</section>
+
+{{-- ══ AD DETAIL MODAL ══ --}}
+<div class="adm-bg" id="adModal" onclick="if(event.target===this)closeAdModal()">
+  <div class="adm-box">
+    <div class="adm-img-side">
+      <img id="adModalImg" src="" alt="">
+      <div class="adm-img-overlay"></div>
+    </div>
+    <div class="adm-info">
+      <button class="adm-close" onclick="closeAdModal()"><i class="bi bi-x-lg"></i></button>
+      <span class="adm-tag ad" id="adModalTag"><i class="bi bi-megaphone-fill"></i> Iklan</span>
+      <h2 class="adm-title" id="adModalTitle"></h2>
+      <div class="adm-divider"></div>
+      <div class="adm-desc" id="adModalDesc"></div>
+      <div class="adm-yt-section" id="adModalYtSection" style="display:none">
+        <div class="adm-yt-label"><i class="bi bi-youtube" style="color:#ff4040"></i> Tonton Video</div>
+        <div class="adm-yt-embed" id="adModalYtEmbed">
+          <div class="adm-yt-thumb" id="adModalYtThumb" onclick="loadYtIframe()">
+            <img id="adModalYtThumbImg" src="" alt="Thumbnail">
+            <div class="adm-yt-play"><i class="bi bi-play-fill"></i></div>
+          </div>
+        </div>
+        <a id="adModalYtWatch" href="#" target="_blank" rel="noopener" class="adm-yt-watch">
+          <i class="bi bi-youtube"></i> Buka di YouTube
+        </a>
+      </div>
+      <div class="adm-no-content" id="adModalNoContent" style="display:none">
+        <i class="bi bi-image"></i>
+        <span style="font-size:.82rem">Belum ada detail untuk iklan ini.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+var ADS_DATA = @json($adsJson);
+var _currentYtEmbed = null;
+
+/* ══════════════════════════════════════════════
+   CANVAS COLOR EXTRACTOR
+   Ambil warna dominan dari gambar poster.
+   Returns { dark:[r,g,b], accent:[r,g,b], light:[r,g,b] }
+══════════════════════════════════════════════ */
+function extractColors(img, callback) {
+  var canvas = document.createElement('canvas');
+  var SIZE   = 64; /* downsample untuk performa */
+  canvas.width = canvas.height = SIZE;
+  var ctx = canvas.getContext('2d');
+
+  /* Gambar sudah load (complete), langsung draw */
+  function draw() {
+    try {
+      ctx.drawImage(img, 0, 0, SIZE, SIZE);
+      var data = ctx.getImageData(0, 0, SIZE, SIZE).data;
+
+      /* Kumpulkan semua pixel, skip transparent & terlalu gelap/terang */
+      var pixels = [];
+      for (var i = 0; i < data.length; i += 4) {
+        var r = data[i], g = data[i+1], b = data[i+2], a = data[i+3];
+        if (a < 128) continue;
+        var brightness = (r*299 + g*587 + b*114) / 1000;
+        if (brightness < 15 || brightness > 240) continue;
+        pixels.push([r, g, b]);
+      }
+      if (!pixels.length) { callback(null); return; }
+
+      /* K-means sederhana: 3 cluster → dark, accent, light */
+      /* Seed: pilih pixel paling gelap, paling saturasi, paling terang */
+      var sorted = pixels.slice().sort(function(a,b){
+        return brightness3(a) - brightness3(b);
+      });
+      var dark   = sorted[Math.floor(sorted.length * 0.1)]  || [15,23,42];
+      var light  = sorted[Math.floor(sorted.length * 0.9)]  || [248,250,252];
+      var accent = mostSaturated(pixels) || [244,185,66];
+
+      /* Pastikan dark benar-benar gelap */
+      if (brightness3(dark) > 80) dark = [Math.floor(dark[0]*.4), Math.floor(dark[1]*.4), Math.floor(dark[2]*.4)];
+
+      callback({ dark: dark, accent: accent, light: light });
+    } catch(e) {
+      /* CORS error — fallback diam-diam */
+      callback(null);
+    }
+  }
+
+  if (img.complete && img.naturalWidth > 0) {
+    draw();
+  } else {
+    img.addEventListener('load', draw, { once: true });
+  }
+}
+
+function brightness3(c) {
+  return (c[0]*299 + c[1]*587 + c[2]*114) / 1000;
+}
+
+function mostSaturated(pixels) {
+  var best = null, bestSat = -1;
+  /* Sample setiap 5 pixel untuk performa */
+  for (var i = 0; i < pixels.length; i += 5) {
+    var r = pixels[i][0]/255, g = pixels[i][1]/255, b = pixels[i][2]/255;
+    var max = Math.max(r,g,b), min = Math.min(r,g,b);
+    var sat = max === 0 ? 0 : (max-min)/max;
+    var bri = (r*299+g*587+b*114)/1000;
+    /* Bonus kalau tidak terlalu gelap atau terlalu terang */
+    var score = sat * (1 - Math.abs(bri - 0.5));
+    if (score > bestSat) { bestSat = score; best = pixels[i]; }
+  }
+  return best;
+}
+
+/* Apply warna ke satu .visual-ad-panel */
+function applyCardColor(panel, colors) {
+  if (!colors) return;
+  var d = colors.dark, a = colors.accent, l = colors.light;
+  panel.style.setProperty('--c1', d[0]+','+d[1]+','+d[2]);
+  panel.style.setProperty('--c2', a[0]+','+a[1]+','+a[2]);
+  panel.style.setProperty('--c3', l[0]+','+l[1]+','+l[2]);
+}
+
+/* Apply warna ke modal */
+function applyModalColor(colors) {
+  var box = document.querySelector('.adm-box');
+  if (!box || !colors) return;
+  var d = colors.dark, a = colors.accent;
+  box.style.setProperty('--modal-c1', d[0]+','+d[1]+','+d[2]);
+  box.style.setProperty('--modal-c2', a[0]+','+a[1]+','+a[2]);
+}
+
+/* Jalankan extractor pada semua panel setelah DOM siap */
+function colorizeAllPanels() {
+  var panels = document.querySelectorAll('.visual-ad-panel');
+  panels.forEach(function(panel) {
+    var img = panel.querySelector('img');
+    if (!img) return;
+    extractColors(img, function(colors) {
+      applyCardColor(panel, colors);
+    });
+  });
+}
+
+/* Simpan cache warna per ad-id untuk modal */
+var _adColors = {};
+
+function openAdModal(id){
+  var ad = ADS_DATA.find(function(a){ return a.id === id; });
+  if(!ad) return;
+
+  document.getElementById('adModalImg').src = ad.img;
+
+  var titleEl = document.getElementById('adModalTitle');
+  titleEl.textContent = ad.title || 'Visual Iklan';
+
+  var descEl = document.getElementById('adModalDesc');
+  descEl.textContent  = ad.description || '';
+  descEl.style.display = ad.description ? '' : 'none';
+
+  var tagEl = document.getElementById('adModalTag');
+  if(ad.yt_id){
+    tagEl.className = 'adm-tag yt';
+    tagEl.innerHTML = '<i class="bi bi-youtube"></i> Video';
+  } else {
+    tagEl.className = 'adm-tag ad';
+    tagEl.innerHTML = '<i class="bi bi-megaphone-fill"></i> Iklan';
+  }
+
+  var ytSec     = document.getElementById('adModalYtSection');
+  var ytEmbed   = document.getElementById('adModalYtEmbed');
+  var noContent = document.getElementById('adModalNoContent');
+
+  if(ad.yt_id){
+    _currentYtEmbed = ad.yt_embed;
+    document.getElementById('adModalYtThumbImg').src = ad.yt_thumb || '';
+    document.getElementById('adModalYtWatch').href   = ad.yt_watch || '#';
+    var oldIframe = ytEmbed.querySelector('iframe');
+    if(oldIframe) oldIframe.remove();
+    document.getElementById('adModalYtThumb').style.display = 'flex';
+    ytSec.style.display = '';
+  } else {
+    ytSec.style.display = 'none';
+    _currentYtEmbed = null;
+  }
+
+  var hasContent = ad.title || ad.description || ad.yt_id;
+  noContent.style.display = hasContent ? 'none' : 'flex';
+
+  /* Apply warna poster ke modal */
+  if (_adColors[id]) {
+    applyModalColor(_adColors[id]);
+  } else {
+    /* Cari panel pertama yang punya ad-id ini, extract lagi */
+    var panels = document.querySelectorAll('.visual-ad-panel');
+    for (var i = 0; i < panels.length; i++) {
+      if (panels[i].dataset.adId == id) {
+        var img = panels[i].querySelector('img');
+        extractColors(img, function(c) {
+          _adColors[id] = c;
+          applyModalColor(c);
+        });
+        break;
+      }
+    }
+  }
+
+  document.getElementById('adModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function loadYtIframe(){
+  if(!_currentYtEmbed) return;
+  var embed  = document.getElementById('adModalYtEmbed');
+  var thumb  = document.getElementById('adModalYtThumb');
+  var iframe = document.createElement('iframe');
+  iframe.src             = _currentYtEmbed + '&autoplay=1';
+  iframe.allow           = 'autoplay; encrypted-media; picture-in-picture';
+  iframe.allowFullscreen = true;
+  iframe.style.cssText   = 'position:absolute;inset:0;width:100%;height:100%;border:0';
+  embed.style.position   = 'relative';
+  thumb.style.display    = 'none';
+  embed.appendChild(iframe);
+}
+
+function closeAdModal(){
+  document.getElementById('adModal').classList.remove('open');
+  document.body.style.overflow = '';
+  var iframe = document.getElementById('adModalYtEmbed').querySelector('iframe');
+  if(iframe) iframe.remove();
+  document.getElementById('adModalYtThumb').style.display = 'flex';
+}
+
+document.addEventListener('keydown', function(e){
+  if(e.key==='Escape') closeAdModal();
+});
+
+/* ── Seamless scroll + 3D curve ── */
+(function(){
+  var viewport = document.getElementById('adsViewport');
+  var track    = document.getElementById('adsTrack');
+  var set1     = document.getElementById('adsSet1');
+  if(!viewport || !track || !set1) return;
+
+  function setShift(){
+    var gap = parseFloat(getComputedStyle(track).gap) || 20;
+    var w   = set1.offsetWidth + gap;
+    track.style.setProperty('--ads-shift', '-' + w + 'px');
+    track.style.animation = 'none';
+    track.offsetHeight;
+    track.style.animation = 'adsScroll 42s linear infinite';
+  }
+
+  var imgs = set1.querySelectorAll('img'), loaded = 0;
+  function onLoad(){ if(++loaded >= imgs.length) { setShift(); colorizeAllPanels(); } }
+  imgs.forEach(function(img){
+    if(img.complete && img.naturalWidth > 0) onLoad();
+    else img.addEventListener('load', onLoad, {once:true});
+  });
+  setTimeout(function(){ setShift(); colorizeAllPanels(); }, 400);
+  window.addEventListener('resize', setShift, {passive:true});
+
+  function curve(){
+    var vcx   = viewport.getBoundingClientRect().left + viewport.offsetWidth / 2;
+    var cards = track.querySelectorAll('.visual-ad-panel');
+    for(var i=0;i<cards.length;i++){
+      var box  = cards[i].getBoundingClientRect();
+      var cx   = box.left + box.width / 2;
+      var dist = Math.min(Math.abs(cx-vcx)/(box.width*2.4),1);
+      cards[i].style.transform = 'translateZ('+((1-dist)*45)+'px) rotateY('+((cx-vcx)*-0.065)+'deg) scale('+(1.28-dist*0.50)+')';
+      cards[i].style.opacity   = 1-dist*0.42;
+      cards[i].style.zIndex    = Math.round((1-dist)*100);
+    }
+    requestAnimationFrame(curve);
+  }
+  requestAnimationFrame(curve);
+})();
+</script>
+@endif
 
 {{-- ══ POPULER ══ --}}
 <section class="lsec" id="populer" style="background:#fff">
@@ -1961,14 +2892,17 @@ a{text-decoration:none;color:inherit}
         <div class="bk-cov">
           @if($b->cover)<img src="{{ Storage::url($b->cover) }}" alt="{{ $b->judul }}">
           @else<div class="bk-ph g{{ $i%8 }}"><span class="pi"><i class="bi bi-book-fill"></i></span><span class="pt">{{ $b->judul }}</span><span class="pa">{{ $b->pengarang }}</span></div>@endif
-          @if($i===0)<div class="bk-rank">🔥 #1</div>
-          @elseif($i<3)<div class="bk-rank" style="color:rgba(255,255,255,.7)">✦ #{{ $i+1 }}</div>@endif
-          <span class="bk-badge {{ $b->stok>0?'b-ada':'b-habis' }}">{{ $b->stok>0?$b->stok.' stok':'Habis' }}</span>
+          @if($i===0)<div class="cover-stamp bk-rank"><span>POPULER</span><strong>#1</strong></div>
+          @elseif($i<3)<div class="cover-stamp bk-rank"><span>PILIHAN</span><strong>#{{ $i+1 }}</strong></div>@endif
+          <span class="cover-stamp bk-badge {{ $b->stok>0?'b-ada':'b-habis' }}">{{ $b->stok>0?number_format($b->stok).' STOK':'HABIS' }}</span>
         </div>
         <div class="bk-body">
           <div class="bk-cat">{{ $b->kategori }}</div>
           <div class="bk-ttl">{{ $b->judul }}</div>
           <div class="bk-ath"><i class="bi bi-person" style="font-size:.65rem"></i> {{ $b->pengarang }}</div>
+          @if($b->ulasan_avg_rating)
+          <div style="margin-bottom:6px">{!! renderStars($b->ulasan_avg_rating) !!}</div>
+          @endif
           <div class="bk-foot">
             <span class="bk-meta"><i class="bi bi-download" style="font-size:.65rem"></i>{{ $b->peminjaman_count }}x</span>
             @if($b->stok>0)<a href="{{ route('register') }}" class="btn-bk"><i class="bi bi-book"></i>Pinjam</a>
@@ -2044,6 +2978,8 @@ a{text-decoration:none;color:inherit}
             <div class="mini-cov-inner">
               @if($tb->cover)<img src="{{ Storage::url($tb->cover) }}" alt="{{ $tb->judul }}">
               @else<div class="bk-ph g{{ $ti%8 }}" style="position:absolute;inset:0;padding:8px"><span class="pi" style="font-size:1.3rem"><i class="bi bi-book-fill"></i></span><span class="pt" style="font-size:.58rem">{{ $tb->judul }}</span></div>@endif
+              <span class="cover-stamp cover-stamp-new">BARU MASUK</span>
+              <span class="cover-stamp mini-stock-stamp {{ $tb->stok > 0 ? '' : 'out' }}">{{ $tb->stok > 0 ? number_format($tb->stok).' STOK' : 'HABIS' }}</span>
             </div>
           </div>
           <div class="mini-body">
@@ -2051,10 +2987,13 @@ a{text-decoration:none;color:inherit}
               <div class="bk-cat" style="margin-bottom:5px">{{ $tb->kategori }}</div>
               <div style="font-size:.85rem;font-weight:700;color:var(--tx1);line-height:1.3;margin-bottom:4px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">{{ $tb->judul }}</div>
               <div style="font-size:.74rem;color:var(--tx3)">{{ $tb->pengarang }}</div>
+              @if($tb->ulasan_avg_rating)
+              <div style="margin-top:5px">{!! renderStars($tb->ulasan_avg_rating, 'xs') !!}</div>
+              @endif
             </div>
             <div style="display:flex;align-items:center;justify-content:space-between;margin-top:12px;padding-top:10px;border-top:1px solid var(--border)">
-              <span style="font-size:.7rem;font-weight:700;padding:3px 9px;border-radius:6px;{{ $tb->stok>0?'background:#dcfce7;color:#16a34a':'background:#fee2e2;color:#dc2626' }}">
-                {{ $tb->stok>0 ? $tb->stok.' stok' : 'Habis' }}
+              <span style="font-size:.7rem;font-weight:700;color:#748096">
+                <i class="bi bi-box-seam"></i> {{ $tb->stok>0 ? $tb->stok.' stok tersedia' : 'Stok habis' }}
               </span>
               <a href="{{ route('register') }}" style="font-size:.77rem;font-weight:700;color:var(--navy2);display:flex;align-items:center;gap:4px">
                 Pinjam <i class="bi bi-arrow-right" style="font-size:.72rem"></i>
@@ -2171,6 +3110,7 @@ a{text-decoration:none;color:inherit}
       d.addEventListener('click', () => goTo(i));
       dotsWrap.appendChild(d);
     }
+
   }
 
   function goTo(page){
@@ -2239,6 +3179,7 @@ a{text-decoration:none;color:inherit}
       foreach($kategoris as $kat) {
         $books = \App\Models\Buku::where('kategori', $kat)
           ->withCount('peminjaman')
+          ->withAvg('ulasan', 'rating')
           ->orderByDesc('peminjaman_count')
           ->take(6)
           ->get();
@@ -2293,18 +3234,21 @@ a{text-decoration:none;color:inherit}
                 </div>
               @endif
               @if($i === 0)
-                <div class="bk-rank">🔥 #1</div>
+                <div class="cover-stamp bk-rank"><span>POPULER</span><strong>#1</strong></div>
               @elseif($i < 3)
-                <div class="bk-rank" style="color:rgba(255,255,255,.7)">✦ #{{ $i+1 }}</div>
+                <div class="cover-stamp bk-rank"><span>PILIHAN</span><strong>#{{ $i+1 }}</strong></div>
               @endif
-              <span class="bk-badge {{ $book->stok > 0 ? 'b-ada' : 'b-habis' }}">
-                {{ $book->stok > 0 ? $book->stok.' stok' : 'Habis' }}
+              <span class="cover-stamp bk-badge {{ $book->stok > 0 ? 'b-ada' : 'b-habis' }}">
+                {{ $book->stok > 0 ? number_format($book->stok).' STOK' : 'HABIS' }}
               </span>
             </div>
             <div class="bk-body">
               <div class="bk-cat">{{ $book->kategori }}</div>
               <div class="bk-ttl">{{ $book->judul }}</div>
               <div class="bk-ath"><i class="bi bi-person" style="font-size:.65rem"></i> {{ $book->pengarang }}</div>
+              @if($book->ulasan_avg_rating)
+              <div style="margin-bottom:6px">{!! renderStars($book->ulasan_avg_rating) !!}</div>
+              @endif
               <div class="bk-foot">
                 <span class="bk-meta"><i class="bi bi-download" style="font-size:.65rem"></i>{{ $book->peminjaman_count }}x</span>
                 @if($book->stok > 0)
@@ -2323,6 +3267,26 @@ a{text-decoration:none;color:inherit}
         const kategoriData = @json($kategoriBuku);
         const kategoriList = @json($kategoriList);
         let currentKatIndex = 0;
+
+        // Half-star renderer (JS version)
+        function renderStarsJS(rating) {
+          if (!rating) return '';
+          let html = '<span style="display:inline-flex;align-items:center;gap:1px;font-size:.8rem;margin-bottom:6px">';
+          for (let i = 1; i <= 5; i++) {
+            const diff = rating - (i - 1);
+            if (diff >= 1) {
+              html += '<span style="color:#f59e0b">&#9733;</span>';
+            } else if (diff >= 0.25) {
+              const pct = Math.min(100, Math.round(diff * 100));
+              html += `<span style="position:relative;display:inline-block;color:#e5e7eb">&#9733;<span style="position:absolute;top:0;left:0;overflow:hidden;width:${pct}%;color:#f59e0b;white-space:nowrap">&#9733;</span></span>`;
+            } else {
+              html += '<span style="color:#e5e7eb">&#9733;</span>';
+            }
+          }
+          html += `<span style="font-size:.62rem;color:#9ca3af;margin-left:3px;font-weight:700">${rating.toFixed(1)}</span>`;
+          html += '</span>';
+          return html;
+        }
 
         function changeKategori(direction) {
           currentKatIndex += direction;
@@ -2380,16 +3344,17 @@ a{text-decoration:none;color:inherit}
                           <span class="pa">${book.pengarang}</span>
                         </div>`
                     }
-                    ${i === 0 ? '<div class="bk-rank">🔥 #1</div>' : ''}
-                    ${i > 0 && i < 3 ? `<div class="bk-rank" style="color:rgba(255,255,255,.7)">✦ #${i+1}</div>` : ''}
-                    <span class="bk-badge ${book.stok > 0 ? 'b-ada' : 'b-habis'}">
-                      ${book.stok > 0 ? book.stok + ' stok' : 'Habis'}
+                    ${i === 0 ? '<div class="cover-stamp bk-rank"><span>POPULER</span><strong>#1</strong></div>' : ''}
+                    ${i > 0 && i < 3 ? `<div class="cover-stamp bk-rank"><span>PILIHAN</span><strong>#${i+1}</strong></div>` : ''}
+                    <span class="cover-stamp bk-badge ${book.stok > 0 ? 'b-ada' : 'b-habis'}">
+                      ${book.stok > 0 ? Number(book.stok).toLocaleString('id-ID') + ' STOK' : 'HABIS'}
                     </span>
                   </div>
                   <div class="bk-body">
                     <div class="bk-cat">${book.kategori}</div>
                     <div class="bk-ttl">${book.judul}</div>
                     <div class="bk-ath"><i class="bi bi-person" style="font-size:.65rem"></i> ${book.pengarang}</div>
+                    ${book.ulasan_avg_rating ? renderStarsJS(parseFloat(book.ulasan_avg_rating)) : ''}
                     <div class="bk-foot">
                       <span class="bk-meta"><i class="bi bi-download" style="font-size:.65rem"></i>${book.peminjaman_count}x</span>
                       ${book.stok > 0 
@@ -2460,21 +3425,22 @@ a{text-decoration:none;color:inherit}
                     <i class="bi bi-book-fill"></i>
                   </div>
                 @endif
+                <div class="cover-stamp baru-kembali-badge-card">
+                  <i class="bi bi-lightning-fill"></i>
+                  <span>TERBATAS</span>
+                </div>
               </div>
               
               {{-- Info --}}
               <div class="baru-kembali-info" style="display:flex !important;flex-direction:column !important;gap:3px !important;padding:8px 10px !important;justify-content:flex-start !important;min-height:135px !important">
-                {{-- Badge pindah ke sini --}}
-                <div class="baru-kembali-badge-card" style="position:static !important;align-self:flex-start !important;margin-bottom:2px !important">
-                  <i class="bi bi-check-circle-fill"></i>
-                  <span>Tersedia</span>
-                </div>
-                
                 <h3 class="baru-kembali-title" style="margin:0 !important;font-size:.85rem !important">{{ $buku->judul }}</h3>
                 <div class="baru-kembali-author" style="margin:0 !important;font-size:.7rem !important">
                   <i class="bi bi-person-fill"></i>
                   {{ $buku->pengarang }}
                 </div>
+                @if($buku->ulasan_avg_rating)
+                <div style="margin:3px 0 2px">{!! renderStars($buku->ulasan_avg_rating, 'xs') !!}</div>
+                @endif
                 
                 {{-- Info Fresh/Available - EXPAND! --}}
                 <div class="baru-kembali-time" style="flex:1 !important;display:flex !important;align-items:flex-start !important;margin:0 !important;padding:6px 8px !important;font-size:.68rem !important;line-height:1.3 !important">
@@ -2544,9 +3510,9 @@ a{text-decoration:none;color:inherit}
                 </div>
                 
                 {{-- Badge kembali ke cover --}}
-                <div class="waitlist-stock-badge">
-                  <i class="bi bi-x-circle-fill"></i>
-                  <span>Habis</span>
+                <div class="cover-stamp waitlist-stock-badge">
+                  <i class="bi bi-x-octagon-fill"></i>
+                  <span>HABIS</span>
                 </div>
               </div>
               
@@ -2558,6 +3524,9 @@ a{text-decoration:none;color:inherit}
                   <i class="bi bi-person-fill"></i>
                   {{ $buku->pengarang }}
                 </div>
+                @if($buku->ulasan_avg_rating)
+                <div style="margin-bottom:6px">{!! renderStars($buku->ulasan_avg_rating, 'xs') !!}</div>
+                @endif
                 
                 {{-- Info Simpel --}}
                 <div class="waitlist-stats">
@@ -2754,14 +3723,28 @@ a{text-decoration:none;color:inherit}
   background:linear-gradient(135deg,#fff5f6,#ffe0e5);
 }
 .cs-badge{
-  position:absolute;top:10px;left:10px;
-  background:rgba(237,27,59,.92);
-  backdrop-filter:blur(6px);
-  color:#fff;padding:5px 11px;border-radius:7px;
-  font-size:.68rem;font-weight:800;letter-spacing:.06em;
-  display:flex;align-items:center;gap:4px;
-  box-shadow:0 2px 8px rgba(237,27,59,.35);
+  position:absolute;top:10px;left:8px;
+  width:auto;height:auto;padding:7px 12px;
+  border-radius:4px;
+  font-family:'Bebas Neue',sans-serif;font-size:.62rem;font-weight:400;
+  letter-spacing:.16em;line-height:1;color:#fff;
+  display:flex;flex-direction:row;align-items:center;justify-content:center;gap:6px;
+  background:linear-gradient(145deg,#1a2f52,#0B1730);
+  border:1.5px solid rgba(244,185,66,.7);
+  box-shadow:
+    0 3px 8px rgba(11,23,48,.55),
+    0 6px 16px rgba(0,0,0,.35),
+    inset 0 1px 0 rgba(255,255,255,.2);
+  transform:rotate(-5deg);
+  z-index:5;pointer-events:none;text-transform:uppercase;
+  text-shadow:0 1px 2px rgba(0,0,0,.35);
 }
+.cs-badge::before{
+  content:'';position:absolute;inset:3px;
+  border:1px solid rgba(244,185,66,.28);border-radius:2px;pointer-events:none;
+}
+.cs-badge i{font-size:.72rem!important;position:relative;z-index:1;color:#F4B942;filter:drop-shadow(0 1px 1px rgba(0,0,0,.3))}
+.cs-badge span{position:relative;z-index:1;font-family:'Bebas Neue',sans-serif;font-size:.62rem;letter-spacing:.16em;color:#fff}
 .cs-body{
   padding:14px 14px 16px;
 }
@@ -2881,13 +3864,17 @@ a{text-decoration:none;color:inherit}
                 </div>
               @endif
               <div class="cs-badge">
-                <i class="bi bi-clock-fill" style="font-size:.6rem"></i> SOON
+                <i class="bi bi-hourglass-split"></i>
+                <span>SEGERA</span>
               </div>
             </div>
             <div class="cs-launch-date">
               <i class="bi bi-calendar-event-fill"></i>
               Launching {{ \Carbon\Carbon::parse($b->tanggal_rilis)->isoFormat('D MMM YY') }}
             </div>
+            @if($b->ulasan_avg_rating)
+            <div style="padding:0 10px 10px;margin-top:-2px">{!! renderStars($b->ulasan_avg_rating,'xs') !!}</div>
+            @endif
           </div>
           @endforeach
         </div>
@@ -2995,6 +3982,106 @@ a{text-decoration:none;color:inherit}
   });
 })();
 </script>
+@endif
+
+{{-- ══ ULASAN PEMBACA ══ --}}
+@if($ulasanTerbaru->isNotEmpty())
+<style>
+.ulasan-sec{background:var(--bg-alt);padding:72px 0;position:relative;overflow:hidden}
+.ulasan-sec::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 40% at 50% 100%,rgba(237,27,59,.05),transparent 70%);pointer-events:none}
+.ulasan-inner{max-width:1180px;margin:0 auto;padding:0 24px;position:relative}
+.ulasan-head{text-align:center;margin-bottom:48px}
+.ulasan-tag{display:inline-flex;align-items:center;gap:7px;background:rgba(237,27,59,.07);border:1px solid rgba(237,27,59,.15);color:var(--crimson);font-size:.72rem;font-weight:800;letter-spacing:.06em;padding:6px 16px;border-radius:99px;margin-bottom:16px}
+.ulasan-head-title{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;color:var(--navy);margin-bottom:10px}
+.ulasan-head-title em{font-style:italic;background:linear-gradient(135deg,var(--crimson),#ff4757);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.ulasan-head-sub{font-size:.92rem;color:var(--tx3);max-width:460px;margin:0 auto}
+.ulasan-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:36px}
+@media(max-width:992px){.ulasan-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:576px){.ulasan-grid{grid-template-columns:1fr}}
+.urev-card{background:#fff;border-radius:16px;border:1px solid rgba(20,40,75,.09);padding:22px;box-shadow:0 3px 14px rgba(20,40,75,.06);display:flex;flex-direction:column;gap:14px;transition:transform .22s,box-shadow .22s,border-color .22s;position:relative}
+.urev-card:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(20,40,75,.12);border-color:rgba(237,27,59,.22)}
+.urev-card::before{content:'"';position:absolute;top:14px;right:18px;font-size:3.5rem;line-height:1;color:rgba(237,27,59,.06);font-family:Georgia,serif;font-weight:900;pointer-events:none}
+.urev-top{display:flex;align-items:center;gap:11px}
+.urev-ava{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--crimson),#c41630);display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:800;color:#fff;flex-shrink:0;overflow:hidden;box-shadow:0 3px 10px rgba(237,27,59,.22)}
+.urev-ava img{width:100%;height:100%;object-fit:cover}
+.urev-name{font-size:.86rem;font-weight:800;color:var(--navy);line-height:1.2}
+.urev-class{font-size:.7rem;color:var(--tx3);margin-top:2px}
+.urev-stars{display:flex;gap:1px;margin-top:3px}
+.urev-star-on{color:#f59e0b;font-size:.82rem}
+.urev-star-off{color:#e5e7eb;font-size:.82rem}
+.urev-book{display:flex;gap:11px;align-items:center;background:#f5f7fa;border:1px solid #edf0f4;border-radius:10px;padding:10px 12px}
+.urev-book-cover{width:38px;height:57px;border-radius:7px;object-fit:cover;flex-shrink:0;box-shadow:0 3px 10px rgba(0,0,0,.15)}
+.urev-book-ph{width:38px;height:57px;border-radius:7px;background:linear-gradient(135deg,#0c4a6e,#0284c7);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.urev-book-title{font-size:.8rem;font-weight:700;color:var(--navy);line-height:1.3;margin-bottom:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.urev-book-author{font-size:.7rem;color:var(--tx3)}
+.urev-comment{font-size:.83rem;color:var(--tx2);line-height:1.65;flex:1;background:#fff8f1;border-left:3px solid #f4b942;border-radius:0 8px 8px 0;padding:11px 13px;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.urev-date{font-size:.68rem;color:var(--tx4);margin-top:auto}
+.ulasan-viewall{display:flex;justify-content:center}
+.ulasan-viewall a{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:99px;font-size:.86rem;font-weight:700;border:2px solid var(--border);background:#fff;color:var(--tx2);transition:all .25s;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.ulasan-viewall a:hover{border-color:var(--crimson);color:var(--crimson);transform:translateY(-2px);box-shadow:0 6px 18px rgba(237,27,59,.15)}
+</style>
+
+<section class="ulasan-sec" id="ulasan">
+  <div class="ulasan-inner">
+    <div class="ulasan-head">
+      <div class="ulasan-tag"><i class="bi bi-star-fill"></i> Ulasan Pembaca</div>
+      <h2 class="ulasan-head-title">Apa Kata <em>Mereka?</em></h2>
+      <p class="ulasan-head-sub">Ulasan jujur dari siswa yang telah menikmati koleksi perpustakaan kami</p>
+    </div>
+
+    <div class="ulasan-grid">
+      @foreach($ulasanTerbaru as $u)
+      <div class="urev-card">
+        <div class="urev-top">
+          <div class="urev-ava">
+            @if($u->anggota->foto)
+              <img src="{{ Storage::url($u->anggota->foto) }}" alt="{{ $u->anggota->nama }}">
+            @else
+              {{ strtoupper(substr($u->anggota->nama,0,1)) }}
+            @endif
+          </div>
+          <div>
+            <div class="urev-name">{{ $u->anggota->nama }}</div>
+            <div class="urev-class">{{ $u->anggota->kelas }}</div>
+            <div class="urev-stars">
+              @for($s=1;$s<=5;$s++)
+                <span class="{{ $s<=$u->rating?'urev-star-on':'urev-star-off' }}">★</span>
+              @endfor
+            </div>
+          </div>
+          <div style="margin-left:auto;font-size:.68rem;color:var(--tx4)">{{ $u->created_at->isoFormat('D MMM YY') }}</div>
+        </div>
+
+        <div class="urev-book">
+          @if($u->buku->cover)
+            <img src="{{ Storage::url($u->buku->cover) }}" alt="{{ $u->buku->judul }}" class="urev-book-cover">
+          @else
+            <div class="urev-book-ph"><i class="bi bi-book-fill" style="font-size:.8rem;color:rgba(255,255,255,.7)"></i></div>
+          @endif
+          <div style="min-width:0">
+            <div class="urev-book-title">{{ $u->buku->judul }}</div>
+            <div class="urev-book-author">{{ $u->buku->pengarang }}</div>
+          </div>
+        </div>
+
+        @if($u->komentar)
+          <div class="urev-comment">{{ $u->komentar }}</div>
+        @endif
+
+        <div class="urev-date">{{ $u->created_at->isoFormat('D MMM YYYY') }}</div>
+      </div>
+      @endforeach
+    </div>
+
+    <div class="ulasan-viewall">
+      <a href="{{ route('ulasan.all') }}">
+        <i class="bi bi-chat-square-text-fill"></i>
+        Lihat Semua Ulasan
+        <i class="bi bi-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+</section>
 @endif
 
 {{-- ══ CTA ══ --}}
@@ -3143,6 +4230,35 @@ document.addEventListener('click',e=>{
   }
 });
 
+/* ── Hero typewriter headline ── */
+const heroWord = document.querySelector('#heroRotatingWord em');
+if(heroWord && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  const words=['Favoritmu','Bacaanmu','Ceritamu','Karaktermu','Duniamu'];
+  let wordIndex=0;
+  let characterIndex=words[0].length;
+  let deleting=true;
+
+  const typeNextWord=()=>{
+    const currentWord=words[wordIndex];
+    characterIndex+=deleting?-1:1;
+    heroWord.textContent=currentWord.slice(0,characterIndex);
+
+    let delay=deleting?65:115;
+    if(!deleting && characterIndex===currentWord.length){
+      deleting=true;
+      delay=1500;
+    }else if(deleting && characterIndex===0){
+      deleting=false;
+      wordIndex=(wordIndex+1)%words.length;
+      delay=350;
+    }
+
+    window.setTimeout(typeNextWord,delay);
+  };
+
+  window.setTimeout(typeNextWord,1600);
+}
+
 /* ── Number counter animation ── */
 function animateCounter(el,target,suffix=''){
   const isNum=!isNaN(parseInt(target));
@@ -3172,6 +4288,223 @@ const observer=new IntersectionObserver((entries)=>{
   });
 },{threshold:.3});
 statNums.forEach(n=>observer.observe(n));
+</script>
+
+<!-- ═══════════════════════════════════════════════
+     🎨 LANDING PAGE — BUTTON MAGIC ANIMATIONS
+═══════════════════════════════════════════════════ -->
+<style>
+/* ── Ripple effect ── */
+.btn-ripple-lp{
+  position:absolute;border-radius:50%;
+  background:rgba(255,255,255,.35);
+  transform:scale(0);
+  animation:lpRipple .55s linear;
+  pointer-events:none;
+}
+@keyframes lpRipple{to{transform:scale(4);opacity:0}}
+
+/* ── btn-hp-primary (hero CTA "Jelajahi Buku"): shimmer + lift ── */
+.btn-hp-primary{
+  position:relative;overflow:hidden;
+  transition:transform .28s cubic-bezier(.34,1.56,.64,1),
+             box-shadow .28s ease !important;
+}
+.btn-hp-primary::before{
+  content:'';
+  position:absolute;top:0;left:-120%;width:60%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.28),transparent);
+  transform:skewX(-20deg);pointer-events:none;
+  transition:none;
+}
+.btn-hp-primary:hover{
+  transform:translateY(-4px) scale(1.04) !important;
+  box-shadow:0 14px 36px rgba(237,27,59,.45) !important;
+}
+.btn-hp-primary:hover::before{
+  animation:lpShimmer .55s ease forwards;
+}
+@keyframes lpShimmer{
+  0%{left:-120%;opacity:.6}
+  100%{left:130%;opacity:0}
+}
+.btn-hp-primary:active{transform:translateY(0) scale(.97) !important}
+.btn-hp-primary i{
+  transition:transform .35s cubic-bezier(.34,1.56,.64,1);
+  display:inline-block;
+}
+.btn-hp-primary:hover i{transform:translateX(5px) rotate(-5deg) scale(1.2)}
+
+/* ── btn-hp-outline (hero "Masuk"): border dash + fill ── */
+.btn-hp-outline{
+  position:relative;overflow:hidden;
+  transition:all .28s ease !important;
+  background:transparent !important;
+}
+.btn-hp-outline:hover{
+  background:rgba(20,40,75,.06) !important;
+  border-color:var(--navy) !important;
+  transform:translateY(-2px) !important;
+  box-shadow:0 6px 18px rgba(20,40,75,.12) !important;
+}
+.btn-hp-outline i{
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1);
+  display:inline-block;
+}
+.btn-hp-outline:hover i{transform:translateX(-4px)}
+
+/* ── btn-bk (Pinjam book card): bounce + glow ── */
+.btn-bk{
+  position:relative;overflow:hidden;
+  transition:all .25s cubic-bezier(.34,1.56,.64,1) !important;
+  animation:bkPulse 2.5s ease-in-out infinite;
+}
+@keyframes bkPulse{
+  0%,100%{box-shadow:0 4px 14px rgba(237,27,59,.25)}
+  50%{box-shadow:0 6px 22px rgba(237,27,59,.48),0 0 0 4px rgba(237,27,59,.08)}
+}
+.btn-bk:hover{
+  transform:translateY(-3px) scale(1.08) !important;
+  animation:none;
+  box-shadow:0 10px 28px rgba(237,27,59,.5) !important;
+  background:var(--crimson-darker) !important;
+}
+.btn-bk:active{transform:scale(.95) !important}
+.btn-bk i{
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1);
+  display:inline-block;
+}
+.btn-bk:hover i{transform:rotate(-8deg) scale(1.25)}
+
+/* ── btn-bk-dis (Habis): disabled visual — cross ── */
+.btn-bk-dis{
+  position:relative;
+  filter:grayscale(.3);
+}
+.btn-bk-dis i{
+  display:inline-block;
+  animation:disWobble 3s ease-in-out infinite;
+}
+@keyframes disWobble{
+  0%,90%,100%{transform:rotate(0deg)}
+  93%{transform:rotate(-8deg)}
+  96%{transform:rotate(5deg)}
+}
+
+/* ── see-all links: arrow slides + underline ── */
+.see-all{
+  position:relative;overflow:hidden;
+  transition:all .25s cubic-bezier(.34,1.56,.64,1) !important;
+}
+.see-all::after{
+  content:'';position:absolute;bottom:0;left:50%;right:50%;
+  height:2px;background:var(--crimson);
+  transition:left .25s ease,right .25s ease;
+}
+.see-all:hover::after{left:8px;right:8px}
+.see-all i{
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1);
+  display:inline-block;
+}
+.see-all:hover i{transform:translateX(5px) scale(1.15)}
+
+/* ── sr-nav-btn (series prev/next): spin ── */
+.sr-nav-btn{
+  transition:all .28s cubic-bezier(.34,1.56,.64,1) !important;
+  position:relative;overflow:hidden;
+}
+.sr-nav-btn:not([disabled]):hover{
+  transform:scale(1.18) !important;
+  box-shadow:0 4px 14px rgba(237,27,59,.35) !important;
+}
+.sr-nav-btn i{
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1);
+  display:inline-block;
+}
+.sr-nav-btn:not([disabled]):hover i{
+  transform:scale(1.25);
+}
+
+/* ── btn-lnav-gold (Daftar): persistent glow pulse ── */
+.btn-lnav-gold{
+  position:relative;overflow:hidden;
+  animation:lnavGlow 2.4s ease-in-out infinite;
+}
+@keyframes lnavGlow{
+  0%,100%{box-shadow:0 2px 8px rgba(237,27,59,.3)}
+  50%{box-shadow:0 5px 18px rgba(237,27,59,.55),0 0 0 4px rgba(237,27,59,.1)}
+}
+.btn-lnav-gold:hover{animation:none}
+.btn-lnav-gold::before{
+  content:'';position:absolute;top:0;left:-100%;width:55%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.25),transparent);
+  transform:skewX(-20deg);pointer-events:none;
+}
+.btn-lnav-gold:hover::before{animation:lpShimmer .5s ease forwards}
+.btn-lnav-gold i,.btn-lnav-solid i{
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1);
+  display:inline-block;
+}
+.btn-lnav-gold:hover i{transform:rotate(10deg) scale(1.2)}
+.btn-lnav-solid:hover i{transform:translateX(3px) scale(1.1)}
+
+/* ── ulasan view-all link: bounce arrow ── */
+.ulasan-viewall a{
+  position:relative;overflow:hidden;
+  transition:all .28s cubic-bezier(.34,1.56,.64,1) !important;
+}
+.ulasan-viewall a:hover{
+  transform:translateY(-3px) !important;
+}
+.ulasan-viewall a i{
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1);
+  display:inline-block;
+}
+.ulasan-viewall a:hover i{transform:translateX(5px) rotate(-10deg) scale(1.15)}
+
+/* ── Promo/CTA daftar buttons in sections ── */
+[class*="promo"] a[style*="crimson"],
+[class*="promo"] a[style*="ED1B3B"],
+section a[style*="ED1B3B"],
+section a[style*="crimson"]{
+  transition:transform .28s cubic-bezier(.34,1.56,.64,1),
+             box-shadow .28s ease !important;
+}
+[class*="promo"] a[style*="ED1B3B"]:hover,
+section a[style*="ED1B3B"]:hover{
+  transform:translateY(-3px) scale(1.03) !important;
+  box-shadow:0 10px 28px rgba(237,27,59,.38) !important;
+}
+</style>
+
+<script>
+/* ── Landing page button magic JS ── */
+(function(){
+  /* Ripple on click */
+  document.addEventListener('click', function(e){
+    const btn = e.target.closest(
+      '.btn-hp-primary,.btn-hp-outline,.btn-bk,.see-all,.sr-nav-btn,.btn-lnav-gold,.btn-lnav-solid,.btn-lnav-out,.ulasan-viewall a'
+    );
+    if(!btn) return;
+    const r = document.createElement('span');
+    r.className = 'btn-ripple-lp';
+    const rect = btn.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height) * 1.8;
+    r.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX-rect.left-size/2}px;top:${e.clientY-rect.top-size/2}px`;
+    if(getComputedStyle(btn).position === 'static') btn.style.position = 'relative';
+    btn.style.overflow = 'hidden';
+    btn.appendChild(r);
+    r.addEventListener('animationend', ()=> r.remove());
+  });
+
+  /* Book card "Pinjam" button — bounce on hover for icon */
+  document.querySelectorAll('.btn-bk').forEach(btn => {
+    btn.addEventListener('mouseenter', function(){
+      const ic = this.querySelector('i');
+      if(ic){ ic.style.animation = 'none'; void ic.offsetWidth; ic.style.animation = ''; }
+    });
+  });
+})();
 </script>
 </body>
 </html>

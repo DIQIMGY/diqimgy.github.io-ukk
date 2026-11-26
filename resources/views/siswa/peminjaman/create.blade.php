@@ -2,6 +2,7 @@
 @section('title','Pinjam Buku')
 @section('page-title','Pinjam Buku')
 @section('content')
+<link rel="stylesheet" href="{{ asset('css/bookshelf-real.css') }}?v={{ filemtime(public_path('css/bookshelf-real.css')) }}">
 <style>
 /* ══════════════════════════════
    BOOKSHELF SISWA STYLE
@@ -623,6 +624,7 @@ document.addEventListener('DOMContentLoaded', function() {
     @foreach($shelves as $shelfIdx => $shelfBooks)
     <div class="shelf-row">
       <div class="shelf-books">
+        @include('partials.shelf-decor')
         @foreach($shelfBooks as $i => $b)
         @php
           $globalIdx = $shelfIdx * $booksPerShelf + $i;
@@ -633,6 +635,7 @@ document.addEventListener('DOMContentLoaded', function() {
           
           {{-- Lampu spotlight --}}
           <div class="shelf-book-light">
+            @include('partials.shelf-light-cord')
             <div class="light-fixture">
               <div class="light-bulb"></div>
             </div>
@@ -661,6 +664,7 @@ document.addEventListener('DOMContentLoaded', function() {
               <span>{{ Str::limit($b->judul, 18) }}</span>
             </div>
           @endif
+          @include('partials.shelf-stock-tag', ['stok' => $b->stok])
 
           {{-- Popup dengan tombol PINJAM --}}
           <div class="book-popup">
@@ -680,6 +684,9 @@ document.addEventListener('DOMContentLoaded', function() {
             @endif
             
             <div class="popup-pinjam-form">
+              <a href="{{ route('siswa.peminjaman.detail', $b) }}" class="popup-btn-pinjam" style="display:flex; margin-bottom:8px; background:linear-gradient(135deg,#0f172a,#1e293b); box-shadow:none;">
+                <i class="bi bi-eye"></i> Detail Buku
+              </a>
               @if($b->stok > 0)
                 <form method="POST" action="{{ route('siswa.peminjaman.store') }}"
                       onsubmit="return confirm('Pinjam buku ini?\nBatas pengembalian 7 hari.')">
@@ -701,7 +708,9 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
         @endforeach
       </div>
-      <div class="shelf-plank"></div>
+      <div class="shelf-plank">
+        @include('partials.shelf-plank-extras')
+      </div>
     </div>
     @endforeach
   </div>

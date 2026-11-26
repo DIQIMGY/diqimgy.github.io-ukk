@@ -269,7 +269,17 @@
             <span class="code-value">{{ $transaksi->kode_pinjam }}</span>
           </div>
 
-          @if($transaksi->status === 'dipinjam')
+          @if($transaksi->status === 'pending')
+            <span class="status-badge-large" style="background:linear-gradient(135deg,#fbbf24,#f59e0b);color:white;box-shadow:0 4px 12px rgba(251,191,36,0.3)">
+              <i class="bi bi-clock-fill"></i>
+              <span>Menunggu Persetujuan</span>
+            </span>
+          @elseif($transaksi->status === 'pending_kembali')
+            <span class="status-badge-large" style="background:linear-gradient(135deg,#0ea5e9,#0284c7);color:white;box-shadow:0 4px 12px rgba(14,165,233,0.3)">
+              <i class="bi bi-hourglass-split"></i>
+              <span>Menunggu Konfirmasi Kembali</span>
+            </span>
+          @elseif($transaksi->status === 'dipinjam')
             <span class="status-badge-large dipinjam">
               <i class="bi bi-circle-fill"></i>
               <span>Dipinjam</span>
@@ -278,6 +288,11 @@
             <span class="status-badge-large terlambat">
               <i class="bi bi-exclamation-circle-fill"></i>
               <span>Terlambat</span>
+            </span>
+          @elseif($transaksi->status === 'ditolak')
+            <span class="status-badge-large" style="background:linear-gradient(135deg,#9ca3af,#6b7280);color:white;box-shadow:0 4px 12px rgba(107,114,128,0.3)">
+              <i class="bi bi-x-circle-fill"></i>
+              <span>Ditolak</span>
             </span>
           @else
             <span class="status-badge-large dikembalikan">
@@ -340,13 +355,13 @@
         <div class="details-grid-modern">
           <div class="detail-item-modern">
             <div class="detail-label">Tanggal Pinjam</div>
-            <div class="detail-value">{{ $transaksi->tanggal_pinjam->format('d F Y') }}</div>
+            <div class="detail-value">{{ $transaksi->tanggal_pinjam ? $transaksi->tanggal_pinjam->format('d F Y') : 'Belum disetujui' }}</div>
           </div>
 
           <div class="detail-item-modern {{ $transaksi->status === 'terlambat' ? 'warning' : '' }}">
             <div class="detail-label">Batas Kembali</div>
             <div class="detail-value {{ $transaksi->status === 'terlambat' ? 'danger' : '' }}">
-              {{ $transaksi->tanggal_kembali_rencana->format('d F Y') }}
+              {{ $transaksi->tanggal_kembali_rencana ? $transaksi->tanggal_kembali_rencana->format('d F Y') : '-' }}
             </div>
           </div>
 
@@ -360,12 +375,63 @@
           <div class="detail-item-modern {{ $transaksi->denda > 0 ? 'warning' : '' }}">
             <div class="detail-label">Denda</div>
             <div class="detail-value {{ $transaksi->denda > 0 ? 'danger' : '' }}">
-              {{ $transaksi->denda > 0 ? 'Rp ' . number_format($transaksi->denda, 0, ',', '.') : 'Tidak ada denda' }}
+              @if($transaksi->denda > 0)
+                Rp {{ number_format($transaksi->denda, 0, ',', '.') }}
+                @if($transaksi->denda_dibayar)
+                  <span style="display:inline-flex;align-items:center;gap:4px;padding:4px 10px;background:#dcfce7;border-radius:6px;font-size:.7rem;font-weight:700;color:#15803d;margin-left:8px">
+                    <i class="bi bi-check-circle-fill"></i>Lunas
+                  </span>
+                @endif
+              @else
+                Tidak ada denda
+              @endif
             </div>
           </div>
         </div>
 
-        @if(in_array($transaksi->status, ['dipinjam', 'terlambat']))
+        {{-- Rejection Reason if exists --}}
+        @if($transaksi->status === 'ditolak' && $transaksi->rejection_reason)
+        <div style="background:#fef2f2;border:2px solid #fecdd3;border-radius:16px;padding:20px;margin-bottom:24px">
+          <div style="font-size:.8rem;font-weight:800;text-transform:uppercase;color:#be123c;margin-bottom:8px;display:flex;align-items:center;gap:8px">
+            <i class="bi bi-x-circle-fill"></i>Alasan Penolakan
+          </div>
+          <div style="font-size:.95rem;color:#881337;line-height:1.6">{{ $transaksi->rejection_reason }}</div>
+        </div>
+        @endif
+
+        {{-- Actions --}}
+        @if($transaksi->status === 'pending')
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px">
+          <form method="POST" action="{{ route('admin.transaksi.approve', $transaksi) }}" onsubmit="return confirm('Setujui peminjaman buku {{ addslashes($transaksi->buku->judul) }}?')">
+            @csrf
+            <button type="submit" style="width:100%;display:flex;align-items:center;justify-content:center;gap:10px;padding:14px 28px;background:linear-gradient(135deg,#16a34a,#15803d);color:white;border:none;border-radius:12px;font-weight:700;font-size:1rem;cursor:pointer;transition:all .3s ease;box-shadow:0 4px 12px rgba(22,163,74,0.3)">
+              <i class="bi bi-check-circle-fill"></i>
+              <span>Setujui Pengajuan</span>
+            </button>
+          </form>
+          <button type="button" onclick="document.getElementById('rejectModal').style.display='flex'" style="width:100%;display:flex;align-items:center;justify-content:center;gap:10px;padding:14px 28px;background:linear-gradient(135deg,#dc2626,#b91c1c);color:white;border:none;border-radius:12px;font-weight:700;font-size:1rem;cursor:pointer;transition:all .3s ease;box-shadow:0 4px 12px rgba(220,38,38,0.3)">
+            <i class="bi bi-x-circle-fill"></i>
+            <span>Tolak Pengajuan</span>
+          </button>
+        </div>
+        @elseif($transaksi->status === 'pending_kembali')
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px">
+          <form method="POST" action="{{ route('admin.transaksi.approve-kembali', $transaksi) }}" onsubmit="return confirm('Konfirmasi pengembalian buku {{ addslashes($transaksi->buku->judul) }}?')">
+            @csrf
+            <button type="submit" style="width:100%;display:flex;align-items:center;justify-content:center;gap:10px;padding:14px 28px;background:linear-gradient(135deg,#16a34a,#15803d);color:white;border:none;border-radius:12px;font-weight:700;font-size:1rem;cursor:pointer;transition:all .3s ease;box-shadow:0 4px 12px rgba(22,163,74,0.3)">
+              <i class="bi bi-check-circle-fill"></i>
+              <span>Konfirmasi Pengembalian</span>
+            </button>
+          </form>
+          <form method="POST" action="{{ route('admin.transaksi.reject-kembali', $transaksi) }}" onsubmit="return confirm('Tolak pengembalian buku {{ addslashes($transaksi->buku->judul) }}?')">
+            @csrf
+            <button type="submit" style="width:100%;display:flex;align-items:center;justify-content:center;gap:10px;padding:14px 28px;background:linear-gradient(135deg,#dc2626,#b91c1c);color:white;border:none;border-radius:12px;font-weight:700;font-size:1rem;cursor:pointer;transition:all .3s ease;box-shadow:0 4px 12px rgba(220,38,38,0.3)">
+              <i class="bi bi-x-circle-fill"></i>
+              <span>Tolak Pengembalian</span>
+            </button>
+          </form>
+        </div>
+        @elseif(in_array($transaksi->status, ['dipinjam', 'terlambat']))
         <div class="return-action-modern">
           <div class="return-action-info">
             <h4>Proses Pengembalian Buku</h4>
@@ -380,8 +446,49 @@
           </form>
         </div>
         @endif
+
+        {{-- Pay Denda --}}
+        @if($transaksi->denda > 0 && !$transaksi->denda_dibayar)
+        <div style="background:linear-gradient(135deg,#fff1f2,#ffe4e6);border:2px solid #fecdd3;border-radius:16px;padding:24px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap">
+          <div>
+            <h4 style="font-size:1.1rem;font-weight:800;color:#be123c;margin:0 0 6px 0">Denda Belum Dibayar</h4>
+            <p style="font-size:.9rem;color:#dc2626;margin:0;font-weight:600">Rp {{ number_format($transaksi->denda, 0, ',', '.') }}</p>
+          </div>
+          <form method="POST" action="{{ route('admin.transaksi.denda.lunas', $transaksi) }}" onsubmit="return confirm('Tandai denda sudah dibayar?')" style="margin:0">
+            @csrf
+            <button type="submit" style="display:inline-flex;align-items:center;gap:10px;padding:14px 28px;background:linear-gradient(135deg,#16a34a,#15803d);color:white;border:none;border-radius:12px;font-weight:700;font-size:1rem;cursor:pointer;transition:all .3s ease;box-shadow:0 4px 12px rgba(22,163,74,0.3)">
+              <i class="bi bi-cash-coin"></i>
+              <span>Tandai Lunas</span>
+            </button>
+          </form>
+        </div>
+        @endif
       </div>
     </div>
   </div>
 </div>
+
+{{-- Reject Modal --}}
+<div id="rejectModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9999;align-items:center;justify-content:center;padding:20px">
+  <div style="background:#fff;border-radius:16px;padding:28px;max-width:480px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3)">
+    <h3 style="font-size:1.2rem;font-weight:800;color:#14284B;margin:0 0 8px">Tolak Pengajuan Peminjaman</h3>
+    <p style="font-size:.88rem;color:#64748b;margin:0 0 20px">Berikan alasan penolakan untuk {{ $transaksi->anggota->nama }}</p>
+    <form method="POST" action="{{ route('admin.transaksi.reject',$transaksi) }}">
+      @csrf
+      <div style="margin-bottom:20px">
+        <label style="display:block;font-size:.82rem;font-weight:700;color:#14284B;margin-bottom:8px">Alasan Penolakan (opsional)</label>
+        <textarea name="rejection_reason" rows="4" placeholder="Contoh: Stok buku sedang dipinjam semua..." style="width:100%;padding:12px;border:1px solid #e0e0e0;border-radius:10px;font-size:.88rem;resize:vertical"></textarea>
+      </div>
+      <div style="display:flex;gap:10px">
+        <button type="button" onclick="document.getElementById('rejectModal').style.display='none'" style="flex:1;padding:12px;border-radius:10px;background:#f5f5f5;border:1px solid #e0e0e0;color:#64748b;font-weight:700;cursor:pointer">
+          Batal
+        </button>
+        <button type="submit" style="flex:1;padding:12px;border-radius:10px;background:#be123c;border:none;color:#fff;font-weight:700;cursor:pointer">
+          Tolak Pengajuan
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
 @endsection

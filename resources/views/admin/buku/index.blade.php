@@ -3,19 +3,24 @@
 @section('page-title','Data Buku')
 @section('content')
 
+<link rel="stylesheet" href="{{ asset('css/bookshelf-real.css') }}?v={{ filemtime(public_path('css/bookshelf-real.css')) }}">
 <style>
 /* ══════════════════════════════
-   BOOKSHELF ADMIN STYLE
+   BOOKSHELF ADMIN STYLE — REDESIGNED
 ══════════════════════════════ */
 .page-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 20px;
   position:relative;
   z-index:1;
+  background:linear-gradient(135deg,rgba(15,23,42,.03),rgba(237,27,59,.04));
+  padding:28px 32px;
+  border-radius:20px;
+  border:1px solid rgba(237,27,59,.12);
 }
 
 .page-header h1 { letter-spacing:-.035em; }
@@ -23,23 +28,60 @@
   content:'KOLEKSI PERPUSTAKAAN';
   display:block;
   color:var(--crimson);
-  font-size:.64rem;
+  font-size:.68rem;
   font-weight:900;
-  letter-spacing:.16em;
-  margin-bottom:7px;
+  letter-spacing:.18em;
+  margin-bottom:8px;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+
+.btn-add-book{
+  padding:13px 28px;
+  border-radius:13px;
+  font-size:.88rem;
+  font-weight:700;
+  background:linear-gradient(135deg,var(--crimson),var(--crimson-dark));
+  color:#fff;
+  border:none;
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  box-shadow:0 8px 24px rgba(237,27,59,.35);
+  text-decoration:none;
+  transition:all .3s cubic-bezier(.34,1.56,.64,1);
+  position:relative;
+  overflow:hidden;
+}
+.btn-add-book::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,transparent,rgba(255,255,255,.2),transparent);
+  transform:translateX(-100%);
+  transition:transform .6s;
+}
+.btn-add-book:hover{
+  transform:translateY(-2px);
+  box-shadow:0 12px 32px rgba(237,27,59,.45);
+  color:#fff;
+}
+.btn-add-book:hover::before{
+  transform:translateX(100%);
 }
 
 .search-toolbar {
   display: flex;
-  gap: 12px;
+  gap: 14px;
   flex-wrap: wrap;
   align-items: center;
-  background:linear-gradient(110deg,#fff 0%,#fff 70%,#fff7f8 100%);
-  padding: 16px 20px;
-  border-radius: 16px;
-  border: 1px solid #f0f0f0;
-  margin-bottom: 24px;
-  box-shadow:0 8px 24px rgba(20,40,75,.06);
+  background:#fff;
+  padding: 20px 24px;
+  border-radius: 18px;
+  border: 1px solid rgba(15,23,42,.08);
+  margin-bottom: 28px;
+  box-shadow:0 10px 28px rgba(15,23,42,.08);
   position:relative;
   overflow:hidden;
 }
@@ -50,8 +92,105 @@
   left:0;
   top:0;
   bottom:0;
-  width:4px;
-  background:linear-gradient(180deg,var(--crimson),#f59e0b);
+  width:5px;
+  background:linear-gradient(180deg,var(--crimson),#f59e0b,var(--crimson));
+  background-size:100% 200%;
+  animation:gradientSlide 3s ease-in-out infinite;
+}
+@keyframes gradientSlide{
+  0%,100%{background-position:0% 0%}
+  50%{background-position:0% 100%}
+}
+
+.search-input-wrapper{
+  flex:1;
+  min-width:280px;
+  position:relative;
+}
+.search-input-wrapper i{
+  position:absolute;
+  left:16px;
+  top:50%;
+  transform:translateY(-50%);
+  color:var(--tx-4);
+  font-size:.9rem;
+  transition:color .3s;
+}
+.search-input-wrapper:focus-within i{
+  color:var(--crimson);
+}
+.search-input{
+  width:100%;
+  padding:12px 16px 12px 44px;
+  border:2px solid #e5e7eb;
+  border-radius:13px;
+  font-size:.88rem;
+  transition:all .3s;
+  background:#fafbfc;
+}
+.search-input:focus{
+  outline:none;
+  border-color:var(--crimson);
+  background:#fff;
+  box-shadow:0 4px 16px rgba(237,27,59,.12);
+}
+
+.filter-select{
+  padding:12px 16px;
+  border:2px solid #e5e7eb;
+  border-radius:13px;
+  font-size:.88rem;
+  min-width:180px;
+  background:#fafbfc;
+  cursor:pointer;
+  transition:all .3s;
+}
+.filter-select:focus{
+  outline:none;
+  border-color:var(--crimson);
+  background:#fff;
+  box-shadow:0 4px 16px rgba(237,27,59,.12);
+}
+
+.btn-filter{
+  padding:12px 24px;
+  border-radius:13px;
+  font-size:.85rem;
+  font-weight:700;
+  background:linear-gradient(135deg,var(--crimson),var(--crimson-dark));
+  color:#fff;
+  border:none;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  transition:all .3s;
+  box-shadow:0 4px 14px rgba(237,27,59,.3);
+}
+.btn-filter:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 20px rgba(237,27,59,.4);
+}
+
+.btn-reset{
+  padding:12px 20px;
+  border-radius:13px;
+  background:#f1f5f9;
+  border:2px solid #e2e8f0;
+  text-decoration:none;
+  color:var(--tx-2);
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-size:.85rem;
+  font-weight:600;
+  transition:all .3s;
+}
+.btn-reset:hover{
+  background:#e2e8f0;
+  border-color:#cbd5e1;
+  color:var(--navy-800);
+  transform:translateY(-1px);
 }
 
 /* ══════════════════════════════
@@ -187,109 +326,236 @@
 .shelf-book-ph i{font-size:1.6rem;color:rgba(255,255,255,.45)}
 .shelf-book-ph span{font-size:.52rem;font-weight:700;color:rgba(255,255,255,.75);line-height:1.3}
 
-/* Popup admin - dengan tombol CRUD - KLIK untuk toggle */
+/* ── Popup Admin - REDESIGNED ── */
 .book-popup{
   display:none;
   position:absolute;
-  bottom:calc(100% + 18px);
+  bottom:calc(100% + 22px);
   left:50%;transform:translateX(-50%);
   z-index:300;
-  width:200px;
+  width:220px;
   background:#fff;
-  border-radius:10px;
-  box-shadow:0 12px 36px rgba(0,0,0,.3),0 4px 12px rgba(0,0,0,.15);
-  padding:14px 15px;
-  animation:popupIn .25s cubic-bezier(.34,1.56,.64,1);
+  border-radius:14px;
+  box-shadow:0 16px 48px rgba(0,0,0,.35),0 8px 16px rgba(0,0,0,.2);
+  padding:16px 16px 14px;
+  animation:popupIn .3s cubic-bezier(.34,1.56,.64,1);
+  border:1px solid rgba(15,23,42,.08);
 }
 @keyframes popupIn{
-  from{opacity:0;transform:translateX(-50%) translateY(12px) scale(.9)}
+  from{opacity:0;transform:translateX(-50%) translateY(14px) scale(.88)}
   to{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}
 }
 .book-popup::after{
-  content:'';position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);
+  content:'';position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);
   width:0;height:0;
-  border-left:8px solid transparent;border-right:8px solid transparent;
-  border-top:8px solid #fff;
+  border-left:10px solid transparent;border-right:10px solid transparent;
+  border-top:10px solid #fff;
+  filter:drop-shadow(0 3px 2px rgba(0,0,0,.1));
 }
-/* Tampilkan popup saat parent punya class 'active' */
 .shelf-book.active .book-popup{display:block}
 
+.popup-cat{
+  display:inline-block;
+  padding:4px 10px;border-radius:7px;
+  font-size:.64rem;font-weight:800;
+  background:linear-gradient(135deg,rgba(237,27,59,.12),rgba(237,27,59,.08));
+  color:var(--crimson);
+  margin-bottom:8px;text-transform:uppercase;letter-spacing:.06em;
+  border:1px solid rgba(237,27,59,.15);
+}
+.popup-title{
+  font-size:.88rem;font-weight:800;color:var(--navy-800);line-height:1.35;
+  margin-bottom:5px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.popup-author{
+  font-size:.74rem;color:var(--tx-3);margin-bottom:10px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.popup-stok{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:.72rem;font-weight:800;padding:5px 12px;border-radius:99px;margin-bottom:12px;
+}
+.stok-ada{background:#d1fae5;color:#065f46;border:1px solid #a7f3d0}
+.stok-habis{background:#fee2e2;color:#991b1b;border:1px solid #fecaca}
+
+.popup-actions{
+  display:flex;gap:6px;margin-top:12px;
+  border-top:1px solid #f0f0f0;padding-top:12px;
+}
+.popup-btn{
+  flex:1;
+  display:flex;align-items:center;justify-content:center;gap:5px;
+  font-size:.72rem;font-weight:700;
+  padding:8px 10px;border-radius:8px;
+  text-decoration:none;
+  transition:all .25s cubic-bezier(.34,1.56,.64,1);
+  border:1px solid #e5e7eb;
+}
+.popup-btn-view{
+  background:linear-gradient(135deg,#f8fafc,#f1f5f9);
+  color:var(--navy-800);
+  border-color:#e2e8f0;
+}
+.popup-btn-view:hover{
+  background:linear-gradient(135deg,var(--navy-800),#1e293b);
+  color:#fff;
+  border-color:var(--navy-800);
+  transform:translateY(-2px);
+}
+.popup-btn-edit{
+  background:linear-gradient(135deg,#fff,#fffbfb);
+  color:var(--crimson);
+  border-color:rgba(237,27,59,.25);
+}
+.popup-btn-edit:hover{
+  background:linear-gradient(135deg,var(--crimson),var(--crimson-dark));
+  color:#fff;
+  border-color:var(--crimson);
+  transform:translateY(-2px);
+}
+.popup-btn-delete{
+  background:linear-gradient(135deg,#fef2f2,#fee2e2);
+  color:#dc2626;
+  border:1px solid #fecaca;
+  cursor:pointer;padding:8px 12px;border-radius:8px;
+  font-size:.72rem;font-weight:700;width:100%;
+  display:flex;align-items:center;justify-content:center;gap:5px;
+  transition:all .25s cubic-bezier(.34,1.56,.64,1);
+}
+.popup-btn-delete:hover{
+  background:linear-gradient(135deg,#dc2626,#b91c1c);
+  color:#fff;
+  border-color:#dc2626;
+  transform:translateY(-2px);
+}
+
 /* ══════════════════════════════
-   MOBILE MODAL (FIXED CENTER)
+   MOBILE MODAL (FIXED CENTER) - REDESIGNED
 ══════════════════════════════ */
 .mobile-modal-overlay{
   display:none;
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.6);
+  background:rgba(15,23,42,.75);
+  backdrop-filter:blur(8px);
   z-index:9999;
   align-items:center;
   justify-content:center;
   padding:20px;
+  animation:overlayIn .3s ease;
+}
+@keyframes overlayIn{
+  from{opacity:0}
+  to{opacity:1}
 }
 .mobile-modal-overlay.open{display:flex}
 .mobile-modal{
   background:#fff;
-  border-radius:16px;
-  padding:20px;
+  border-radius:20px;
+  padding:24px;
   width:100%;
-  max-width:320px;
-  box-shadow:0 24px 60px rgba(0,0,0,.4);
-  animation:modalIn .25s cubic-bezier(.34,1.56,.64,1);
+  max-width:340px;
+  box-shadow:0 24px 64px rgba(0,0,0,.5);
+  animation:modalIn .3s cubic-bezier(.34,1.56,.64,1);
   position:relative;
 }
 @keyframes modalIn{
-  from{opacity:0;transform:scale(.85) translateY(20px)}
+  from{opacity:0;transform:scale(.85) translateY(24px)}
   to{opacity:1;transform:scale(1) translateY(0)}
 }
 .mobile-modal-close{
-  position:absolute;top:12px;right:12px;
-  width:28px;height:28px;border-radius:50%;
+  position:absolute;top:14px;right:14px;
+  width:32px;height:32px;border-radius:50%;
   background:#f1f5f9;border:none;cursor:pointer;
   display:flex;align-items:center;justify-content:center;
-  font-size:1rem;color:#374151;line-height:1;
+  font-size:1.1rem;color:#374151;line-height:1;
+  transition:all .2s;
+}
+.mobile-modal-close:hover{
+  background:#e2e8f0;
+  transform:rotate(90deg);
+}
+.mobile-modal-cover{
+  display:flex;
+  justify-content:center;
+  margin-bottom:14px;
 }
 .mobile-modal-cover img{
-  width:70px;height:100px;
-  object-fit:cover;border-radius:3px 6px 6px 3px;
-  margin-bottom:10px;
-  box-shadow:2px 4px 10px rgba(0,0,0,.25);
+  width:80px;height:115px;
+  object-fit:cover;border-radius:4px 8px 8px 4px;
+  box-shadow:0 8px 24px rgba(0,0,0,.3);
 }
 .mobile-modal-cover-ph{
-  width:70px;height:100px;border-radius:3px 6px 6px 3px;
+  width:80px;height:115px;border-radius:4px 8px 8px 4px;
   background:linear-gradient(135deg,#14284B,#ED1B3B);
   display:flex;align-items:center;justify-content:center;
-  margin-bottom:10px;
+  box-shadow:0 8px 24px rgba(0,0,0,.3);
 }
-.mobile-modal-cover-ph i{font-size:1.8rem;color:rgba(255,255,255,.6)}
+.mobile-modal-cover-ph i{font-size:2rem;color:rgba(255,255,255,.65)}
 .m-cat-badge{
-  display:inline-block;padding:2px 8px;border-radius:5px;
-  font-size:.62rem;font-weight:800;
-  background:rgba(237,27,59,.1);color:#ED1B3B;
-  margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em;
+  display:inline-block;padding:4px 10px;border-radius:7px;
+  font-size:.64rem;font-weight:800;
+  background:linear-gradient(135deg,rgba(237,27,59,.12),rgba(237,27,59,.08));
+  color:var(--crimson);
+  margin-bottom:8px;text-transform:uppercase;letter-spacing:.06em;
+  border:1px solid rgba(237,27,59,.15);
 }
-.m-title{font-size:.95rem;font-weight:700;color:#111;line-height:1.3;margin-bottom:4px}
-.m-author{font-size:.78rem;color:#6B7280;margin-bottom:8px}
+.m-title{
+  font-size:1rem;font-weight:800;color:var(--navy-800);
+  line-height:1.35;margin-bottom:6px;
+}
+.m-author{
+  font-size:.8rem;color:var(--tx-3);margin-bottom:10px;
+}
 .m-stok{
-  display:inline-flex;align-items:center;gap:4px;
-  font-size:.72rem;font-weight:700;padding:4px 10px;
-  border-radius:99px;margin-bottom:12px;
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:.74rem;font-weight:800;padding:5px 12px;
+  border-radius:99px;margin-bottom:14px;
 }
-.m-actions{display:flex;gap:6px;margin-bottom:6px}
+.m-stok.stok-ada{background:#d1fae5;color:#065f46;border:1px solid #a7f3d0}
+.m-stok.stok-habis{background:#fee2e2;color:#991b1b;border:1px solid #fecaca}
+.m-actions{display:flex;gap:8px;margin-bottom:8px}
 .m-btn-view{
-  flex:1;display:flex;align-items:center;justify-content:center;gap:4px;
-  font-size:.78rem;font-weight:700;padding:8px;border-radius:7px;
-  background:#f0f0f0;color:#14284B;text-decoration:none;border:1px solid #e0e0e0;
+  flex:1;display:flex;align-items:center;justify-content:center;gap:5px;
+  font-size:.8rem;font-weight:700;padding:10px;border-radius:10px;
+  background:linear-gradient(135deg,#f8fafc,#f1f5f9);
+  color:var(--navy-800);
+  text-decoration:none;
+  border:1px solid #e2e8f0;
+  transition:all .2s;
+}
+.m-btn-view:hover{
+  background:linear-gradient(135deg,var(--navy-800),#1e293b);
+  color:#fff;
+  border-color:var(--navy-800);
 }
 .m-btn-edit{
-  flex:1;display:flex;align-items:center;justify-content:center;gap:4px;
-  font-size:.78rem;font-weight:700;padding:8px;border-radius:7px;
-  background:#fff;color:#ED1B3B;text-decoration:none;border:1px solid #fecdd3;
+  flex:1;display:flex;align-items:center;justify-content:center;gap:5px;
+  font-size:.8rem;font-weight:700;padding:10px;border-radius:10px;
+  background:linear-gradient(135deg,#fff,#fffbfb);
+  color:var(--crimson);
+  text-decoration:none;
+  border:1px solid rgba(237,27,59,.25);
+  transition:all .2s;
+}
+.m-btn-edit:hover{
+  background:linear-gradient(135deg,var(--crimson),var(--crimson-dark));
+  color:#fff;
+  border-color:var(--crimson);
 }
 .m-btn-delete{
-  width:100%;display:flex;align-items:center;justify-content:center;gap:4px;
-  font-size:.78rem;font-weight:700;padding:8px;border-radius:7px;
-  background:#fef2f2;color:#dc2626;border:1px solid #fecaca;cursor:pointer;
+  width:100%;display:flex;align-items:center;justify-content:center;gap:5px;
+  font-size:.8rem;font-weight:700;padding:10px;border-radius:10px;
+  background:linear-gradient(135deg,#fef2f2,#fee2e2);
+  color:#dc2626;
+  border:1px solid #fecaca;cursor:pointer;
+  transition:all .2s;
+}
+.m-btn-delete:hover{
+  background:linear-gradient(135deg,#dc2626,#b91c1c);
+  color:#fff;
+  border-color:#dc2626;
 }
 
 /* Desktop: sembunyikan modal */
@@ -407,7 +673,7 @@
   
   .book-popup{width:170px}
 }
-@media(max-width:480px){
+@media(max-width:576px){
   body{overflow-x:hidden}
   .main{padding:24px 12px 52px}
   .page-header{padding:16px;border-radius:10px}
@@ -523,41 +789,43 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-{{-- Page Header --}}
+{{-- Page Header - REDESIGNED --}}
 <div class="page-header">
   <div>
-    <h1 style="font-size:1.6rem;font-weight:900;color:var(--navy-800);margin:0 0 6px">Data Buku</h1>
-    <p style="font-size:.88rem;color:var(--tx-3);margin:0">
-      <i class="bi bi-collection-fill" style="color:var(--crimson)"></i>
-      Kelola koleksi perpustakaan
+    <h1 style="font-size:1.75rem;font-weight:900;color:var(--navy-800);margin:0 0 8px">Data Buku</h1>
+    <p style="font-size:.9rem;color:var(--tx-3);margin:0;display:flex;align-items:center;gap:7px">
+      <i class="bi bi-collection-fill" style="color:var(--crimson);font-size:.95rem"></i>
+      <span>Kelola koleksi perpustakaan digital</span>
     </p>
   </div>
-  <a href="{{ route('admin.buku.create') }}" style="padding:12px 24px;border-radius:14px;font-size:.88rem;font-weight:700;background:linear-gradient(135deg,var(--crimson),var(--crimson-dark));color:#fff;border:none;display:flex;align-items:center;gap:10px;box-shadow:0 6px 20px rgba(237,27,59,.3);text-decoration:none;transition:all .3s">
-    <i class="bi bi-plus-circle-fill" style="font-size:1.1rem"></i> Tambah Buku
+  <a href="{{ route('admin.buku.create') }}" class="btn-add-book">
+    <i class="bi bi-plus-circle-fill" style="font-size:1.15rem"></i> 
+    <span>Tambah Buku</span>
   </a>
 </div>
 
-{{-- Search & Filter Toolbar --}}
+{{-- Search & Filter Toolbar - REDESIGNED --}}
 <div class="search-toolbar">
-  <form method="GET" style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;flex:1">
-    <div style="flex:1;min-width:250px;position:relative">
-      <i class="bi bi-search" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--tx-4);font-size:.85rem"></i>
-      <input type="text" name="search" placeholder="Cari judul, pengarang, atau ISBN..." value="{{ request('search') }}" style="width:100%;padding:10px 14px 10px 38px;border:1px solid #e0e0e0;border-radius:12px;font-size:.88rem">
+  <form method="GET" style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;flex:1">
+    <div class="search-input-wrapper">
+      <i class="bi bi-search"></i>
+      <input type="text" name="search" class="search-input" placeholder="Cari judul, pengarang, atau ISBN..." value="{{ request('search') }}">
     </div>
     
-    <select name="kategori" style="padding:10px 14px;border:1px solid #e0e0e0;border-radius:12px;font-size:.88rem;min-width:160px">
+    <select name="kategori" class="filter-select">
       <option value="">Semua Kategori</option>
       @foreach($kategoris as $k)
       <option value="{{ $k }}" {{ request('kategori')==$k?'selected':'' }}>{{ $k }}</option>
       @endforeach
     </select>
     
-    <button type="submit" style="padding:10px 20px;border-radius:12px;font-size:.85rem;font-weight:700;background:var(--crimson);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;gap:8px">
-      <i class="bi bi-funnel-fill"></i> Filter
+    <button type="submit" class="btn-filter">
+      <i class="bi bi-funnel-fill"></i> 
+      <span>Filter</span>
     </button>
     
     @if(request()->hasAny(['search','kategori']))
-    <a href="{{ route('admin.buku.index') }}" style="padding:10px 16px;border-radius:12px;background:#f5f5f5;border:1px solid #e0e0e0;text-decoration:none;color:var(--tx-2);display:flex;align-items:center;gap:6px;font-size:.85rem">
+    <a href="{{ route('admin.buku.index') }}" class="btn-reset">
       <i class="bi bi-x-circle-fill"></i> Reset
     </a>
     @endif
@@ -565,14 +833,33 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 
 @if($buku->isEmpty())
-{{-- Empty State --}}
-<div style="background:#fff;border-radius:20px;padding:60px 40px;text-align:center;border:2px dashed #e0e0e0">
-  <i class="bi bi-journal-x" style="font-size:4rem;color:#d0d0d0;display:block;margin-bottom:16px"></i>
-  <h3 style="font-size:1.2rem;font-weight:800;color:var(--navy-800);margin:0 0 8px">Tidak ada buku ditemukan</h3>
-  <p style="font-size:.88rem;color:var(--tx-3);margin:0 0 24px">Coba kata kunci berbeda atau tambahkan buku baru.</p>
-  <a href="{{ route('admin.buku.create') }}" style="display:inline-flex;align-items:center;gap:10px;padding:12px 28px;border-radius:14px;background:linear-gradient(135deg,var(--crimson),var(--crimson-dark));color:#fff;font-weight:700;text-decoration:none;box-shadow:0 6px 20px rgba(237,27,59,.3)">
-    <i class="bi bi-plus-circle-fill"></i> Tambah Buku Pertama
-  </a>
+{{-- Empty State - REDESIGNED --}}
+<div style="background:linear-gradient(135deg,#fff,#fafbfc);border-radius:24px;padding:70px 40px;text-align:center;border:2px dashed rgba(237,27,59,.2);position:relative;overflow:hidden">
+  <div style="position:absolute;top:-50px;right:-50px;width:200px;height:200px;background:radial-gradient(circle,rgba(237,27,59,.08),transparent);border-radius:50%"></div>
+  <div style="position:absolute;bottom:-60px;left:-60px;width:220px;height:220px;background:radial-gradient(circle,rgba(237,27,59,.06),transparent);border-radius:50%"></div>
+  <div style="position:relative;z-index:1">
+    <div style="width:80px;height:80px;background:linear-gradient(135deg,rgba(237,27,59,.12),rgba(237,27,59,.08));border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;border:3px solid rgba(237,27,59,.15)">
+      <i class="bi bi-journal-x" style="font-size:2.2rem;color:var(--crimson)"></i>
+    </div>
+    <h3 style="font-size:1.35rem;font-weight:900;color:var(--navy-800);margin:0 0 10px;letter-spacing:-.02em">Tidak ada buku ditemukan</h3>
+    <p style="font-size:.92rem;color:var(--tx-3);margin:0 0 28px;max-width:380px;margin-left:auto;margin-right:auto;line-height:1.6">
+      @if(request()->hasAny(['search','kategori']))
+        Coba kata kunci berbeda atau ubah filter pencarian Anda.
+      @else
+        Mulai membangun koleksi perpustakaan digital Anda dengan menambahkan buku pertama.
+      @endif
+    </p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      @if(request()->hasAny(['search','kategori']))
+        <a href="{{ route('admin.buku.index') }}" style="display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:13px;background:#f1f5f9;border:2px solid #e2e8f0;color:var(--navy-800);font-weight:700;text-decoration:none;font-size:.88rem;transition:all .3s">
+          <i class="bi bi-arrow-counterclockwise"></i> Reset Filter
+        </a>
+      @endif
+      <a href="{{ route('admin.buku.create') }}" style="display:inline-flex;align-items:center;gap:10px;padding:13px 28px;border-radius:13px;background:linear-gradient(135deg,var(--crimson),var(--crimson-dark));color:#fff;font-weight:700;text-decoration:none;box-shadow:0 8px 24px rgba(237,27,59,.35);font-size:.88rem;transition:all .3s">
+        <i class="bi bi-plus-circle-fill" style="font-size:1.1rem"></i> Tambah Buku
+      </a>
+    </div>
+  </div>
 </div>
 @else
 {{-- Bookshelf Rows --}}
@@ -587,6 +874,7 @@ document.addEventListener('DOMContentLoaded', function() {
   @foreach($shelves as $shelfIdx => $shelfBooks)
   <div class="shelf-row">
     <div class="shelf-books">
+      @include('partials.shelf-decor')
       @foreach($shelfBooks as $i => $b)
       @php
         $globalIdx = $shelfIdx * $booksPerShelf + $i;
@@ -597,6 +885,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         {{-- Lampu spotlight --}}
         <div class="shelf-book-light">
+          @include('partials.shelf-light-cord')
           <div class="light-fixture">
             <div class="light-bulb"></div>
           </div>
@@ -628,6 +917,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <span>{{ Str::limit($b->judul, 18) }}</span>
           </div>
         @endif
+        @include('partials.shelf-stock-tag', ['stok' => $b->stok])
 
         {{-- Popup dengan tombol CRUD --}}
         <div class="book-popup">
@@ -667,7 +957,9 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
       @endforeach
     </div>
-    <div class="shelf-plank"></div>
+    <div class="shelf-plank">
+      @include('partials.shelf-plank-extras')
+    </div>
   </div>
   @endforeach
 </div>

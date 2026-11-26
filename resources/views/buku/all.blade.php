@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link rel="stylesheet" href="{{ asset('css/bookshelf-real.css') }}?v={{ filemtime(public_path('css/bookshelf-real.css')) }}">
 <style>
 :root{
   --red:#ED1B3B;--red-dk:#C41630;
@@ -430,8 +431,15 @@ img{display:block}
   .book-popup{display:none !important}
 }
 .popup-title{font-size:.84rem;font-weight:700;color:#1a1a1a;line-height:1.3;margin-bottom:4px}
-.popup-author{font-size:.72rem;color:var(--tx3);margin-bottom:8px}
+.popup-author{font-size:.72rem;color:var(--tx3);margin-bottom:5px}
+.popup-stars{display:flex;align-items:center;gap:1px;margin-bottom:7px}
+.ps-on{color:#f59e0b;font-size:.82rem}
+.ps-off{color:#e5e7eb;font-size:.82rem}
+.ps-half{position:relative;display:inline-block;color:#e5e7eb;font-size:.82rem}
+.ps-half::after{content:'★';position:absolute;top:0;left:0;width:50%;overflow:hidden;color:#f59e0b;white-space:nowrap}
+.ps-num{font-size:.65rem;color:#9ca3af;font-weight:700;margin-left:3px}
 .popup-cat{font-size:.68rem;color:var(--tx4);margin-bottom:10px}
+.m-stars{align-items:center;gap:1px;margin:4px 0 6px;flex-wrap:wrap}
 .popup-stok{
   display:inline-flex;align-items:center;gap:4px;
   font-size:.69rem;font-weight:700;padding:4px 10px;border-radius:99px;margin-bottom:10px;
@@ -716,6 +724,7 @@ img{display:block}
     @foreach($shelves as $shelfIdx => $shelfBooks)
     <div class="shelf-row">
       <div class="shelf-books">
+        @include('partials.shelf-decor')
         @foreach($shelfBooks as $i => $buku)
         @php
           $globalIdx = ($shelfIdx * $booksPerShelf) + $i;
@@ -726,6 +735,7 @@ img{display:block}
           
           {{-- Lampu spotlight - cahaya nempel di background --}}
           <div class="shelf-book-light">
+            @include('partials.shelf-light-cord')
             <div class="light-fixture">
               <div class="light-bulb"></div>
             </div>
@@ -738,6 +748,7 @@ img{display:block}
             data-pengarang="{{ $buku->pengarang }}"
             data-kategori="{{ $buku->kategori }}"
             data-stok="{{ $buku->stok }}"
+            data-rating="{{ $buku->ulasan_avg_rating ? round($buku->ulasan_avg_rating, 1) : '' }}"
             data-cover="{{ $buku->cover ? (Str::startsWith($buku->cover,'http') ? $buku->cover : Storage::url($buku->cover)) : '' }}"
             data-link="{{ $buku->stok > 0 ? route('register') : '' }}"
           >
@@ -762,11 +773,31 @@ img{display:block}
               <span>{{ Str::limit($buku->judul, 18) }}</span>
             </div>
           @endif
+          @include('partials.shelf-stock-tag', ['stok' => $buku->stok])
 
           {{-- Popup info saat hover --}}
           <div class="book-popup">
             <div class="popup-title">{{ $buku->judul }}</div>
             <div class="popup-author">{{ $buku->pengarang }}</div>
+            @if($buku->ulasan_avg_rating)
+              <div class="popup-stars">
+                @php
+                  $r = (float) $buku->ulasan_avg_rating;
+                  $full = floor($r);
+                  $half = ($r - $full) >= 0.25;
+                @endphp
+                @for($s = 1; $s <= 5; $s++)
+                  @if($s <= $full)
+                    <span class="ps-on">★</span>
+                  @elseif($s == $full + 1 && $half)
+                    <span class="ps-half">★</span>
+                  @else
+                    <span class="ps-off">★</span>
+                  @endif
+                @endfor
+                <span class="ps-num">{{ number_format($r, 1) }}</span>
+              </div>
+            @endif
             @if($buku->kategori)
               <div class="popup-cat">{{ $buku->kategori }}</div>
             @endif
@@ -798,7 +829,9 @@ img{display:block}
       </div>
       
       {{-- Papan rak kayu --}}
-      <div class="shelf-plank"></div>
+      <div class="shelf-plank">
+        @include('partials.shelf-plank-extras')
+      </div>
     </div>
     @endforeach
   </div>
@@ -855,6 +888,7 @@ img{display:block}
     <div class="m-cover"></div>
     <div class="m-title mobile-modal-title"></div>
     <div class="m-author mobile-modal-author"></div>
+    <div class="m-stars"></div>
     <div class="m-cat mobile-modal-cat"></div>
     <div class="m-stok mobile-modal-stok"></div>
     <div class="m-btn"></div>
@@ -865,6 +899,26 @@ img{display:block}
 // ════════════════════════════════════════
 // POPUP (desktop hover) + MOBILE MODAL
 // ════════════════════════════════════════
+
+// Half-star renderer for modal/popup
+function renderStarsModal(rating) {
+  let html = '<span style="display:inline-flex;align-items:center;gap:1px;margin-bottom:4px">';
+  for (let i = 1; i <= 5; i++) {
+    const diff = rating - (i - 1);
+    if (diff >= 1) {
+      html += '<span style="color:#f59e0b;font-size:.9rem">&#9733;</span>';
+    } else if (diff >= 0.25) {
+      const pct = Math.min(100, Math.round(diff * 100));
+      html += `<span style="position:relative;display:inline-block;font-size:.9rem;color:#e5e7eb">&#9733;<span style="position:absolute;top:0;left:0;overflow:hidden;width:${pct}%;color:#f59e0b;white-space:nowrap">&#9733;</span></span>`;
+    } else {
+      html += '<span style="color:#e5e7eb;font-size:.9rem">&#9733;</span>';
+    }
+  }
+  html += `<span style="font-size:.72rem;color:#9ca3af;margin-left:4px;font-weight:700">${rating.toFixed(1)}</span>`;
+  html += '</span>';
+  return html;
+}
+
 document.addEventListener('DOMContentLoaded', function() {
   const isMobile = () => window.innerWidth <= 768;
 
@@ -880,6 +934,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const stok      = parseInt(book.dataset.stok) || 0;
     const cover     = book.dataset.cover     || '';
     const link      = book.dataset.link      || '';
+    const rating    = parseFloat(book.dataset.rating) || 0;
 
     // Cover
     const coverEl = modal.querySelector('.m-cover');
@@ -892,6 +947,16 @@ document.addEventListener('DOMContentLoaded', function() {
     modal.querySelector('.m-title').textContent  = judul;
     modal.querySelector('.m-author').textContent = pengarang;
     modal.querySelector('.m-cat').textContent    = kategori;
+
+    // Stars
+    const starsEl = modal.querySelector('.m-stars');
+    if(rating > 0){
+      starsEl.innerHTML = renderStarsModal(rating);
+      starsEl.style.display = 'flex';
+    } else {
+      starsEl.innerHTML = '';
+      starsEl.style.display = 'none';
+    }
 
     const stokEl = modal.querySelector('.m-stok');
     if(stok > 0){

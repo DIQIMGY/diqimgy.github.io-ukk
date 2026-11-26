@@ -106,15 +106,12 @@
 {{-- Page Header --}}
 <div class="transaction-header">
   <div>
-    <h1 style="font-size:1.6rem;font-weight:900;color:var(--navy-800);margin:0 0 6px">Transaksi Peminjaman</h1>
+    <h1 style="font-size:1.6rem;font-weight:900;color:var(--navy-800);margin:0 0 6px">Riwayat Transaksi</h1>
     <p style="font-size:.88rem;color:var(--tx-3);margin:0">
       <i class="bi bi-arrow-left-right" style="color:#f59e0b"></i>
-      Kelola transaksi peminjaman buku
+      Telusuri riwayat peminjaman, pengembalian, dan denda
     </p>
   </div>
-  <a href="{{ route('admin.transaksi.create') }}" style="padding:12px 24px;border-radius:14px;font-size:.88rem;font-weight:700;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;border:none;display:flex;align-items:center;gap:10px;box-shadow:0 6px 20px rgba(245,158,11,.3);text-decoration:none;transition:all .3s">
-    <i class="bi bi-plus-circle-fill" style="font-size:1.1rem"></i> Tambah Transaksi
-  </a>
 </div>
 
 {{-- Filter Bar --}}
@@ -127,16 +124,24 @@
     
     <select name="status" style="padding:10px 14px;border:1px solid #e0e0e0;border-radius:12px;font-size:.88rem;min-width:160px">
       <option value="">Semua Status</option>
+      <option value="pending" {{ request('status')==='pending'?'selected':'' }}>Menunggu Persetujuan Pinjam</option>
+      <option value="pending_kembali" {{ request('status')==='pending_kembali'?'selected':'' }}>Menunggu Konfirmasi Kembali</option>
       <option value="dipinjam" {{ request('status')==='dipinjam'?'selected':'' }}>Dipinjam</option>
       <option value="terlambat" {{ request('status')==='terlambat'?'selected':'' }}>Terlambat</option>
       <option value="dikembalikan" {{ request('status')==='dikembalikan'?'selected':'' }}>Dikembalikan</option>
+      <option value="ditolak" {{ request('status')==='ditolak'?'selected':'' }}>Ditolak</option>
+    </select>
+
+    <select name="denda" style="padding:10px 14px;border:1px solid #e0e0e0;border-radius:12px;font-size:.88rem;min-width:160px">
+      <option value="">Semua Pembayaran</option>
+      <option value="belum_lunas" {{ request('denda')==='belum_lunas'?'selected':'' }}>Denda Belum Lunas</option>
     </select>
     
     <button type="submit" style="padding:10px 20px;border-radius:12px;font-size:.85rem;font-weight:700;background:#f59e0b;color:#fff;border:none;cursor:pointer;display:flex;align-items:center;gap:8px">
       <i class="bi bi-funnel-fill"></i> Filter
     </button>
     
-    @if(request()->hasAny(['search','status']))
+    @if(request()->hasAny(['search','status','denda']))
     <a href="{{ route('admin.transaksi.index') }}" style="padding:10px 16px;border-radius:12px;background:#f5f5f5;border:1px solid #e0e0e0;text-decoration:none;color:var(--tx-2);display:flex;align-items:center;gap:6px;font-size:.85rem">
       <i class="bi bi-x-circle-fill"></i> Reset
     </a>
@@ -148,10 +153,13 @@
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:24px">
   @php
     $stats = [
-      ['Total', $transaksi->total(), '#6b7280', 'bi-arrow-left-right'],
-      ['Dipinjam', $transaksi->where('status','dipinjam')->count(), '#0ea5e9', 'bi-circle-fill'],
-      ['Terlambat', $transaksi->where('status','terlambat')->count(), '#f59e0b', 'bi-exclamation-triangle-fill'],
-      ['Kembali', $transaksi->where('status','dikembalikan')->count(), '#10b981', 'bi-check-circle-fill'],
+      ['Total', $statTotal, '#6b7280', 'bi-arrow-left-right'],
+      ['Menunggu Pinjam', $statPending, '#f59e0b', 'bi-hourglass-split'],
+      ['Menunggu Kembali', $statPendingKembali, '#0891b2', 'bi-box-arrow-in-left'],
+      ['Dipinjam', $statDipinjam, '#0ea5e9', 'bi-circle-fill'],
+      ['Terlambat', $statTerlambat, '#d97706', 'bi-exclamation-triangle-fill'],
+      ['Dikembalikan', $statKembali, '#10b981', 'bi-check-circle-fill'],
+      ['Denda Belum Lunas', $statDendaBelumLunas, '#e11d48', 'bi-cash-coin'],
     ];
   @endphp
   
@@ -175,10 +183,7 @@
 <div style="background:#fff;border-radius:20px;padding:60px 40px;text-align:center;border:2px dashed #e0e0e0">
   <i class="bi bi-inbox" style="font-size:4rem;color:#d0d0d0;display:block;margin-bottom:16px"></i>
   <h3 style="font-size:1.2rem;font-weight:800;color:var(--navy-800);margin:0 0 8px">Tidak ada transaksi ditemukan</h3>
-  <p style="font-size:.88rem;color:var(--tx-3);margin:0 0 24px">Coba kata kunci berbeda atau tambahkan transaksi baru.</p>
-  <a href="{{ route('admin.transaksi.create') }}" style="display:inline-flex;align-items:center;gap:10px;padding:12px 28px;border-radius:14px;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;font-weight:700;text-decoration:none;box-shadow:0 6px 20px rgba(245,158,11,.3)">
-    <i class="bi bi-plus-circle-fill"></i> Tambah Transaksi Pertama
-  </a>
+  <p style="font-size:.88rem;color:var(--tx-3);margin:0">Coba kata kunci atau filter status yang berbeda.</p>
 </div>
 @else
 {{-- Transaction List --}}
@@ -235,29 +240,46 @@
         <div>
           <div style="font-size:.68rem;color:var(--tx-4);font-weight:700;text-transform:uppercase;margin-bottom:4px">Tgl Pinjam</div>
           <div style="font-size:.85rem;font-weight:700;color:var(--navy-800)">
-            <i class="bi bi-calendar3"></i> {{ $t->tanggal_pinjam->format('d M Y') }}
+            <i class="bi bi-calendar3"></i> {{ $t->tanggal_pinjam?->format('d M Y') ?? 'Belum disetujui' }}
           </div>
         </div>
         <div>
           <div style="font-size:.68rem;color:var(--tx-4);font-weight:700;text-transform:uppercase;margin-bottom:4px">Batas Kembali</div>
           <div style="font-size:.85rem;font-weight:700;color:{{ $t->status === 'terlambat' ? '#f59e0b' : 'var(--navy-800)' }}">
-            <i class="bi bi-calendar-check"></i> {{ $t->tanggal_kembali_rencana->format('d M Y') }}
+            <i class="bi bi-calendar-check"></i> {{ $t->tanggal_kembali_rencana?->format('d M Y') ?? 'Belum ditentukan' }}
           </div>
         </div>
       </div>
     </div>
     
-    {{-- Right: Status & Actions --}}
+    {{-- Right: Status & History Details --}}
     <div style="display:flex;flex-direction:column;gap:12px;min-width:200px">
       {{-- Status Badge --}}
       <div>
-        @if($t->status === 'dipinjam')
+        @if($t->status === 'pending')
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#fef3c7;color:#b45309;font-size:.8rem;font-weight:700;padding:8px 16px;border-radius:10px;width:100%;justify-content:center">
+            <i class="bi bi-clock-fill"></i>Menunggu Persetujuan
+          </span>
+        @elseif($t->status === 'pending_kembali')
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#e0f2fe;color:#0369a1;font-size:.8rem;font-weight:700;padding:8px 16px;border-radius:10px;width:100%;justify-content:center">
+            <i class="bi bi-hourglass-split"></i>Menunggu Konfirmasi Kembali
+          </span>
+          @if($t->return_requested_at)
+          <div style="font-size:.72rem;color:#0369a1;text-align:center;margin-top:5px">
+            Diajukan {{ $t->return_requested_at->isoFormat('D MMM YYYY, HH:mm') }}
+          </div>
+          @endif
+        @elseif($t->status === 'dipinjam')
           <span style="display:inline-flex;align-items:center;gap:6px;background:#dbeafe;color:#0369a1;font-size:.8rem;font-weight:700;padding:8px 16px;border-radius:10px;width:100%;justify-content:center">
             <span style="width:8px;height:8px;background:currentColor;border-radius:50%"></span>Sedang Dipinjam
           </span>
         @elseif($t->status === 'terlambat')
           <span style="display:inline-flex;align-items:center;gap:6px;background:#fef3c7;color:#b45309;font-size:.8rem;font-weight:700;padding:8px 16px;border-radius:10px;width:100%;justify-content:center">
             <i class="bi bi-exclamation-triangle-fill"></i>Terlambat
+          </span>
+        @elseif($t->status === 'ditolak')
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#f3f4f6;color:#6b7280;font-size:.8rem;font-weight:700;padding:8px 16px;border-radius:10px;width:100%;justify-content:center">
+            <i class="bi bi-x-circle-fill"></i>Ditolak
           </span>
         @else
           <span style="display:inline-flex;align-items:center;gap:6px;background:#dcfce7;color:#15803d;font-size:.8rem;font-weight:700;padding:8px 16px;border-radius:10px;width:100%;justify-content:center">
@@ -268,32 +290,24 @@
       
       {{-- Denda --}}
       @if($t->denda > 0)
-      <div style="background:#fff1f2;border:1px solid #fecdd3;border-radius:10px;padding:10px;text-align:center">
-        <div style="font-size:.7rem;color:#be123c;font-weight:700;text-transform:uppercase;margin-bottom:4px">Denda</div>
-        <div style="font-size:1.1rem;font-weight:900;color:#be123c;line-height:1">Rp {{ number_format($t->denda,0,',','.') }}</div>
+      <div style="background:#fff1f2;border:1px solid #fecdd3;border-radius:10px;padding:10px;text-align:center;position:relative">
+      <div style="font-size:.7rem;color:#be123c;font-weight:700;text-transform:uppercase;margin-bottom:4px">Denda</div>
+      <div style="font-size:1.1rem;font-weight:900;color:#be123c;line-height:1;margin-bottom:8px">Rp {{ number_format($t->denda,0,',','.') }}</div>
+      @if($t->denda_dibayar)
+      <div style="display:inline-flex;align-items:center;gap:4px;padding:4px 10px;background:#dcfce7;border-radius:6px;font-size:.7rem;font-weight:700;color:#15803d">
+        <i class="bi bi-check-circle-fill"></i>Lunas
+      </div>
+      @else
+      <div style="display:inline-flex;align-items:center;gap:4px;padding:4px 10px;background:#fff7ed;border-radius:6px;font-size:.7rem;font-weight:700;color:#c2410c">
+        <i class="bi bi-clock-fill"></i>Belum lunas
+      </div>
+      @endif
       </div>
       @endif
       
-      {{-- Actions --}}
-      <div style="display:flex;gap:8px">
-        <a href="{{ route('admin.transaksi.show',$t) }}" style="flex:1;display:flex;align-items:center;justify-content:center;padding:10px;border-radius:10px;background:#eff6ff;border:1px solid #bfdbfe;color:#1d4ed8;text-decoration:none;font-size:.82rem;font-weight:700">
-          <i class="bi bi-eye-fill"></i>
-        </a>
-        @if(in_array($t->status,['dipinjam','terlambat']))
-        <form method="POST" action="{{ route('admin.transaksi.kembali',$t) }}" onsubmit="return confirm('Proses pengembalian buku {{ $t->buku->judul }}?')" style="flex:1">
-          @csrf
-          <button type="submit" style="width:100%;padding:10px;border-radius:10px;background:#dcfce7;border:1px solid #bbf7d0;color:#15803d;font-size:.82rem;font-weight:700;cursor:pointer">
-            <i class="bi bi-box-arrow-in-left"></i>
-          </button>
-        </form>
-        @endif
-        <form method="POST" action="{{ route('admin.transaksi.destroy',$t) }}" onsubmit="return confirm('Hapus transaksi ini?')" style="flex:1">
-          @csrf @method('DELETE')
-          <button type="submit" style="width:100%;padding:10px;border-radius:10px;background:#fef2f2;border:1px solid #fecdd3;color:#be123c;font-size:.82rem;font-weight:700;cursor:pointer">
-            <i class="bi bi-trash-fill"></i>
-          </button>
-        </form>
-      </div>
+      <a href="{{ route('admin.transaksi.show',$t) }}" style="display:flex;align-items:center;justify-content:center;gap:7px;padding:10px;border-radius:10px;background:#eff6ff;border:1px solid #bfdbfe;color:#1d4ed8;text-decoration:none;font-size:.82rem;font-weight:700">
+      <i class="bi bi-eye-fill"></i> Lihat Detail
+      </a>
     </div>
   </div>
 </div>
@@ -301,8 +315,17 @@
 
 {{-- Pagination --}}
 @if($transaksi->hasPages())
-<div style="display:flex;justify-content:center;margin-top:32px">
-  {{ $transaksi->links() }}
+<div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:24px">
+  <span style="font-size:.8rem;color:var(--tx-3)">
+    Menampilkan {{ $transaksi->firstItem() }}–{{ $transaksi->lastItem() }} dari {{ $transaksi->total() }} transaksi
+  </span>
+  <div style="display:flex;justify-content:center">
+    {{ $transaksi->links('vendor.pagination.custom-simple') }}
+  </div>
+</div>
+@elseif($transaksi->total() > 0)
+<div style="margin-top:20px;font-size:.8rem;color:var(--tx-3)">
+  Menampilkan {{ $transaksi->total() }} transaksi
 </div>
 @endif
 @endif

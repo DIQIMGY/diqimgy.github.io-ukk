@@ -46,11 +46,11 @@
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px">
         <div class="date-cell">
           <label>Tanggal Pinjam</label>
-          <p>{{ $peminjaman->tanggal_pinjam->format('d M Y') }}</p>
+          <p>{{ $peminjaman->tanggal_pinjam ? $peminjaman->tanggal_pinjam->format('d M Y') : '—' }}</p>
         </div>
         <div class="date-cell {{ $denda>0?'date-cell-red':'' }}">
           <label>Batas Kembali</label>
-          <p>{{ $peminjaman->tanggal_kembali_rencana->format('d M Y') }}</p>
+          <p>{{ $peminjaman->tanggal_kembali_rencana ? $peminjaman->tanggal_kembali_rencana->format('d M Y') : '—' }}</p>
         </div>
       </div>
 
@@ -64,7 +64,7 @@
             Rp {{ number_format($denda,0,',','.') }}
           </p>
           <p style="font-size:.72rem;color:#be123c;margin:0">
-            Rp 1.000 × {{ $peminjaman->tanggal_kembali_rencana->diffInDays(\Carbon\Carbon::today()) }} hari keterlambatan
+            Rp 1.000 × {{ $peminjaman->tanggal_kembali_rencana ? $peminjaman->tanggal_kembali_rencana->diffInDays(\Carbon\Carbon::today()) : 0 }} hari keterlambatan
           </p>
         </div>
       </div>
